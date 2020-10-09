@@ -21,8 +21,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 
 const mapStateToProps = state => {
+  var itemsCnt = 0;
+  state.cartItems.forEach(item => itemsCnt += item.quantity);
   return {
-    nrOfItemsInCard: state.cartItems.length,
+    nrOfItemsInCard: itemsCnt,
     loggedInUser: state.loggedInUser
   };
 };
@@ -42,6 +44,16 @@ class ConnectedHeader extends Component {
     anchorEl: null,
     categoryFilterValue: categories[0].name
   };
+
+
+  handleSearch() {
+    this.props.history.push(
+      "/?category=" +
+        this.state.categoryFilterValue +
+        "&term=" +
+        this.state.searchTerm
+    );
+  }
 
   render() {
     let { anchorEl } = this.state;
@@ -68,6 +80,11 @@ class ConnectedHeader extends Component {
               onChange={e => {
                 this.setState({ searchTerm: e.target.value });
               }}
+              onKeyPress={(ev) => {
+                if (ev.key === 'Enter') {
+                  this.handleSearch()
+                }
+              }}
               style={{ marginLeft: 30, width: 250, marginBottom: 15 }}
             />
 
@@ -86,17 +103,13 @@ class ConnectedHeader extends Component {
               {categoryOptions}
             </Select>
 
+ 
             <Button
               style={{ marginLeft: 20 }}
               variant="outlined"
               color="primary"
               onClick={() => {
-                this.props.history.push(
-                  "/?category=" +
-                    this.state.categoryFilterValue +
-                    "&term=" +
-                    this.state.searchTerm
-                );
+                this.handleSearch()
               }}
             >
               {" "}
