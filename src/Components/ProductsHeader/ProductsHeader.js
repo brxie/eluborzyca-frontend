@@ -19,7 +19,7 @@ class ProductsHeader extends Component {
     // Lot of values come from the query string.
     let usePriceFilter = parsedQueryStr.usePriceFilter === "true";
     let minPrice = parsedQueryStr.minPrice || 0;
-    let maxPrice = parsedQueryStr.maxPrice || 1000;
+    let maxPrice = parsedQueryStr.maxPrice || 10;
     let sortValue = parsedQueryStr.sortValue || "lh";
     let keyword = parsedQueryStr.term;
     let category = parsedQueryStr.category;
@@ -80,7 +80,7 @@ class ProductsHeader extends Component {
                   });
                 }}
               >
-                {`${minPrice}$-${maxPrice}$`}
+                {`${minPrice}zł-${maxPrice}zł`}
               </Button>
             </Tooltip>
           )}

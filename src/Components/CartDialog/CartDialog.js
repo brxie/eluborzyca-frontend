@@ -73,7 +73,7 @@ class ConnectedCartDialog extends Component {
               }}
             >
               {" "}
-              Total Price: {totalPrice} $
+              Total Price: {totalPrice} zł
             </div>
             <Button
               variant="outlined"
