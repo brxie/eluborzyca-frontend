@@ -10,9 +10,29 @@ import Order from "./Components/Order/Order";
 import Login from "./Components/Login/Login";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import Footer from "./Components/Footer/Footer";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import Auth from "./Auth";
+import { setLoggedInUser } from "./Redux/Actions";
 
 class App extends Component {
+  
+  state = {}
+
+  componentDidMount() {
+    Auth.sessionGet((session, error) => {
+      if (error) {
+        return
+      }
+      this.props.dispatch(setLoggedInUser({ name: session.username }));
+    }).then(() => this.setState({ ready: true }));
+  }
+
   render() {
+    if (!this.state.ready) {
+      return (<div>Loading....</div>)
+    }
+
     return (
       <div className="app">
         <Header />
@@ -39,4 +59,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(connect()(App));

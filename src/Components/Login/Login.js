@@ -14,6 +14,28 @@ class ConnectedLogin extends Component {
     pass: "",
     redirectToReferrer: false
   };
+
+  handleAuth() {
+    // Simulate authentication call
+    Auth.sessionCreate(this.state.userName, this.state.pass, (res, error) => {      
+            
+      if (error) {
+        this.setState({ loginError: error });
+        return;
+      }
+
+      if (res.unauthorized) {
+        this.setState({ wrongCred: true });
+        return;
+      }
+
+      this.props.dispatch(setLoggedInUser({ name: res.userName }));
+      this.setState(() => ({
+        redirectToReferrer: true
+      }));
+    });
+  }
+
   render() {
     const { from } = this.props.location.state || { from: { pathname: "/" } };
 
@@ -62,6 +84,11 @@ class ConnectedLogin extends Component {
             onChange={e => {
               this.setState({ userName: e.target.value });
             }}
+            onKeyPress={(ev) => {
+              if (ev.key === 'Enter') {
+                this.handleAuth();
+              }
+            }}
           />
           <TextField
             value={this.state.pass}
@@ -70,31 +97,26 @@ class ConnectedLogin extends Component {
             onChange={e => {
               this.setState({ pass: e.target.value });
             }}
+            onKeyPress={(ev) => {
+              if (ev.key === 'Enter') {
+                this.handleAuth();
+              }
+            }}
           />
           <Button
             style={{ marginTop: 20, width: 200 }}
             variant="outlined"
             color="primary"
             onClick={() => {
-              // Simulate authentication call
-              Auth.authenticate(this.state.userName, this.state.pass, user => {
-                if (!user) {
-                  this.setState({ wrongCred: true });
-                  return;
-                }
-
-                this.props.dispatch(setLoggedInUser({ name: user.name }));
-                this.setState(() => ({
-                  redirectToReferrer: true
-                }));
-              });
+              this.handleAuth();
             }}
           >
             Log in
           </Button>
-          {this.state.wrongCred && (
-            <div style={{ color: "red" }}>Wrong username and/or password</div>
-          )}
+          {
+            (this.state.wrongCred && (<div style={{ color: "red" }}>Wrong username and/or password</div>)) || 
+            (this.state.loginError && <div style={{ color: "red" }}>Login failed: {this.state.loginError}</div>)
+          }
         </div>
       </div>
     );

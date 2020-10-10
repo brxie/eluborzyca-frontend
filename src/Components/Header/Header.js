@@ -45,7 +45,6 @@ class ConnectedHeader extends Component {
     categoryFilterValue: categories[0].name
   };
 
-
   handleSearch() {
     this.props.history.push(
       "/?category=" +
@@ -82,7 +81,7 @@ class ConnectedHeader extends Component {
               }}
               onKeyPress={(ev) => {
                 if (ev.key === 'Enter') {
-                  this.handleSearch()
+                  this.handleSearch();
                 }
               }}
               style={{ marginLeft: 30, width: 250, marginBottom: 15 }}
@@ -109,7 +108,7 @@ class ConnectedHeader extends Component {
               variant="outlined"
               color="primary"
               onClick={() => {
-                this.handleSearch()
+                this.handleSearch();
               }}
             >
               {" "}
@@ -165,7 +164,7 @@ class ConnectedHeader extends Component {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  Auth.signout(() => {
+                  Auth.sessionDestroy(() => {
                     this.props.dispatch(logout());
                     this.props.history.push("/");
                   });
