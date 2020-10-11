@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import queryString from "query-string";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { dataForTheMenu } from "../../Data";
+import { getMenuData } from "../../Data";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Icon from "@material-ui/core/Icon";
@@ -23,13 +23,15 @@ class ConnectedMenu extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      // initially item with id 1 is expanded
-      expandedMenuItems: {
-        1: true
-      },
-      dataForTheMenu
-    };
+    getMenuData().then(menuData => {
+      this.setState( {
+        // initially item with id 1 is expanded
+        expandedMenuItems: {
+          1: true
+        },
+        menuData
+      });
+    });
 
     this.renderMenu = this.renderMenu.bind(this);
   }
@@ -120,6 +122,11 @@ class ConnectedMenu extends Component {
 
   render() {
     if (!this.props.showMenu) return null;
+    
+    if (!this.state) {
+      return (<div></div>)
+    }
+    
     return (
       <div
         style={{
@@ -128,7 +135,7 @@ class ConnectedMenu extends Component {
         }}
       >
         {/* Render our menu */}
-        {this.renderMenu(this.state.dataForTheMenu)}
+        {this.renderMenu(this.state.menuData)}
       </div>
     );
   }

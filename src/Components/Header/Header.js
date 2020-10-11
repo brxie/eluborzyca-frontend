@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import { showCartDlg, toggleMenu, logout } from "../../Redux/Actions";
 import cartImage from "../../Images/logo2.png";
 import Auth from "../../Auth";
-import { categories } from "../../Data";
+import { getCategories } from "../../Data";
 import Person from "@material-ui/icons/PersonOutline";
 import Avatar from "@material-ui/core/Avatar";
 import Menu from "@material-ui/core/Menu";
@@ -29,21 +29,23 @@ const mapStateToProps = state => {
   };
 };
 
-// Option items for product categories.
-const categoryOptions = categories.map(x => {
-  return (
-    <MenuItem key={x.name} value={x.name}>
-      {x.name}
-    </MenuItem>
-  );
-});
-
 class ConnectedHeader extends Component {
   state = {
     searchTerm: "",
     anchorEl: null,
-    categoryFilterValue: categories[0].name
+    categoryFilterValue: ""
   };
+
+  constructor(props) {
+    super(props);
+    getCategories().then(categories => {
+      this.setState( {
+        categories: categories,
+        categoryFilterValue: (categories.length > 0) ? categories[0].name : ""
+      });
+      
+    })
+  }
 
   handleSearch() {
     this.props.history.push(
@@ -54,7 +56,22 @@ class ConnectedHeader extends Component {
     );
   }
 
+  categoryOptions() {
+    return this.state.categories.map(x => {
+      return (
+      <MenuItem key={x.name} value={x.name}>
+        {x.name}
+      </MenuItem>
+      );
+    });
+  }
+
   render() {
+
+    if (!this.state || !this.state.categories) {
+      return (<div></div>)
+    }
+
     let { anchorEl } = this.state;
 
     return (
@@ -99,7 +116,7 @@ class ConnectedHeader extends Component {
                 this.setState({ categoryFilterValue: e.target.value });
               }}
             >
-              {categoryOptions}
+              {this.categoryOptions()}
             </Select>
 
  

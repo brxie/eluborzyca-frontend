@@ -1,5 +1,5 @@
 import Cookies from 'universal-cookie';
-import { sampleProducts } from "./../../Data";
+import { getItems } from "./../../Data";
 
 const CART_ITEMS_COOKIE_KEY='LOCAL_CART_ITEMS'
 
@@ -61,14 +61,17 @@ const Cart = {
       // some product can change or be removed, we need 
       // to  update state of them
       var items = [];
-      for(let cookieItem of cookie) {
-        for(let dbItem of sampleProducts) {
-          if (cookieItem.id === dbItem.id) {
-            Object.assign(cookieItem, dbItem);
-            items.push(cookieItem);
+
+      getItems().then( dbItems => {
+        for(let cookieItem of cookie) {
+          for(let dbItem of dbItems) {
+            if (cookieItem.id === dbItem.id) {
+              Object.assign(cookieItem, dbItem);
+              items.push(cookieItem);
+            }
           }
         }
-      }
+      });
 
       new Cookies().set(CART_ITEMS_COOKIE_KEY, items)
       return { ...state, cartItems: items} 

@@ -1,4 +1,4 @@
-import { sampleProducts } from "./Data";
+import { getItems } from "./Data";
 
 ///
 //
@@ -6,11 +6,11 @@ import { sampleProducts } from "./Data";
 //
 class Api {
   getItemUsingID(id) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        let res = sampleProducts.filter(x => x.id === parseInt(id, 10));
+    return new Promise( (resolve, reject) => {
+      getItems().then( items => {
+        let res = items.filter(x => x.id === parseInt(id, 10));
         resolve(res.length === 0 ? null : res[0]);
-      }, 500);
+      });
     });
   }
 
@@ -42,8 +42,8 @@ class Api {
     usePriceFilter = usePriceFilter === "true" && true;
 
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        let data = sampleProducts.filter(item => {
+      getItems().then( items => {
+        let data = items.filter(item => {
           if (
             usePriceFilter &&
             (item.price < minPrice || item.price > maxPrice)
@@ -71,7 +71,7 @@ class Api {
         data = data.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
         resolve({ data, totalLength });
-      }, 500);
+      });
     });
   }
 }

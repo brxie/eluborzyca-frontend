@@ -1,84 +1,56 @@
+import axios from 'axios';
+import url from 'url'
+
+
+const ITEMS_API_URL = url.resolve(process.env.REACT_APP_API_URL, "items");
+const CATEGORIES_API_URL = url.resolve(process.env.REACT_APP_API_URL, "categories");
+
+
 // Our product database.
-const sampleProducts = [
-  {
-    id: 1,
-    name: "Pomidor",
-    category: "Warzywa",
-    price: 4.50,
-    description:
-      "Pomidor luz.",
-    popular: true,
-    imageUrls: [
-      "https://upload.wikimedia.org/wikipedia/commons/8/89/Tomato_je.jpg",
-      "https://www.tomato-academy.pl/files/news/trudnosci-w-uprawie-pomidorow-miesistych.extradena%20(2)%20-%20copy.jpg"
-    ]
-  },
-  {
-    id: 7,
-    name: "Jabłka champion",
-    category: "Owoce",
-    price: 3.00,
-    description: "",
-    popular: false,
-    imageUrls: [
-      "https://imgusr.tradekey.com/p-8320367-20131001075106/apples-champion-apple-fresh-apples.jpg"
-    ]
-  },
-  {
-    id: 8,
-    name: "Ogórek",
-    category: "Warzywa",
-    price: 2.55,
-    description: "Gruntowy, świeży",
-    popular: false,
-    imageUrls: [
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRzYXcc6qBJvaR6wJ82IoZ-uwogoWLgvr9f9w&usqp=CAU",
-    ]
-  },
-  {
-    id: 9,
-    name: "Truskawki",
-    category: "Owoce",
-    price: 8.00,
-    description: "",
-    popular: true,
-    imageUrls: [
-      "https://minnesotagrown.com/wp-content/uploads/2018/12/2018-03-02-Submitted-Miracle-Strawberry-Farm-Strawberries.jpg"
-    ]
-  }
-];
+async function getItems() {
+  try {
+    let resp = await axios({
+        method: 'GET',
+        url: ITEMS_API_URL
+    });
 
-// List of item categories.
-const categories = [
-  {
-    name: "All categories",
-    icon: "list"
-  },
-  {
-    name: "Warzywa",
-    icon: "group"
-  },
-  {
-    name: "Owoce",
-    icon: "watch"
+    return resp.data
+  } catch (error) {
+    return []
   }
-];
+}
 
-// Data for rendering menu.
-const dataForTheMenu = [
-  { name: "Home page", url: "/", icon: "home", id: 0 },
-  {
-    name: "Product categories",
-    id: 1,
-    children: categories.map((x, i) => {
-      return {
-        name: x.name,
-        id: i,
-        url: "/?category=" + x.name,
-        icon: x.icon
-      };
-    })
+async function getCategories() {
+  try {
+    let resp = await axios({
+        method: 'GET',
+        url: CATEGORIES_API_URL
+    });
+
+    return resp.data
+  } catch (error) {
+    return []
   }
-];
+}
 
-export { sampleProducts, categories, dataForTheMenu };
+async function getMenuData() {
+  let cat = await getCategories();
+  
+  return [
+    { name: "Home page", url: "/", icon: "home", id: 0 },
+    {
+      name: "Product categories",
+      id: 1,
+      children: cat.map((x, i) => {
+        return {
+          name: x.name,
+          id: i,
+          url: "/?category=" + x.name,
+          icon: x.icon
+        };
+      })
+    }
+  ];  
+}
+
+export { getItems, getCategories, getMenuData };
