@@ -1,7 +1,8 @@
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
-// Simulate authentication service
+const SESSION_COOKIE_KEY = "SESSION_ID"
+
 const Auth = {
 
     async sessionGet(cb) {
@@ -18,6 +19,7 @@ const Auth = {
         }
     },
 
+    // Log In
     async sessionCreate(name, pass, cb) {
         let res = {
             userName: null,
@@ -48,6 +50,7 @@ const Auth = {
         }
     },
 
+    // Logout
     async sessionDestroy(cb) {
         try {
             await axios({
@@ -60,7 +63,7 @@ const Auth = {
         } catch (error) {
             cb(error)
         }
-        new Cookies().remove('SESSION_ID', { path: '/api' });
+        new Cookies().remove(SESSION_COOKIE_KEY, { path: '/api' });
     }
 };
 
