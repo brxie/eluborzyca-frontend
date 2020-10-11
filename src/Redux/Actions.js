@@ -12,6 +12,10 @@ export const deleteCartItem = id => ({
   type: CONSTANTS.DELETE_CART_ITEM,
   payload: id
 });
+export const LoadCartItems = () => ({
+  type: CONSTANTS.LOAD_CART_ITEMS,
+  payload: null
+});
 export const toggleMenu = () => ({
   type: CONSTANTS.TOGGLE_MENU,
   payload: null

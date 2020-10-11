@@ -13,13 +13,19 @@ import Footer from "./Components/Footer/Footer";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Auth from "./Auth";
-import { setLoggedInUser } from "./Redux/Actions";
+import { setLoggedInUser, LoadCartItems } from "./Redux/Actions";
 
 class App extends Component {
   
   state = {}
 
   componentDidMount() {
+    // load cart items
+    this.props.dispatch(
+      LoadCartItems()
+    );
+
+    // retrieve user session
     Auth.sessionGet((session, error) => {
       if (error) {
         return

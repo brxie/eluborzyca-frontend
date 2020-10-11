@@ -41,7 +41,7 @@ const sampleProducts = [
     category: "Owoce",
     price: 8.00,
     description: "",
-    popular: false,
+    popular: true,
     imageUrls: [
       "https://minnesotagrown.com/wp-content/uploads/2018/12/2018-03-02-Submitted-Miracle-Strawberry-Farm-Strawberries.jpg"
     ]
