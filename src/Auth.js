@@ -1,15 +1,18 @@
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import url from 'url'
+
 
 const SESSION_COOKIE_KEY = "SESSION_ID"
+const SESSION_API_URL = url.resolve(process.env.REACT_APP_API_URL, "session");
 
 const Auth = {
 
-    async sessionGet(cb) {
+    async sessionGet(cb) {        
         try {
             let resp = await axios({
                 method: 'GET',
-                url: 'http://localhost:3050/api/session',
+                url: SESSION_API_URL,
                 withCredentials: true
             });
 
@@ -29,7 +32,7 @@ const Auth = {
         try {
             await axios({
                 method: 'POST',
-                url: 'http://localhost:3050/api/session',
+                url: SESSION_API_URL,
                 data: {
                     "username": name,
                     "password": pass
@@ -55,7 +58,7 @@ const Auth = {
         try {
             await axios({
                 method: 'DELETE',
-                url: 'http://localhost:3050/api/session',
+                url: SESSION_API_URL,
                 withCredentials: true
             });
             
