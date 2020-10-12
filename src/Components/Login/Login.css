@@ -1,0 +1,37 @@
+.screen-container {
+    display: flex;
+}
+  
+.screen-divider {
+    width: 2px;
+    background-color: gray;
+    margin-left: 23%;
+    margin-right: 0px;
+}
+
+.input-panel {
+    /* border: 2px solid red; */
+    height: 300px;
+    width: 200px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.register-panel {
+    /* border: 2px solid red; */
+    width: 750px;
+    align-items: stretch;
+    margin-left: 10%;
+}
+
+.input-text {
+    width: 280px;
+    height: 30px;
+}
+
+.text-area {
+    font-size: 0.875rem;
+}

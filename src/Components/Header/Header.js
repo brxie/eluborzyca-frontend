@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import "./Header.css";
-import IconButton from "@material-ui/core/IconButton";
+import { IconButton, Badge, TextField, Button, Avatar, Menu,
+         MenuItem, Select, AppBar, Toolbar } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import Badge from "@material-ui/core/Badge";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { showCartDlg, toggleMenu, logout } from "../../Redux/Actions";
@@ -13,12 +11,6 @@ import cartImage from "../../Images/logo2.png";
 import Auth from "../../Auth";
 import { getCategories } from "../../Data";
 import Person from "@material-ui/icons/PersonOutline";
-import Avatar from "@material-ui/core/Avatar";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 
 const mapStateToProps = state => {
   var itemsCnt = 0;
@@ -135,14 +127,14 @@ class ConnectedHeader extends Component {
           <div className="right-part">
             {!this.props.loggedInUser ? (
               <Button
-                variant="outlined"
+                variant="text"
                 style={{ marginRight: 20 }}
                 color="primary"
                 onClick={() => {
                   this.props.history.push("/login");
                 }}
               >
-                Log in
+                Zaloguj
               </Button>
             ) : (
               <Avatar
