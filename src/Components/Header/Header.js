@@ -33,19 +33,9 @@ class ConnectedHeader extends Component {
   state = {
     searchTerm: "",
     anchorEl: null,
-    categoryFilterValue: ""
+    categoryFilterValue: "",
+    categories: []
   };
-
-  constructor(props) {
-    super(props);
-    getCategories().then(categories => {
-      this.setState( {
-        categories: categories,
-        categoryFilterValue: (categories.length > 0) ? categories[0].name : ""
-      });
-      
-    })
-  }
 
   handleSearch() {
     this.props.history.push(
@@ -64,6 +54,16 @@ class ConnectedHeader extends Component {
       </MenuItem>
       );
     });
+  }
+
+  componentDidMount() {
+    getCategories().then(categories => {
+      this.setState( {
+        categories: categories,
+        categoryFilterValue: (categories.length > 0) ? categories[0].name : ""
+      });
+      
+    })
   }
 
   render() {

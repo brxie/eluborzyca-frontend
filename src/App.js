@@ -17,7 +17,9 @@ import { setLoggedInUser, LoadCartItems } from "./Redux/Actions";
 
 class App extends Component {
   
-  state = {}
+  state = {
+    ready: false
+  };
 
   componentDidMount() {
     // load cart items
