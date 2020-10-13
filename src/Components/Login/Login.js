@@ -4,6 +4,7 @@ import { withRouter, Redirect } from "react-router-dom";
 import MuiPhoneInput from "material-ui-phone-number";
 import { connect } from "react-redux";
 import Auth from "../../Auth";
+import User from "../../User";
 import { Button, Avatar, Checkbox, FormControlLabel, Input,
          IconButton, InputAdornment, FormControl, InputLabel} from "@material-ui/core";
 import { setLoggedInUser } from "../../Redux/Actions";
@@ -16,17 +17,36 @@ class ConnectedLogin extends Component {
     userName: "",
     pass: "",
     showPass: "",
+
     redirectToReferrer: false,
-    registUserName: "",
+    
+    registUserEmail: "",
     showRegistPass: false,
     registPass: "",
     showRegistSecPass: false,
-    registSecPass: ""
+    registSecPass: "",
+    registUserPhone: ""
+
+    
   };
 
 
-  handleRegister() {
+  handleRegisterUser() {
+    let name = ""
+    let role = "user"
+    User.createUser(name,
+                    this.state.registPass,
+                    this.state.registUserEmail,
+                    this.state.registUserPhone,
+                    role, (res, error) => {
 
+      if (error) {
+        this.setState({registFaild: true})
+      }
+      return;
+    });
+
+    this.setState({registSuccessed: true})
   }
 
   handleAuth() {
@@ -72,13 +92,6 @@ class ConnectedLogin extends Component {
             <Avatar style={{ marginBottom: 10 }}>
               <LockOutlinedIcon />
             </Avatar>
-            {/* <div
-              style={{
-                marginBottom: 20,
-                fontSize: 24,
-                textAlign: "center"
-              }}
-            > */}
             <div className="text-header">Logowanie</div>
             <FormControl>
               <InputLabel>E-mail</InputLabel>
@@ -96,8 +109,6 @@ class ConnectedLogin extends Component {
                 }}
               />
             </FormControl>
-
-
 
               <FormControl>
                 <InputLabel>Password</InputLabel>
@@ -130,9 +141,6 @@ class ConnectedLogin extends Component {
                 />
               </FormControl>
 
-
-
-
             <Button
               style={{ marginTop: 20, width: 200 }}
               variant="outlined"
@@ -162,12 +170,12 @@ class ConnectedLogin extends Component {
               <FormControl>
                 <InputLabel>E-mail</InputLabel>
                 <Input
-                  id="registUserName"
+                  id="registUserEmail"
                   type='text'
                   className="input-text"
-                  value={this.state.registUserName}
+                  value={this.state.registUserEmail}
                   onChange={e => {
-                    this.setState({ registUserName: e.target.value });
+                    this.setState({ registUserEmail: e.target.value });
                   }}
                 />
               </FormControl>
@@ -177,6 +185,11 @@ class ConnectedLogin extends Component {
                   regions={'europe'}
                   onlyCountries={["pl"]}
                   className="input-text"
+                  onChange={number => {
+                    this.setState({
+                       registUserPhone: number
+                      });
+                  }}
                 />
               <FormControl>
                 <InputLabel>Password</InputLabel>
@@ -238,15 +251,17 @@ class ConnectedLogin extends Component {
                 label="Zapoznałem się z regulaminem"
                 style={{ marginTop: 10}}/>
               <Button
-                style={{ marginTop: 20, width: 200 }}
+                style={{ marginTop: 20, marginBottom: 10, width: 200 }}
                 variant="outlined"
                 color="primary"
                 onClick={() => {
-                  this.handleRegister();
+                  this.handleRegisterUser();
                 }}
               >
                 Zarejestruj się
               </Button>
+              {this.state.registFaild && <div style={{ color: "red" }}>Registration failed: {this.state.loginError}</div>}
+              {this.state.registSuccessed && <div style={{ color: "green" }}>Please open configmarion email to finish registration</div>}
             </div>
         </div>
       </div>

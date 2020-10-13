@@ -10,7 +10,6 @@ async function getItems() {
 
     return resp.data
   } catch (error) {
-    console.log(error)
     return []
   }
 }
@@ -27,7 +26,6 @@ async function getCategories() {
 async function getMenuData() {
   let categories = await getCategories();
 
-  console.log("categories: " + categories)
   return [
     { name: "Home page", url: "/", icon: "home", id: 0 },
     {
