@@ -1,32 +1,23 @@
-import axios from 'axios';
-import url from 'url'
+import Items from './ApiClient/Items'
+import Categories from './ApiClient/Categories'
 
-
-const ITEMS_API_URL = url.resolve(process.env.REACT_APP_API_URL, "items");
-const CATEGORIES_API_URL = url.resolve(process.env.REACT_APP_API_URL, "categories");
 
 
 // Our product database.
 async function getItems() {
   try {
-    let resp = await axios({
-        method: 'GET',
-        url: ITEMS_API_URL
-    });
+    let resp = await Items.itemsGet();
 
     return resp.data
   } catch (error) {
+    console.log(error)
     return []
   }
 }
 
 async function getCategories() {
   try {
-    let resp = await axios({
-        method: 'GET',
-        url: CATEGORIES_API_URL
-    });
-
+    let resp = await Categories.categoriesGet();
     return resp.data
   } catch (error) {
     return []
@@ -34,14 +25,15 @@ async function getCategories() {
 }
 
 async function getMenuData() {
-  let cat = await getCategories();
-  
+  let categories = await getCategories();
+
+  console.log("categories: " + categories)
   return [
     { name: "Home page", url: "/", icon: "home", id: 0 },
     {
       name: "Product categories",
       id: 1,
-      children: cat.map((x, i) => {
+      children: categories.map((x, i) => {
         return {
           name: x.name,
           id: i,
