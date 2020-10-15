@@ -23,8 +23,7 @@ const User = {
                 "username": user.name,
                 "password": user.pass,
                 "email": user.email,
-                "phone": user.phone,
-                "role": user.role
+                "phone": user.phone
             }
         });
     },

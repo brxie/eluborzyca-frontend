@@ -1,3 +1,4 @@
+import util from 'util';
 import React, { Component } from "react";
 import "./Login.css";
 import { withRouter, Redirect } from "react-router-dom";
@@ -5,52 +6,123 @@ import MuiPhoneInput from "material-ui-phone-number";
 import { connect } from "react-redux";
 import Auth from "../../Auth";
 import User from "../../User";
-import { Button, Avatar, Checkbox, FormControlLabel, Input,
+import { Button, Avatar, Checkbox, FormControlLabel, Input, FormHelperText, Typography,
          IconButton, InputAdornment, FormControl, InputLabel} from "@material-ui/core";
 import { setLoggedInUser } from "../../Redux/Actions";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+import * as EmailValidator from 'email-validator';
 
 
 class ConnectedLogin extends Component {
   state = {
+    redirectToReferrer: false,
+    
+    // login inputs values
     userName: "",
     pass: "",
     showPass: "",
 
-    redirectToReferrer: false,
-    
+    // sign up inputs values
     registUserEmail: "",
+    registUserPhone: "",
     showRegistPass: false,
     registPass: "",
-    showRegistSecPass: false,
     registSecPass: "",
-    registUserPhone: ""
+    showRegistSecPass: false,
+    rulesCheckbox: false,
+    rulesCheckboxError: false,
 
-    
+    // inputs errors
+    userNameError: false,
+    passError: false,
+    registUserEmailError: false,
+    registUserPhoneError: false,
+    registPassError: false,
+    registSecPassError: false,
   };
 
 
   handleRegisterUser() {
+    // clean messages state
+    this.setState({registError: "",
+                   registSuccessed: false,
+                   registUserEmailError: false,
+                   registUserPhoneError: false,
+                   registPassError: false,
+                   registSecPassError: false,
+                   rulesCheckboxError: false});
+
+    // validate
+    try {
+      this.validateRegisterForm();
+    } catch (error) {
+      this.setState({registError: error.message})
+      return;
+    }
+
+    // send api request
     let name = ""
-    let role = "user"
     User.createUser(name,
                     this.state.registPass,
                     this.state.registUserEmail,
                     this.state.registUserPhone,
-                    role, (res, error) => {
+                    (res, error) => {
 
+      
       if (error) {
-        this.setState({registFaild: true})
+        this.setState({registError: error.message})
+        return;
       }
-      return;
+      this.setState({registSuccessed: true})
     });
-
-    this.setState({registSuccessed: true})
   }
 
-  handleAuth() {
-    // Simulate authentication call
+  validateRegisterForm(){
+    const PHONE_NUMBER_LENGTH = 11
+
+    if (EmailValidator.validate(this.state.registUserEmail) === false) {
+      this.setState({registUserEmailError: true})
+      throw new Error("Wrong email format");
+    }
+
+    if (this.state.registPass !== this.state.registSecPass) {
+      this.setState({registPassError: true, registSecPassError: true})
+      throw new Error("Password don't match");
+    }
+
+    let phoneDigits = this.state.registUserPhone.replace(/[^0-9]/g,"").length
+    if (phoneDigits !== PHONE_NUMBER_LENGTH) {
+      this.setState({registUserPhoneError: true})
+      throw new Error(util.format('The phone number "%s" is incorrect', this.state.registUserPhone));
+    }
+
+    if (this.state.registPass === '') {
+      this.setState({registPassError: true})
+      throw new Error("Password can't be empty");
+    }
+
+    if (this.state.rulesCheckbox === false) {
+      this.setState({rulesCheckboxError: true})
+      throw new Error("You need to accept rules");
+    }
+  }
+
+  handleLogin() {
+    // clean messages state
+    this.setState({userNameError: "",
+                  passError: false,
+                  wrongCred: false});
+
+    // validate
+    try {
+      this.validateLoginForm();
+    } catch (error) {
+      this.setState({loginError: error.message})
+      return;
+    }
+
+    // send api request
     Auth.sessionCreate(this.state.userName, this.state.pass, (res, error) => {      
             
       if (error) {
@@ -68,6 +140,18 @@ class ConnectedLogin extends Component {
         redirectToReferrer: true
       }));
     });
+  }
+
+  validateLoginForm() {
+    if (this.state.userName === '') {
+      this.setState({userNameError: true})
+      throw new Error("User name can't be empty");
+    }
+
+    if (this.state.pass === '') {
+      this.setState({passError: true})
+      throw new Error("Password can't be empty");
+    }
   }
 
   render() {
@@ -98,16 +182,18 @@ class ConnectedLogin extends Component {
               <Input
                 id="userName"
                 value={this.state.userName}
+                error={this.state.userNameError}
                 className="input-text"
                 onChange={e => {
                   this.setState({ userName: e.target.value });
                 }}
                 onKeyPress={(ev) => {
                   if (ev.key === 'Enter') {
-                    this.handleAuth();
+                    this.handleLogin();
                   }
                 }}
               />
+              
             </FormControl>
 
               <FormControl>
@@ -115,13 +201,14 @@ class ConnectedLogin extends Component {
                 <Input
                   type={this.state.showPass ? 'text' : 'password'}
                   value={this.state.pass}
+                  error={this.state.passError}
                   className="input-text"
                   onChange={e => {
                     this.setState({ pass: e.target.value });
                   }}
                   onKeyPress={(ev) => {
                     if (ev.key === 'Enter') {
-                      this.handleAuth();
+                      this.handleLogin();
                     }
                   }}
                   endAdornment={
@@ -146,15 +233,17 @@ class ConnectedLogin extends Component {
               variant="outlined"
               color="primary"
               onClick={() => {
-                this.handleAuth();
+                this.handleLogin();
               }}
             >
               Zaloguj
             </Button>
-            {
-              (this.state.wrongCred && (<div style={{ color: "red" }}>Wrong username and/or password</div>)) || 
-              (this.state.loginError && <div style={{ color: "red" }}>Login failed: {this.state.loginError}</div>)
-            }
+            <div style={{ width: 280 }}>
+              {
+                (this.state.wrongCred && (<h5 style={{ color: "red" }}>Wrong username and/or password</h5>)) || 
+                (this.state.loginError && <h5 style={{ color: "red" }}>Login failed: {this.state.loginError}</h5>)
+              }
+            </div>
           </div>
             <div className="screen-divider"></div>
               <div className="input-panel register-panel">
@@ -174,28 +263,32 @@ class ConnectedLogin extends Component {
                   type='text'
                   className="input-text"
                   value={this.state.registUserEmail}
+                  error={this.state.registUserEmailError}
                   onChange={e => {
                     this.setState({ registUserEmail: e.target.value });
                   }}
                 />
               </FormControl>
-                <InputLabel>Phone</InputLabel>
+                <div style={{marginTop: 10}}></div>
                 <MuiPhoneInput
                   defaultCountry='pl'
-                  regions={'europe'}
-                  onlyCountries={["pl"]}
+                  value={this.state.registUserPhone}
+                  error={this.state.registUserPhoneError}
                   className="input-text"
+                  disableDropdown={true}
                   onChange={number => {
                     this.setState({
                        registUserPhone: number
                       });
                   }}
                 />
+              <FormHelperText id="component-error-text">Phone</FormHelperText>
               <FormControl>
                 <InputLabel>Password</InputLabel>
                 <Input
                   type={this.state.showRegistPass ? 'text' : 'password'}
                   value={this.state.registPass}
+                  error={this.state.registPassError}
                   className="input-text"
                   onChange={e => {
                     this.setState({ registPass: e.target.value });
@@ -221,6 +314,7 @@ class ConnectedLogin extends Component {
                 <Input
                   type={this.state.showRegistSecPass ? 'text' : 'password'}
                   value={this.state.registSecPass}
+                  error={this.state.registSecPassError}
                   className="input-text"
                   onChange={e => {
                     this.setState({ registSecPass: e.target.value });
@@ -243,15 +337,23 @@ class ConnectedLogin extends Component {
               </FormControl>
               <FormControlLabel
                 control={
-                    <Checkbox
-                        value="SomeValue"
+                  <Checkbox
                         color="primary"
+                        onChange={() => {
+                          this.setState({rulesCheckbox: !this.state.rulesCheckbox});
+                        }}
+                        checked={this.state.rulesCheckbox}
+                        style={ {color: this.state.rulesCheckboxError ? "red" : null }}
                     />
                 }
-                label="Zapoznałem się z regulaminem"
-                style={{ marginTop: 10}}/>
+                label={
+                  <Typography  style={{fontSize: 13}}>
+                     Zapoznałem się z regulaminem
+                  </Typography>
+              }
+                style={{ marginTop: 10, fontSize: 4}}/>
               <Button
-                style={{ marginTop: 20, marginBottom: 10, width: 200 }}
+                style={{ marginTop: 20, width: 200 }}
                 variant="outlined"
                 color="primary"
                 onClick={() => {
@@ -260,8 +362,8 @@ class ConnectedLogin extends Component {
               >
                 Zarejestruj się
               </Button>
-              {this.state.registFaild && <div style={{ color: "red" }}>Registration failed: {this.state.loginError}</div>}
-              {this.state.registSuccessed && <div style={{ color: "green" }}>Please open configmarion email to finish registration</div>}
+              {this.state.registError && <h5 style={{ color: "red" }}>Registration failed: {this.state.registError}</h5>}
+              {this.state.registSuccessed && <h5 style={{ color: "green" }}>Please open confirmation email to finish registration</h5>}
             </div>
         </div>
       </div>

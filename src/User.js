@@ -13,20 +13,22 @@ const Auth = {
     },
 
 
-    async createUser(name, pass, email, phone, role, cb) {
+    async createUser(name, pass, email, phone, cb) {
         let user = {
             "name": name,
             "pass": pass,
             "email": email,
-            "phone": phone,
-            "role": role
+            "phone": phone
         };
 
         try {
             let resp = await User.userPost(user)
+            if (resp.status !== 200) {
+                cb(null, Error('error: ' + resp.statusText))
+            }
             cb(resp.data, null)
         } catch (error) {
-            cb(null, error.message)
+            cb(null, error)
         }
     }
 }
