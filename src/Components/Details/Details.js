@@ -7,6 +7,8 @@ import Api from "../../Api";
 import Item from "../Item/Item";
 import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
+import Gallery from 'react-grid-gallery';
+
 
 class ConnectedDetails extends Component {
   constructor(props) {
@@ -79,65 +81,75 @@ class ConnectedDetails extends Component {
           {this.state.item.name}
         </div>
         <div style={{ display: "flex" }}>
-          <img
-            src={this.state.item.imageUrls[0]}
-            alt=""
-            width={250}
-            height={250}
-            style={{
-              border: "1px solid lightgray",
-              borderRadius: "5px",
-              objectFit: "cover"
-            }}
-          />
-          <div
-            style={{
-              flex: 1,
-              marginLeft: 20,
-              display: "flex",
-              flexDirection: "column"
-            }}
-          >
-            <div
-              style={{
-                fontSize: 16
-              }}
-            >
-              Price: {this.state.item.price} zł
-            </div>
-            {this.state.item.popular && (
-              <div style={{ fontSize: 14, marginTop: 5, color: "#228B22" }}>
-                (Popular product)
-              </div>
-            )}
-
-            <TextField
-              type="number"
-              value={this.state.quantity}
-              style={{ marginTop: 20, marginBottom: 10, width: 70 }}
-              label="Quantity"
-              inputProps={{ min: 1, max: 10, step: 1 }}
-              onChange={e => {
-                this.setState({ quantity: parseInt(e.target.value) });
-              }}
-            />
-            <Button
-              style={{ width: 170, marginTop: 5 }}
-              color="primary"
-              variant="outlined"
-              onClick={() => {
-                this.props.dispatch(
-                  addItemInCart({
-                    ...this.state.item,
-                    quantity: this.state.quantity
-                  })
-                );
-              }}
-            >
-              Add to Cart <AddShoppingCartIcon style={{ marginLeft: 5 }} />
-            </Button>
-          </div>
+        <div style={{
+                    display: "block",
+                    width: "50%",
+                    // border: "1px solid #ddd",
+                    }}>
+                <Gallery
+            images={this.state.item.imageUrls}
+            maxRows="1"
+            enableImageSelection={false}
+        />
         </div>
+
+        <div style={{
+          flexDirection: "column",
+          flex: 1,
+          display: "flex",
+          alignItems: "flex-end",
+          // border: "1px solid red"
+        }}>
+          <div
+              style={{
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                marginRight: 20
+                // border: "1px solid red",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 16,
+                }}
+              >
+                Price: {this.state.item.price} zł
+              </div>
+              {this.state.item.popular && (
+                <div style={{ fontSize: 14, marginTop: 5, color: "#228B22"}}>
+                  (Popular product)
+                </div>
+              )}
+
+              <TextField
+                type="number"
+                value={this.state.quantity}
+                style={{ marginTop: 20, marginBottom: 10, width: 70 }}
+                label="Quantity"
+                inputProps={{ min: 1, max: 10, step: 1 }}
+                onChange={e => {
+                  this.setState({ quantity: parseInt(e.target.value) });
+                }}
+              />
+              <Button
+                style={{ width: 170, marginTop: 5 }}
+                color="primary"
+                variant="outlined"
+                onClick={() => {
+                  this.props.dispatch(
+                    addItemInCart({
+                      ...this.state.item,
+                      quantity: this.state.quantity
+                    })
+                  );
+                }}
+              >
+                Add to Cart <AddShoppingCartIcon style={{ marginLeft: 5 }} />
+              </Button>
+            </div>
+          </div>
+        </div>  
 
         {/* Product description */}
         <div
@@ -164,7 +176,7 @@ class ConnectedDetails extends Component {
         {/* Relateditems */}
         <div
           style={{
-            marginTop: 20,
+            marginTop: 200,
             marginBottom: 10,
             fontSize: 22
           }}
