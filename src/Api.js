@@ -46,19 +46,19 @@ class Api {
         let data = items.filter(item => {
           if (
             usePriceFilter &&
-            (item.price < minPrice || item.price > maxPrice)
+            (item.public.price < minPrice || item.public.price > maxPrice)
           ) {
             return false;
           }
 
           if (category === "popular") {
-            return item.popular;
+            return item.public.popular;
           }
 
-          if (category !== "All categories" && category !== item.category)
+          if (category !== "All categories" && category !== item.public.category)
             return false;
 
-          if (term && !item.name.toLowerCase().includes(term.toLowerCase()))
+          if (term && !item.public.name.toLowerCase().includes(term.toLowerCase()))
             return false;
 
           return true;

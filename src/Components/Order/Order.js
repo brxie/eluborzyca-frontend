@@ -19,7 +19,7 @@ const mapStateToProps = state => {
 class ConnectedOrder extends Component {
   render() {
     let totalPrice = this.props.checkedOutItems.reduce((accumulator, item) => {
-      return accumulator + item.price * item.quantity;
+      return accumulator + item.public.price * item.quantity;
     }, 0);
 
     return (
@@ -37,8 +37,8 @@ class ConnectedOrder extends Component {
             {this.props.checkedOutItems.map((item, index) => {
               return (
                 <TableRow key={item.id}>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.price}</TableCell>
+                  <TableCell>{item.public.name}</TableCell>
+                  <TableCell>{item.public.price}</TableCell>
                   <TableCell>{item.quantity}</TableCell>
                 </TableRow>
               );

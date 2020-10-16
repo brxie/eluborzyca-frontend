@@ -40,7 +40,6 @@ class ConnectedMenu extends Component {
   isMenuItemActive(item, location) {
     if (location.pathname === "/" && location.search) {
       let queryStringParsed = queryString.parse(location.search);
-
       return item.name === queryStringParsed.category;
     }
 

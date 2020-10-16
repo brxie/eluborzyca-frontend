@@ -110,7 +110,7 @@ class ConnectedLogin extends Component {
 
   handleLogin() {
     // clean messages state
-    this.setState({userNameError: "",
+    this.setState({userNameError: false,
                   passError: false,
                   wrongCred: false});
 

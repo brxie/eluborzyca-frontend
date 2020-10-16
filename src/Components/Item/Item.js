@@ -25,7 +25,7 @@ class ConnectedItem extends Component {
         >
           <CardMedia
             style={{ height: 140 }}
-            image={this.props.item.imageUrls[0].thumbnail}
+            image={this.props.item.public.imageUrls[0].thumbnail}
           />
           <CardContent style={{ height: 50 }}>
             <div
@@ -37,11 +37,11 @@ class ConnectedItem extends Component {
                 textOverflow: "ellipsis"
               }}
             >
-              {this.props.item.name}
+              {this.props.item.public.name}
             </div>
-            <div style={{ margin: 5 }}>Price: {this.props.item.price} zł</div>
+            <div style={{ margin: 5 }}>Price: {this.props.item.public.price} zł</div>
             <div style={{ color: "#1a9349", fontWeight: "bold", margin: 5 }}>
-              {this.props.item.popular && "Popular"}
+              {this.props.item.public.popular && "Popular"}
             </div>
           </CardContent>
         </CardActionArea>
