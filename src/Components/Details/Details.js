@@ -90,6 +90,9 @@ class ConnectedDetails extends Component {
             maxRows={1}
             enableImageSelection={false}
             rowHeight={140}
+            // the backdropClosesModal parais is a woraround for
+            // https://github.com/benhowell/react-grid-gallery/issues/83
+            backdropClosesModal={true} 
         />
         </div>
 
