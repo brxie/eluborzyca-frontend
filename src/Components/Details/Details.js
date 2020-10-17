@@ -4,6 +4,7 @@ import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { addItemInCart } from "../../Redux/Actions";
 import Api from "../../Api";
+import { getItem } from "./../../Data";
 import Item from "../Item/Item";
 import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
@@ -27,7 +28,7 @@ class ConnectedDetails extends Component {
   async fetchProductAndRelatedItems(productId) {
     this.setState({ itemLoading: true });
 
-    let item = await Api.getItemUsingID(productId);
+    let item = await getItem(productId);
     let relatedItems = await Api.searchItems({
       category: item.category
     });

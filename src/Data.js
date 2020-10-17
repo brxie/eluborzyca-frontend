@@ -2,12 +2,28 @@ import Items from './ApiClient/Items'
 import Categories from './ApiClient/Categories'
 
 
-
-// Our product database.
 async function getItems() {
   try {
     let resp = await Items.itemsGet();
 
+    return resp.data
+  } catch (error) {
+    return []
+  }
+}
+
+async function getItem(id) {
+  try {
+    let resp = await Items.itemGet(id);
+    return resp.data
+  } catch (error) {
+    return []
+  }
+}
+
+async function deleteItem(id) {
+  try {
+    let resp = await Items.itemDelete(id);
     return resp.data
   } catch (error) {
     return []
@@ -43,4 +59,4 @@ async function getMenuData() {
   ];  
 }
 
-export { getItems, getCategories, getMenuData };
+export { getItems, getCategories, getMenuData, getItem, deleteItem };

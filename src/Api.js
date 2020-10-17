@@ -6,25 +6,6 @@ import { getItems } from "./Data";
 //
 class Api {
 
-
-  getItemUsingUsername(username) {
-    return new Promise( (resolve, reject) => {
-      getItems().then( items => {
-        let res = items.filter(x => x.owner === username);
-        resolve(res);
-      });
-    });
-  }
-
-  getItemUsingID(id) {
-    return new Promise( (resolve, reject) => {
-      getItems().then( items => {
-        let res = items.filter(x => x.id === parseInt(id, 10));
-        resolve(res.length === 0 ? null : res[0]);
-      });
-    });
-  }
-
   sortByPrice(data, sortval) {
     if (sortval !== "lh" && sortval !== "hl") return data;
 

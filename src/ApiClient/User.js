@@ -9,7 +9,7 @@ const User = {
     async userGet(name) {        
         return await axios({
                 method: 'GET',
-                url: url.resolve(USER_API_URL, name)
+                url: USER_API_URL + "/" + name
             }
         );
     },
