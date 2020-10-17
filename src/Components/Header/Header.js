@@ -173,6 +173,14 @@ class ConnectedHeader extends Component {
               </MenuItem>
               <MenuItem
                 onClick={() => {
+                  this.setState({ anchorEl: null });
+                  this.props.history.push("/offer");
+                }}
+              >
+                Moje oferty
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
                   Auth.sessionDestroy(() => {
                     this.props.dispatch(logout());
                     this.props.history.push("/");

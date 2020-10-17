@@ -29,7 +29,7 @@ class ConnectedDetails extends Component {
 
     let item = await Api.getItemUsingID(productId);
     let relatedItems = await Api.searchItems({
-      category: item.public.category
+      category: item.category
     });
 
     // Make sure this component is still mounted before we set state..
@@ -77,7 +77,7 @@ class ConnectedDetails extends Component {
             fontSize: 22
           }}
         >
-          {this.state.item.public.name}
+          {this.state.item.name}
         </div>
         <div style={{ display: "flex" }}>
         <div style={{
@@ -86,7 +86,7 @@ class ConnectedDetails extends Component {
                     // border: "1px solid #ddd",
                     }}>
                 <Gallery
-            images={this.state.item.public.imageUrls}
+            images={this.state.item.imageUrls}
             maxRows={1}
             enableImageSelection={false}
             rowHeight={140}
@@ -117,9 +117,9 @@ class ConnectedDetails extends Component {
                   fontSize: 16,
                 }}
               >
-                Price: {this.state.item.public.price} zł
+                Price: {this.state.item.price} zł
               </div>
-              {this.state.item.public.popular && (
+              {this.state.item.popular && (
                 <div style={{ fontSize: 14, marginTop: 5, color: "#228B22"}}>
                   (Popular product)
                 </div>
@@ -171,8 +171,8 @@ class ConnectedDetails extends Component {
             overflow: "auto"
           }}
         >
-          {this.state.item.public.description
-            ? this.state.item.public.description
+          {this.state.item.description
+            ? this.state.item.description
             : "Not available"}
         </div>
 

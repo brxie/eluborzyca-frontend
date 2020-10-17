@@ -21,11 +21,11 @@ const CartRow = props => {
               props.dispatch(showCartDlg(false));
             }}
           >
-            {item.public.name}
+            {item.name}
           </div>
         </Link>
       </TableCell>
-      <TableCell>{item.public.price}</TableCell>
+      <TableCell>{item.price}</TableCell>
       <TableCell>
         <TextField
           type="number"

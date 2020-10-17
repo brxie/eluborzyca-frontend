@@ -5,6 +5,17 @@ import { getItems } from "./Data";
 // Methods of this class are used to simulate calls to server.
 //
 class Api {
+
+
+  getItemUsingUsername(username) {
+    return new Promise( (resolve, reject) => {
+      getItems().then( items => {
+        let res = items.filter(x => x.owner === username);
+        resolve(res);
+      });
+    });
+  }
+
   getItemUsingID(id) {
     return new Promise( (resolve, reject) => {
       getItems().then( items => {
@@ -46,19 +57,19 @@ class Api {
         let data = items.filter(item => {
           if (
             usePriceFilter &&
-            (item.public.price < minPrice || item.public.price > maxPrice)
+            (item.price < minPrice || item.price > maxPrice)
           ) {
             return false;
           }
 
           if (category === "popular") {
-            return item.public.popular;
+            return item.popular;
           }
 
-          if (category !== "All categories" && category !== item.public.category)
+          if (category !== "All categories" && category !== item.category)
             return false;
 
-          if (term && !item.public.name.toLowerCase().includes(term.toLowerCase()))
+          if (term && !item.name.toLowerCase().includes(term.toLowerCase()))
             return false;
 
           return true;
