@@ -12,6 +12,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { getItems, deleteItem } from "./../../Data";
+import AlertDialog from "./../Common/AlertDialog";
 
 
 const mapStateToProps = state => {
@@ -27,7 +28,9 @@ class ConnectedOrder extends Component {
 
     this.state = {
       loading: false,
-      items: []
+      items: [],
+      deleteDialogOpen: false,
+      deletingItemId: 0
     };
   }
 
@@ -56,11 +59,24 @@ class ConnectedOrder extends Component {
     this.fetchData();
   }
 
-  onDelete(itemId) {
-    deleteItem(itemId).then(() => {
+  handleDeleteClickOpen = (itemId) => {
+    this.setState({ deleteDialogOpen: true, deletingItemId: itemId });
+  };
+
+  handleDeleteDialogClose = () => {
+    this.setState({ deleteDialogOpen: false, deletingItemId: 0 });
+  };
+
+  handleDeleteAgree = () => {
+    deleteItem(this.state.deletingItemId).then(() => {
       this.fetchData();
     });
-  }
+    this.handleDeleteDialogClose();
+  };
+
+  handleDeleteDisagree = () => {
+    this.handleDeleteDialogClose();
+  };
 
   render() {    
     if (this.state.loading) {
@@ -109,9 +125,8 @@ class ConnectedOrder extends Component {
                         <IconButton>
                           <DeleteIcon
                             aria-label={deleteId}
-                            onClick={(e) => {
-                              console.log("DELETE EVENT" + e.target.ariaLabel)
-                              this.onDelete(row.id)
+                            onClick={() => {
+                              this.handleDeleteClickOpen(row.id)
                             }}
                           />
                         </IconButton>
@@ -123,16 +138,17 @@ class ConnectedOrder extends Component {
               })}
             </TableBody>
           </Table>
+          {AlertDialog(this.state.deleteDialogOpen,
+                       this.handleDeleteDialogClose,
+                       this.handleDeleteAgree,
+                       this.handleDeleteDisagree)}
         </div>
-
         <div style={{paddingTop: "20px"}}>
           Dodaj ofertę
         <IconButton>
           <AddCircleIcon  color="primary" size="medium" style={{ width: 30, height: 30}} />
         </IconButton>
         </div>
-
-        
       </div>
     );
   }
