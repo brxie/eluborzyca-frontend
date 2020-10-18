@@ -8,9 +8,10 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { showCartDlg, toggleMenu, logout } from "../../Redux/Actions";
 import cartImage from "../../Images/logo2.png";
-import Auth from "../../Auth";
-import { getCategories } from "../../Data";
+import Auth from "../../ApiProxy/Auth";
+import { getCategories } from "../../ApiProxy/Misc";
 import Person from "@material-ui/icons/PersonOutline";
+import { allCategoriesCategory } from "../../Constants";
 
 const mapStateToProps = state => {
   var itemsCnt = 0;
@@ -39,7 +40,9 @@ class ConnectedHeader extends Component {
   }
 
   categoryOptions() {
-    return this.state.categories.map(x => {
+    let cat = JSON.parse(JSON.stringify(this.state.categories))
+    cat.unshift(allCategoriesCategory)
+    return cat.map(x => {
       return (
       <MenuItem key={x.name} value={x.name}>
         {x.name}
@@ -55,6 +58,12 @@ class ConnectedHeader extends Component {
         categoryFilterValue: (categories.length > 0) ? categories[0].name : ""
       });
       
+    }).catch(e => {
+      console.log("Header get categories error: " + JSON.stringify(e))
+      this.setState( {
+        categories: [],
+        categoryFilterValue: ""
+      });
     })
   }
 
@@ -174,7 +183,7 @@ class ConnectedHeader extends Component {
               <MenuItem
                 onClick={() => {
                   this.setState({ anchorEl: null });
-                  this.props.history.push("/offer");
+                  this.props.history.push("/offers");
                 }}
               >
                 Moje oferty

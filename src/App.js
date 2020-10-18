@@ -7,13 +7,15 @@ import Menu from "./Components/Menu/Menu";
 import CartDialog from "./Components/CartDialog/CartDialog";
 import Details from "./Components/Details/Details";
 import Order from "./Components/Order/Order";
-import Offer from "./Components/Offer/Offer";
+import Offer from "./Components/Offers/Offers";
+import NewOffer from "./Components/Offer/NewOffer";
+import EditOffer from "./Components/Offer/EditOffer";
 import Login from "./Components/Login/Login";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import Footer from "./Components/Footer/Footer";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import Auth from "./Auth";
+import Auth from "./ApiProxy/Auth";
 import { setLoggedInUser, LoadCartItems } from "./Redux/Actions";
 
 class App extends Component {
@@ -53,7 +55,9 @@ class App extends Component {
               <Route path="/" exact component={ProductList} />
               <Route path="/details/:id" component={Details} />
               <Route path="/login" component={Login} />
-              <ProtectedRoute path="/offer" component={Offer} />
+              <ProtectedRoute path="/offers" component={Offer} />
+              <ProtectedRoute path="/new-offer" component={NewOffer} />
+              <ProtectedRoute path="/edit-offer" component={EditOffer} />
               <ProtectedRoute path="/order" component={Order} />
               <Route
                 component={() => (

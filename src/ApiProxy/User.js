@@ -1,4 +1,4 @@
-import User from './ApiClient/User'
+import User from '../ApiClient/User'
 
 
 

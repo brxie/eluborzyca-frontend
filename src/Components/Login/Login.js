@@ -1,12 +1,10 @@
-import util from 'util';
 import React, { Component } from "react";
 import "./Login.css";
 import { withRouter, Redirect } from "react-router-dom";
-import MuiPhoneInput from "material-ui-phone-number";
 import { connect } from "react-redux";
-import Auth from "../../Auth";
-import User from "../../User";
-import { Button, Avatar, Checkbox, FormControlLabel, Input, FormHelperText, Typography,
+import Auth from "../../ApiProxy/Auth";
+import User from "../../ApiProxy/User";
+import { Button, Avatar, Checkbox, FormControlLabel, Input, Typography,
          IconButton, InputAdornment, FormControl, InputLabel} from "@material-ui/core";
 import { setLoggedInUser } from "../../Redux/Actions";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -25,7 +23,6 @@ class ConnectedLogin extends Component {
 
     // sign up inputs values
     registUserEmail: "",
-    registUserPhone: "",
     showRegistPass: false,
     registPass: "",
     registSecPass: "",
@@ -37,7 +34,6 @@ class ConnectedLogin extends Component {
     userNameError: false,
     passError: false,
     registUserEmailError: false,
-    registUserPhoneError: false,
     registPassError: false,
     registSecPassError: false,
   };
@@ -48,7 +44,6 @@ class ConnectedLogin extends Component {
     this.setState({registError: "",
                    registSuccessed: false,
                    registUserEmailError: false,
-                   registUserPhoneError: false,
                    registPassError: false,
                    registSecPassError: false,
                    rulesCheckboxError: false});
@@ -63,10 +58,11 @@ class ConnectedLogin extends Component {
 
     // send api request
     let name = ""
+    let phone = ""
     User.createUser(name,
                     this.state.registPass,
                     this.state.registUserEmail,
-                    this.state.registUserPhone,
+                    phone,
                     (res, error) => {
 
       
@@ -79,8 +75,6 @@ class ConnectedLogin extends Component {
   }
 
   validateRegisterForm(){
-    const PHONE_NUMBER_LENGTH = 11
-
     if (EmailValidator.validate(this.state.registUserEmail) === false) {
       this.setState({registUserEmailError: true})
       throw new Error("Wrong email format");
@@ -89,12 +83,6 @@ class ConnectedLogin extends Component {
     if (this.state.registPass !== this.state.registSecPass) {
       this.setState({registPassError: true, registSecPassError: true})
       throw new Error("Password don't match");
-    }
-
-    let phoneDigits = this.state.registUserPhone.replace(/[^0-9]/g,"").length
-    if (phoneDigits !== PHONE_NUMBER_LENGTH) {
-      this.setState({registUserPhoneError: true})
-      throw new Error(util.format('The phone number "%s" is incorrect', this.state.registUserPhone));
     }
 
     if (this.state.registPass === '') {
@@ -126,7 +114,8 @@ class ConnectedLogin extends Component {
     Auth.sessionCreate(this.state.userName, this.state.pass, (res, error) => {      
             
       if (error) {
-        this.setState({ loginError: error });
+        console.log("Login error: " + JSON.stringify(error))
+        this.setState({ loginError: error.message });
         return;
       }
 
@@ -270,19 +259,6 @@ class ConnectedLogin extends Component {
                 />
               </FormControl>
                 <div style={{marginTop: 10}}></div>
-                <MuiPhoneInput
-                  defaultCountry='pl'
-                  value={this.state.registUserPhone}
-                  error={this.state.registUserPhoneError}
-                  className="input-text"
-                  disableDropdown={true}
-                  onChange={number => {
-                    this.setState({
-                       registUserPhone: number
-                      });
-                  }}
-                />
-              <FormHelperText id="component-error-text">Phone</FormHelperText>
               <FormControl>
                 <InputLabel>Password</InputLabel>
                 <Input

@@ -1,6 +1,6 @@
 
 import Cookies from 'universal-cookie';
-import Session from './ApiClient/Session'
+import Session from '../ApiClient/Session'
 
 
 const SESSION_COOKIE_KEY = "SESSION_ID"
@@ -33,7 +33,7 @@ const Auth = {
             if (error.response && error.response.status === 401) {
                 cb(res, null)
             }
-            cb(null, error.message)
+            cb(null, error)
         }
     },
 

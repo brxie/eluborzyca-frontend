@@ -3,13 +3,15 @@ import Button from "@material-ui/core/Button";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { addItemInCart } from "../../Redux/Actions";
-import Api from "../../Api";
-import { getItem } from "./../../Data";
+import Items from "../../Items";
+import { getItem } from "./../../ApiProxy/Misc";
 import Item from "../Item/Item";
 import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Gallery from 'react-grid-gallery';
 
+
+const minDescriptionLines = 8
 
 class ConnectedDetails extends Component {
   constructor(props) {
@@ -29,7 +31,7 @@ class ConnectedDetails extends Component {
     this.setState({ itemLoading: true });
 
     let item = await getItem(productId);
-    let relatedItems = await Api.searchItems({
+    let relatedItems = await Items.searchItems({
       category: item.category
     });
 
@@ -58,6 +60,11 @@ class ConnectedDetails extends Component {
 
   componentWillUnmount() {
     this.isCompMounted = false;
+  }
+
+
+  getNumberOfLines(text) {
+    return text.split(/\r\n|\r|\n/).length
   }
 
   render() {
@@ -167,20 +174,30 @@ class ConnectedDetails extends Component {
         </div>
         <div
           style={{
-            maxHeight: 200,
             fontSize: 13,
             overflow: "auto"
           }}
         >
-          {this.state.item.description
-            ? this.state.item.description
-            : "Not available"}
+          <TextField
+            disabled={true}
+            variant="outlined"
+            value={this.state.item.description}
+            onChange={e => {
+              this.setState({ description: e.target.value });
+            }}
+            multiline
+            rows={this.getNumberOfLines(this.state.item.description) < minDescriptionLines
+                  ? minDescriptionLines
+                  : this.getNumberOfLines(this.state.item.description) 
+                 }
+            style={{marginTop: 5, width: "100%"}}
+          />
         </div>
 
         {/* Relateditems */}
         <div
           style={{
-            marginTop: 200,
+            marginTop: 100,
             marginBottom: 10,
             fontSize: 22
           }}
