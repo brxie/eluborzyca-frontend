@@ -6,7 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-function AlertDialog(isDialogOpen, onClose, onClickAgree, onClickDisagree) {
+function AlertDialog(title,  text, isDialogOpen, onClose, onClickAgree, onClickDisagree) {
   return ( <Dialog
     open={isDialogOpen}
     onClose={onClose}
@@ -14,21 +14,21 @@ function AlertDialog(isDialogOpen, onClose, onClickAgree, onClickDisagree) {
     aria-describedby="alert-dialog-description"
   >
     <DialogTitle id="alert-dialog-title">
-      {"Successful Alert"}
+      {title}
     </DialogTitle>
     <DialogContent>
       <DialogContentText id="alert-dialog-description">
-        You are successful in life!
+        {text}
       </DialogContentText>
     </DialogContent>
     <DialogActions>
       <Button onClick={onClickDisagree} color="primary">
-        Disagree
+        Anuluj
       </Button>
       <Button 
         onClick={onClickAgree}
         color="primary" autoFocus>
-        Agree
+        Akceptuj
       </Button>
     </DialogActions>
   </Dialog>)

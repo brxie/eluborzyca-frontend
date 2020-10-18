@@ -6,9 +6,11 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import Switch from "@material-ui/core/Switch";
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import StarIcon from '@material-ui/icons/Star';
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { getItems, deleteItem } from "./../../Data";
@@ -37,7 +39,7 @@ class ConnectedOrder extends Component {
 
   getItemUsingUsername(username) {
     return new Promise( (resolve, reject) => {
-      getItems().then( items => {
+      getItems(true).then( items => {
         let res = items.filter(x => x.owner === username);
         resolve(res);
       });
@@ -68,15 +70,20 @@ class ConnectedOrder extends Component {
   };
 
   handleDeleteAgree = () => {
-    deleteItem(this.state.deletingItemId).then(() => {
-      this.fetchData();
-    });
+    this.setState({ items: this.state.items.filter(x => x.id !== this.state.deletingItemId)});
+    deleteItem(this.state.deletingItemId);
     this.handleDeleteDialogClose();
   };
 
   handleDeleteDisagree = () => {
     this.handleDeleteDialogClose();
   };
+
+  handleActiveSwitchChange(e, itemIdx) {
+    let items = this.state.items
+    items[itemIdx].active = e.target.checked
+    this.setState({ items: items});
+  }
 
   render() {    
     if (this.state.loading) {
@@ -91,7 +98,8 @@ class ConnectedOrder extends Component {
             <TableHead>
               <TableRow>
 
-                <TableCell>Mazwa</TableCell>
+                <TableCell>Aktywne</TableCell>
+                <TableCell>Nazwa</TableCell>
                 <TableCell>Cena</TableCell>
                 <TableCell>Kategoria</TableCell>
                 <TableCell>Popularne</TableCell>
@@ -109,13 +117,26 @@ class ConnectedOrder extends Component {
                     tabIndex={-1}
                     key={row.name}
                   >  
-                    <TableCell component="th" scope="row" padding="none">
+                    <TableCell>
+                      <Switch
+                        checked={row.active}
+                        onChange={(e) => {
+                          this.handleActiveSwitchChange(e, index)
+                        }}
+                        color="primary"
+                        name="checkedB"
+                        inputProps={{ 'aria-label': 'primary checkbox' }}
+                      />
+                    </TableCell>
+                    <TableCell component="th" align="center" scope="row" padding="none">
                       {row.name}
                     </TableCell>
-                    <TableCell align="right">{row.price}</TableCell>
-                    <TableCell align="right">{row.category}</TableCell>
-                    <TableCell align="right" style={{ width: "10px"}}>{row.popular.toString()}</TableCell>
-                    <TableCell align="right" style={{ width: "10px"}}>
+                    <TableCell>{row.price}</TableCell>
+                    <TableCell>{row.category}</TableCell>
+                    <TableCell style={{ width: "10px"}}>
+                      <StarIcon color={row.popular ? 'primary' : 'disabled'}/>
+                    </TableCell>
+                    <TableCell style={{ width: "10px"}}>
                       <div  style={{ display: "inline-flex"}}>
                         <IconButton >
                           <EditIcon
@@ -138,7 +159,10 @@ class ConnectedOrder extends Component {
               })}
             </TableBody>
           </Table>
-          {AlertDialog(this.state.deleteDialogOpen,
+          {AlertDialog("Usunięcie oferty",
+                       "Usunięcie oferty sprawi, że nie będzie ona więcej dostępna. \n \
+                        Ta operacja jest nieodwracalna. Czy chcesz kontynuować?",
+                       this.state.deleteDialogOpen,
                        this.handleDeleteDialogClose,
                        this.handleDeleteAgree,
                        this.handleDeleteDisagree)}

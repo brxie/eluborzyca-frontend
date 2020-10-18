@@ -2,11 +2,14 @@ import Items from './ApiClient/Items'
 import Categories from './ApiClient/Categories'
 
 
-async function getItems() {
+async function getItems(includeInactive) {
   try {
     let resp = await Items.itemsGet();
 
-    return resp.data
+    if (includeInactive) {
+      return resp.data
+    }
+    return resp.data.filter(x => x.active)
   } catch (error) {
     return []
   }
