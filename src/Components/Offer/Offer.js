@@ -6,11 +6,13 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import Tooltip from "@material-ui/core/Tooltip";
 import Switch from "@material-ui/core/Switch";
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import StarIcon from '@material-ui/icons/Star';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { getItems, deleteItem } from "./../../Data";
@@ -97,12 +99,27 @@ class ConnectedOrder extends Component {
           <Table>
             <TableHead>
               <TableRow>
-
-                <TableCell>Aktywne</TableCell>
-                <TableCell>Nazwa</TableCell>
+                <TableCell>
+                  <div style={{display: "flex", alignItems: "center"}}>
+                    Aktywne
+                    <Tooltip title="Jeśli chcesz aby ogłoszenie było niewidoczne dla kupujących, dezaktywuj je.
+                    W każdej chwile możesz je włączyć ponownie.">
+                      <InfoOutlinedIcon  color="disabled" size="medium" style={{ width: 18, height: 18, paddingBottom: 10}} />
+                    </Tooltip>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  Nazwa</TableCell>
                 <TableCell>Cena</TableCell>
                 <TableCell>Kategoria</TableCell>
-                <TableCell>Popularne</TableCell>
+                <TableCell >
+                  <div style={{display: "flex", alignItems: "center"}}>
+                    Popularne
+                    <Tooltip title="Tylko administrator może nadać ten status.">
+                      <InfoOutlinedIcon  color="disabled" size="medium" style={{ width: 18, height: 18, paddingBottom: 10}} />
+                    </Tooltip>
+                  </div>
+                </TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
@@ -160,8 +177,8 @@ class ConnectedOrder extends Component {
             </TableBody>
           </Table>
           {AlertDialog("Usunięcie oferty",
-                       "Usunięcie oferty sprawi, że nie będzie ona więcej dostępna. \n \
-                        Ta operacja jest nieodwracalna. Czy chcesz kontynuować?",
+                       `Usunięcie oferty sprawi, że nie będzie ona więcej dostępna.
+                        Ta operacja jest nieodwracalna. Czy chcesz kontynuować?`,
                        this.state.deleteDialogOpen,
                        this.handleDeleteDialogClose,
                        this.handleDeleteAgree,
