@@ -9,6 +9,7 @@ import Item from "../Item/Item";
 import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Gallery from 'react-grid-gallery';
+import CustomizedInput from './CustomizedInput'
 
 
 const minDescriptionLines = 8
@@ -178,22 +179,18 @@ class ConnectedDetails extends Component {
             overflow: "auto"
           }}
         >
-          <TextField
+          <CustomizedInput
             disabled={true}
             variant="outlined"
             value={this.state.item.description}
-            onChange={e => {
-              this.setState({ description: e.target.value });
-            }}
             multiline
             rows={this.getNumberOfLines(this.state.item.description) < minDescriptionLines
                   ? minDescriptionLines
-                  : this.getNumberOfLines(this.state.item.description) 
+                  : this.getNumberOfLines(this.state.item.description) + 1
                  }
-            style={{marginTop: 5, width: "100%"}}
+            style={{marginTop: 5, width: "98%"}}
           />
         </div>
-
         {/* Relateditems */}
         <div
           style={{
