@@ -6,17 +6,17 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
-import { Input, Typography, Select, InputLabel, TextField, Slider,
+import { Input, Typography, Select, InputLabel, TextField,
          Button, MenuItem, LinearProgress } from "@material-ui/core";
+import AvabilitySlider from "../Common/AvabilitySlider";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ImageUploader from 'react-images-upload';
 import Images from '../../ApiClient/Images'
 import { getCategories, getVillages, getUnits } from "../../ApiProxy/Misc";
 import AlertDialog from "../Common/AlertDialog";
+import { quantitySliderLabels, quantitySliderColors } from "../../Constants";
 
-
-const quantitySliderLabels = ["mała", "średnia", "duża", "b. duża"]
 
 // This component shows the items user checked out from the cart.
 class Offer extends Component {
@@ -132,7 +132,10 @@ class Offer extends Component {
 
     if (this.state.price === "") {
       this.setState({priceError: true, detailsExpanded: true})
-      errMsgs.push("Musisz podać cenę produktu")
+      errMsgs.push("musisz podać cenę produktu")
+      validSuccess = false
+    } else if (isNaN(parseInt(this.state.price, "10"))) {
+      errMsgs.push("podana cena jest nieprawidłowa")
       validSuccess = false
     }
 
@@ -182,7 +185,6 @@ class Offer extends Component {
 
   onUpload(pictures) {
     var uploads = this.state.uploads
-    console.log(pictures)
     this.setState({
       pictures: pictures,
     });
@@ -192,29 +194,31 @@ class Offer extends Component {
 
 
     for (let picture of pictures) {
+      let imgId = this.getImageId(picture)
       // avoid uploading once again already uplaoded files
-      if  (picture.name in this.state.uploads.finished || 
-          this.state.uploads.ongoing.includes(picture.name))  {
+      if  (imgId in this.state.uploads.finished || 
+          this.state.uploads.ongoing.includes(imgId))  {
           continue
       }
 
       // put file name to the uploads array
-      uploads.ongoing.push(picture.name)
+      uploads.ongoing.push(imgId)
       this.setState({
         uploads: uploads
       });
 
       Images.imagePost(picture).then((resp) => {
+        let imgId = this.getImageId(picture)
         // remove already uploaded image from uplaod array
-        uploads.ongoing.splice(uploads.ongoing.indexOf(picture.name), 1);
-        uploads.finished[picture.name] = resp.data
+        uploads.ongoing.splice(uploads.ongoing.indexOf(imgId), 1);
+        uploads.finished[imgId] = resp.data
         this.setState({
           uploads: uploads
         });
       }).catch((e) => {
-        uploads.ongoing.splice(uploads.ongoing.indexOf(picture.name), 1);
+        uploads.ongoing.splice(uploads.ongoing.indexOf(imgId), 1);
         let failImg = {}
-        failImg[picture.name] = e.message
+        failImg[imgId] = e.message
         uploads.failed.push(failImg)
         this.setState({
           uploads: uploads
@@ -222,6 +226,10 @@ class Offer extends Component {
         console.log("Image upload error: " + JSON.stringify(e))
       })
     }
+  }
+
+  getImageId(picture) {
+    return picture.lastModified.toString() + '-' + picture.name
   }
 
   async loadState() {
@@ -307,12 +315,12 @@ class Offer extends Component {
                     <InputLabel>Cena</InputLabel>
                     <div style={{display: "flex", width: "100%"}}>
                       <Input
-                        type="number"
+                        // type="number"
                         value={this.state.price}
                         error={this.state.priceError}
                         onChange={e => {
                           let val = e.target.value
-                          if (val < 0) val=0;
+                          // if (val < 0) val=0;
                           this.setState({ price: val });
                         }}
                       />
@@ -335,25 +343,26 @@ class Offer extends Component {
                       }
                     </Select>
                   </div>
-                  <div style={{display: "inline-grid", width: "160px", marginLeft: "60px", marginRight: "10px"}}>
+                  <div style={{display: "inline-grid", width: "160px", marginLeft: "40px", marginRight: "10px"}}>
                     <InputLabel>Dostępna ilość</InputLabel>
-                    <Slider
+                    <AvabilitySlider
                       orientation="horizontal"
                       valueLabelDisplay="off"
                       min={0}
                       max={quantitySliderLabels.length-1}
                       step={1}
-                      // defaultValue={quantitySliderLabels.length-2}
                       value={this.state.availability}
-                      error={this.state.availabilityError}
                       onChange={(e, v) => {
                         this.setState({ availability: v });
                       }}
-                      style={{paddingTop: 15}}
+                      style={{paddingTop: 15, color: quantitySliderColors[this.state.availability]}}
                       track={false}
-                      marks={quantitySliderLabels.map((label, idx) => {
-                        return {value: idx, label: label}
-                      })}
+                      marks={[{value: 0, label: quantitySliderLabels[0]},
+                              {value: quantitySliderLabels.length-1,
+                               label: quantitySliderLabels[quantitySliderLabels.length-1]}]}
+                      // marks={quantitySliderLabels.map((label, idx) => {
+                      //   return {value: idx, label: label}
+                      // })}
                     />
                   </div>
                 </div>

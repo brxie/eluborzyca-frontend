@@ -3,6 +3,8 @@ const allCategoriesCategory = {
     "icon": "list"
 }
 
+const quantitySliderLabels = ["mała", "średnia", "duża", "b. duża"]
+const quantitySliderColors = ["red", "orange", "yellowgreen", "green"]
 
 
-export { allCategoriesCategory };
+export { allCategoriesCategory, quantitySliderLabels, quantitySliderColors };

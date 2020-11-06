@@ -8,7 +8,7 @@ const styles = theme => ({
   }
 });
 
-function CustomizedInputs(props) {
+function CustomizedInput(props) {
   return (
     <TextField
       InputProps={{ classes: props.classes }}
@@ -17,4 +17,4 @@ function CustomizedInputs(props) {
   );
 }
 
-export default withStyles(styles)(CustomizedInputs);
+export default withStyles(styles)(CustomizedInput);

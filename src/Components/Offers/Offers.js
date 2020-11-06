@@ -9,14 +9,15 @@ import TableCell from "@material-ui/core/TableCell";
 import Tooltip from "@material-ui/core/Tooltip";
 import Switch from "@material-ui/core/Switch";
 import IconButton from '@material-ui/core/IconButton';
+import AvabilitySlider from "../Common/AvabilitySlider";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import StarIcon from '@material-ui/icons/Star';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { getItems, deleteItem, updateItem } from "../../ApiProxy/Misc";
 import AlertDialog from "../Common/AlertDialog";
+import { quantitySliderLabels, quantitySliderColors } from "../../Constants";
 
 
 const mapStateToProps = state => {
@@ -88,7 +89,19 @@ class ConnectedOffers extends Component {
       console.log("Offer edit error: " + JSON.stringify(e))
       this.setState({createItemError: e.message})
     })
+  }
 
+  handleAvabilitySliderChange(val, itemIdx) {
+    if (this.state.items[itemIdx].availability === val) return
+    let items = this.state.items
+    items[itemIdx].availability = val
+
+    updateItem(items[itemIdx].id, {availability: val}).then(()=> {
+      this.setState({ items: items});
+    }).catch(e => {
+      console.log("Offer edit error: " + JSON.stringify(e))
+      this.setState({createItemError: e.message})
+    })
   }
 
   render() {    
@@ -99,7 +112,7 @@ class ConnectedOffers extends Component {
     return (
       <div style={{ padding: 10}}>
         <div style={{ fontSize: 24, marginTop: 10 }}>Moje oferty</div>
-        <div style={{width: "75%"}}>
+        <div style={{width: "98%"}}>
           <Table>
             <TableHead>
               <TableRow>
@@ -115,15 +128,9 @@ class ConnectedOffers extends Component {
                 <TableCell>
                   Nazwa</TableCell>
                 <TableCell>Cena</TableCell>
+                <TableCell>Jednostka</TableCell>
+                <TableCell>Dostepnosc</TableCell>
                 <TableCell>Kategoria</TableCell>
-                <TableCell >
-                  <div style={{display: "flex", alignItems: "center"}}>
-                    Popularne
-                    <Tooltip title="Tylko administrator może nadać ten status.">
-                      <InfoOutlinedIcon  color="disabled" size="medium" style={{ width: 18, height: 18, paddingBottom: 10}} />
-                    </Tooltip>
-                  </div>
-                </TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
@@ -149,14 +156,31 @@ class ConnectedOffers extends Component {
                         inputProps={{ 'aria-label': 'primary checkbox' }}
                       />
                     </TableCell>
-                    <TableCell component="th" align="center" scope="row" padding="none">
-                      {row.name}
-                    </TableCell>
+                    <TableCell>{row.name}</TableCell>
                     <TableCell>{row.price}</TableCell>
-                    <TableCell>{row.category}</TableCell>
-                    <TableCell style={{ width: "10px"}}>
-                      <StarIcon color={row.popular ? 'primary' : 'disabled'}/>
+                    <TableCell>{row.unit}</TableCell>
+                    <TableCell>
+                      <div style={{width: "80%"}}>
+                        <AvabilitySlider
+                          orientation="horizontal"
+                          valueLabelDisplay="off"
+                          min={0}
+                          max={quantitySliderLabels.length-1}
+                          step={1}
+                          // defaultValue={quantitySliderLabels.length-2}
+                          value={this.state.items[index].availability}
+                          onChange={(e, v) => {
+                            this.handleAvabilitySliderChange(v, index)
+                          }}
+                          style={{paddingTop: 15, color: quantitySliderColors[this.state.items[index].availability]}}
+                          track={false}
+                          marks={[{value: 0, label: quantitySliderLabels[0]},
+                                  {value: quantitySliderLabels.length-1,
+                                  label: quantitySliderLabels[quantitySliderLabels.length-1]}]}
+                        />
+                      </div>
                     </TableCell>
+                    <TableCell>{row.category}</TableCell>
                     <TableCell style={{ width: "10px"}}>
                       <div  style={{ display: "inline-flex"}}>
                         <IconButton

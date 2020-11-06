@@ -24,17 +24,24 @@ class ConnectedNewOffer extends Offer {
       return
     }
 
+  
     var images = []
     var uploads = this.state.uploads
     for (let picture of this.state.pictures) {
-      let src = url.resolve(IMAGES_API_URL, uploads.finished[picture.name].path)
-      let thumbnail = url.resolve(IMAGES_API_URL, uploads.finished[picture.name].thumbnailPath)
+      var imgId = this.getImageId(picture)
+      uploads.finished = {}
+      console.log("Warning: failed to add '" + imgId + "' to images list. " + 
+                  "Imagge fond in pictures state but it doesn't exist on finished list.")
+      if(!(imgId in uploads.finished)) {
+        continue
+      }
+      let src = url.resolve(IMAGES_API_URL, uploads.finished[imgId].path)
+      let thumbnail = url.resolve(IMAGES_API_URL, uploads.finished[imgId].thumbnailPath)
       let img = {"src": src,
                 "thumbnail": thumbnail,
-                "thumbnailWidth": uploads.finished[picture.name].thumbnailWidth,
-                "thumbnailHeight": uploads.finished[picture.name].thumbnailHeight
+                "thumbnailWidth": uploads.finished[imgId].thumbnailWidth,
+                "thumbnailHeight": uploads.finished[imgId].thumbnailHeight
       }
-
       images.push(img)
     }
 
