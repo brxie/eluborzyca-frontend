@@ -4,10 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 
 const CustomSlider = withStyles({
     thumb: {
-      marginTop: -4,
-      marginLeft: -6,
+      marginTop: "-4px !important",
+      marginLeft: "-6px !important",
+      width: "12px !important",
+      height: "12px !important",
     },
-    active: {},
     markLabel: {
         color: "rgba(0, 0, 0, 0.87)"
     },
@@ -15,8 +16,9 @@ const CustomSlider = withStyles({
         display: "none"
     },
     rail: {
-      height: 4,
-      borderRadius: 2,
+      height: "4px !important",
+      borderRadius: "2px !important",
+      
     },
   })(Slider);
 

@@ -162,6 +162,7 @@ class ConnectedOffers extends Component {
                     <TableCell>
                       <div style={{width: "80%"}}>
                         <AvabilitySlider
+                          disabled={!this.state.items[index].active}
                           orientation="horizontal"
                           valueLabelDisplay="off"
                           min={0}
@@ -172,7 +173,10 @@ class ConnectedOffers extends Component {
                           onChange={(e, v) => {
                             this.handleAvabilitySliderChange(v, index)
                           }}
-                          style={{paddingTop: 15, color: quantitySliderColors[this.state.items[index].availability]}}
+                          style={{paddingTop: 15, color: this.state.items[index].active
+                            ? quantitySliderColors[this.state.items[index].availability]
+                            : "gray"
+                          }}
                           track={false}
                           marks={[{value: 0, label: quantitySliderLabels[0]},
                                   {value: quantitySliderLabels.length-1,
