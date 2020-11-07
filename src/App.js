@@ -6,7 +6,6 @@ import { Switch, Route } from "react-router-dom";
 import Menu from "./Components/Menu/Menu";
 import CartDialog from "./Components/CartDialog/CartDialog";
 import Details from "./Components/Details/Details";
-import Order from "./Components/Order/Order";
 import Offer from "./Components/Offers/Offers";
 import NewOffer from "./Components/Offer/NewOffer";
 import EditOffer from "./Components/Offer/EditOffer";
@@ -58,7 +57,6 @@ class App extends Component {
               <ProtectedRoute path="/offers" component={Offer} />
               <ProtectedRoute path="/new-offer" component={NewOffer} />
               <ProtectedRoute path="/edit-offer" component={EditOffer} />
-              <ProtectedRoute path="/order" component={Order} />
               <Route
                 component={() => (
                   <div style={{ padding: 20 }}>Page not found</div>

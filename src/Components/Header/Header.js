@@ -1,23 +1,19 @@
 import React, { Component } from "react";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import "./Header.css";
-import { IconButton, Badge, TextField, Button, Avatar, Menu,
+import { IconButton, TextField, Button, Avatar, Menu,
          MenuItem, Select, AppBar, Toolbar } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { showCartDlg, toggleMenu, logout } from "../../Redux/Actions";
-import cartImage from "../../Images/logo2.png";
+import { toggleMenu, logout } from "../../Redux/Actions";
+import logoImage from "../../Images/logo2.png";
 import Auth from "../../ApiProxy/Auth";
 import { getCategories } from "../../ApiProxy/Misc";
 import Person from "@material-ui/icons/PersonOutline";
 import { allCategoriesCategory } from "../../Constants";
 
 const mapStateToProps = state => {
-  var itemsCnt = 0;
-  state.cartItems.forEach(item => itemsCnt += item.quantity);
   return {
-    nrOfItemsInCard: itemsCnt,
     loggedInUser: state.loggedInUser
   };
 };
@@ -90,7 +86,7 @@ class ConnectedHeader extends Component {
               <MenuIcon size="medium" />
             </IconButton>
 
-            <img src={cartImage} alt={"Logo"} style={{ marginLeft: 10 }} />
+            <img src={logoImage} alt={"Logo"} style={{ marginLeft: 10 }} />
             <TextField
               label="Search products"
               value={this.state.searchTerm}
@@ -155,16 +151,6 @@ class ConnectedHeader extends Component {
                 <Person />
               </Avatar>
             )}
-            <IconButton
-              aria-label="Cart"
-              onClick={() => {
-                this.props.dispatch(showCartDlg(true));
-              }}
-            >
-              <Badge badgeContent={this.props.nrOfItemsInCard} color="primary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
             <Menu
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
@@ -172,14 +158,6 @@ class ConnectedHeader extends Component {
                 this.setState({ anchorEl: null });
               }}
             >
-              <MenuItem
-                onClick={() => {
-                  this.setState({ anchorEl: null });
-                  this.props.history.push("/order");
-                }}
-              >
-                Checkout page
-              </MenuItem>
               <MenuItem
                 onClick={() => {
                   this.setState({ anchorEl: null });
