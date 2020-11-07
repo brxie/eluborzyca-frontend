@@ -6,8 +6,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
-import { Input, Typography, Select, InputLabel, TextField,
-         Button, MenuItem, LinearProgress } from "@material-ui/core";
+import { Input, Typography, Select, InputLabel, TextField, FormControlLabel, 
+         Button, MenuItem, LinearProgress, Checkbox } from "@material-ui/core";
 import AvabilitySlider from "../Common/AvabilitySlider";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -16,6 +16,7 @@ import Images from '../../ApiClient/Images'
 import { getCategories, getVillages, getUnits } from "../../ApiProxy/Misc";
 import AlertDialog from "../Common/AlertDialog";
 import { quantitySliderLabels, quantitySliderColors } from "../../Constants";
+import User from '../../ApiClient/User'
 
 
 // This component shows the items user checked out from the cart.
@@ -49,6 +50,7 @@ class Offer extends Component {
     village: null,
     homeNumber: "",
     phone: "",
+    saveUserData: false,
 
     // inputs errors
     nameError: false,
@@ -110,7 +112,28 @@ class Offer extends Component {
   }
 
   handleProceedButton() {
+    this.requestOffer()
+    this.updateUserData()
+  }
+
+  requestOffer() {
     throw new Error("Not implemented error")
+  }
+
+  updateUserData() {
+    if (this.state.saveUserData) {
+      let user = {
+        username: this.state.firstLastName,
+        village: this.state.village,
+        homeNumber: this.state.homeNumber,
+        phone: this.state.phone,
+      }
+  
+      User.userPut(user).then(()=> {
+      }).catch(e => {
+        console.log("Update user data failed: " + JSON.stringify(e))
+      })
+    }
   }
 
   validateForm() {
@@ -510,6 +533,29 @@ class Offer extends Component {
                   style={{width: "150px"}}
                 />
               </div>
+
+
+
+              <div style={{marginTop: 20, width: "100"}}>
+                <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={this.state.saveUserData}
+                    onChange={(e) => {
+                      this.setState({saveUserData: e.target.checked});
+                    }}
+                    color="primary"
+                  />
+                }
+                label={
+                  <Typography  style={{fontSize: 13}}>
+                    Użyj tych danych przy dodawaniu kolejnej oferty.
+                  </Typography>
+                }
+                />
+              </div>
+
+
             </div>
             </AccordionDetails>
           </Accordion>

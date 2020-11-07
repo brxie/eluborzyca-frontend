@@ -38,7 +38,7 @@ class ConnectedEditOffer extends Offer {
     })
   }
 
-  handleProceedButton() {
+  requestOffer() {
 
     console.log("offerId: " + this.offerId)
 

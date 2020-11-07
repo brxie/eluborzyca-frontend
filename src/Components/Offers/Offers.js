@@ -29,7 +29,7 @@ const mapStateToProps = state => {
 // This component shows the items user checked out from the cart.
 class ConnectedOffers extends Component {
   state = {
-    loading: false,
+    loading: true,
     items: [],
     deleteDialogOpen: false,
     deletingItemId: 0
@@ -46,10 +46,8 @@ class ConnectedOffers extends Component {
   }
 
   async fetchData() {
-    this.setState({ loading: true });
 
     let userItems = await this.getItemUsingUsername(this.props.loggedInUser.email);
-    
     this.setState({
       items: userItems,
       loading: false,

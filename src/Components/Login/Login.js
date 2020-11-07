@@ -124,7 +124,7 @@ class ConnectedLogin extends Component {
         return;
       }
 
-      this.props.dispatch(setLoggedInUser({ name: res.email }));
+      this.props.dispatch(setLoggedInUser({ email: res.email }));
       this.setState(() => ({
         redirectToReferrer: true
       }));
@@ -315,8 +315,8 @@ class ConnectedLogin extends Component {
                 control={
                   <Checkbox
                         color="primary"
-                        onChange={() => {
-                          this.setState({rulesCheckbox: !this.state.rulesCheckbox});
+                        onChange={(e) => {
+                          this.setState({rulesCheckbox: e.target.checked});
                         }}
                         checked={this.state.rulesCheckbox}
                         style={ {color: this.state.rulesCheckboxError ? "red" : null }}

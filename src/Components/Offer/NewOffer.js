@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Offer from './Offer'
 import url from 'url'
 import { newItem } from "../../ApiProxy/Misc";
+import User from '../../ApiClient/User'
 
 
 const IMAGES_API_URL = url.resolve(process.env.REACT_APP_API_URL, "images/");
@@ -16,7 +17,23 @@ class ConnectedNewOffer extends Offer {
     super(props, renderOpts);
   }
 
-  handleProceedButton() {
+  async loadState() {
+    var user
+    try {
+      var resp = await User.userGet()
+      user = resp.data
+      this.setState( {
+        firstLastName: user.username,
+        village: user.village,
+        homeNumber: user.homeNumber,
+        phone: user.phone
+      });
+    } catch(e) {
+      console.log("User get error: " + JSON.stringify(e))
+    }
+  }
+
+  requestOffer() {
     // validation
     try {
       this.validateForm()
