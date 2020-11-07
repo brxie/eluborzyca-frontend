@@ -17,7 +17,7 @@ class ConnectedLogin extends Component {
     redirectToReferrer: false,
     
     // login inputs values
-    userName: "",
+    email: "",
     pass: "",
     showPass: "",
 
@@ -31,7 +31,7 @@ class ConnectedLogin extends Component {
     rulesCheckboxError: false,
 
     // inputs errors
-    userNameError: false,
+    emailError: false,
     passError: false,
     registUserEmailError: false,
     registPassError: false,
@@ -98,7 +98,7 @@ class ConnectedLogin extends Component {
 
   handleLogin() {
     // clean messages state
-    this.setState({userNameError: false,
+    this.setState({emailError: false,
                   passError: false,
                   wrongCred: false});
 
@@ -111,7 +111,7 @@ class ConnectedLogin extends Component {
     }
 
     // send api request
-    Auth.sessionCreate(this.state.userName, this.state.pass, (res, error) => {      
+    Auth.sessionCreate(this.state.email, this.state.pass, (res, error) => {      
             
       if (error) {
         console.log("Login error: " + JSON.stringify(error))
@@ -124,7 +124,7 @@ class ConnectedLogin extends Component {
         return;
       }
 
-      this.props.dispatch(setLoggedInUser({ name: res.userName }));
+      this.props.dispatch(setLoggedInUser({ name: res.email }));
       this.setState(() => ({
         redirectToReferrer: true
       }));
@@ -132,8 +132,8 @@ class ConnectedLogin extends Component {
   }
 
   validateLoginForm() {
-    if (this.state.userName === '') {
-      this.setState({userNameError: true})
+    if (this.state.email === '') {
+      this.setState({emailError: true})
       throw new Error("User name can't be empty");
     }
 
@@ -169,12 +169,12 @@ class ConnectedLogin extends Component {
             <FormControl>
               <InputLabel>E-mail</InputLabel>
               <Input
-                id="userName"
-                value={this.state.userName}
-                error={this.state.userNameError}
+                id="email"
+                value={this.state.email}
+                error={this.state.emailError}
                 className="input-text"
                 onChange={e => {
-                  this.setState({ userName: e.target.value });
+                  this.setState({ email: e.target.value });
                 }}
                 onKeyPress={(ev) => {
                   if (ev.key === 'Enter') {
@@ -229,7 +229,7 @@ class ConnectedLogin extends Component {
             </Button>
             <div style={{ width: 280 }}>
               {
-                (this.state.wrongCred && (<h5 style={{ color: "red" }}>Wrong username and/or password</h5>)) || 
+                (this.state.wrongCred && (<h5 style={{ color: "red" }}>Wrong email and/or password</h5>)) || 
                 (this.state.loginError && <h5 style={{ color: "red" }}>Login failed: {this.state.loginError}</h5>)
               }
             </div>

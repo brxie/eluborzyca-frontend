@@ -29,7 +29,6 @@ class ConnectedNewOffer extends Offer {
     var uploads = this.state.uploads
     for (let picture of this.state.pictures) {
       var imgId = this.getImageId(picture)
-      uploads.finished = {}
       console.log("Warning: failed to add '" + imgId + "' to images list. " + 
                   "Imagge fond in pictures state but it doesn't exist on finished list.")
       if(!(imgId in uploads.finished)) {

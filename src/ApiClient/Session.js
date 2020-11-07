@@ -16,12 +16,12 @@ const Session = {
     },
 
     // Log In
-    async sessionPost(name, pass) {
+    async sessionPost(email, pass) {
         return await axios({
             method: 'POST',
             url: SESSION_API_URL,
             data: {
-                "username": name,
+                "email": email,
                 "password": pass
             },
             withCredentials: true

@@ -28,9 +28,9 @@ export const setCheckedOutItems = items => ({
   type: CONSTANTS.SET_CHECKEDOUT_ITEMS,
   payload: items
 });
-export const setLoggedInUser = user => ({
+export const setLoggedInUser = email => ({
   type: CONSTANTS.SET_LOGGED_IN_USER,
-  payload: user
+  payload: email
 });
 export const logout = () => ({
   type: CONSTANTS.LOGOUT

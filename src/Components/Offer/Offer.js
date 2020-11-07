@@ -30,7 +30,7 @@ class Offer extends Component {
     initError: null,
     uploads: {"ongoing": [], "finished": {}, "failed": []},
     pictures: [],
-    createItemError: "",
+    createItemError: null,
     abortDialogOpen: false,
 
     // accordions state
@@ -533,7 +533,6 @@ class Offer extends Component {
             onClick={() => {
               this.handleAbortClickOpen()
             }}
-            disabled={Boolean(this.state.uploads.ongoing.length)}
           >
             Powrót
           </Button>

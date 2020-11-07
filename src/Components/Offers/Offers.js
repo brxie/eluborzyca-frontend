@@ -36,10 +36,10 @@ class ConnectedOffers extends Component {
   };
   
   
-  getItemUsingUsername(username) {
+  getItemUsingUsername(email) {
     return new Promise( (resolve, reject) => {
       getItems(true).then( items => {
-        let res = items.filter(x => x.owner === username);
+        let res = items.filter(x => x.owner === email);
         resolve(res);
       });
     });
@@ -48,7 +48,7 @@ class ConnectedOffers extends Component {
   async fetchData() {
     this.setState({ loading: true });
 
-    let userItems = await this.getItemUsingUsername(this.props.loggedInUser.name);
+    let userItems = await this.getItemUsingUsername(this.props.loggedInUser.email);
     
     this.setState({
       items: userItems,
@@ -111,7 +111,7 @@ class ConnectedOffers extends Component {
 
     return (
       <div style={{ padding: 10}}>
-        <div style={{ fontSize: 24, marginTop: 10 }}>Moje oferty</div>
+        <div style={{ fontSize: 24, marginTop: 20 }}>Moje oferty</div>
         <div style={{width: "98%"}}>
           <Table>
             <TableHead>

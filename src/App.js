@@ -10,6 +10,7 @@ import Offer from "./Components/Offers/Offers";
 import NewOffer from "./Components/Offer/NewOffer";
 import EditOffer from "./Components/Offer/EditOffer";
 import Login from "./Components/Login/Login";
+import AccountSettings from "./Components/AccountSettings/AccountSettings";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import Footer from "./Components/Footer/Footer";
 import { withRouter } from "react-router-dom";
@@ -34,7 +35,7 @@ class App extends Component {
       if (error) {
         return
       }
-      this.props.dispatch(setLoggedInUser({ name: session.username }));
+      this.props.dispatch(setLoggedInUser({ email: session.email }));
     }).then(() => this.setState({ ready: true }));
   }
 
@@ -54,6 +55,7 @@ class App extends Component {
               <Route path="/" exact component={ProductList} />
               <Route path="/details/:id" component={Details} />
               <Route path="/login" component={Login} />
+              <ProtectedRoute path="/account-settings" component={AccountSettings} />
               <ProtectedRoute path="/offers" component={Offer} />
               <ProtectedRoute path="/new-offer" component={NewOffer} />
               <ProtectedRoute path="/edit-offer" component={EditOffer} />

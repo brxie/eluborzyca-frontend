@@ -17,15 +17,15 @@ const Auth = {
     },
 
     // Log In
-    async sessionCreate(name, pass, cb) {
+    async sessionCreate(email, pass, cb) {
         let res = {
-            userName: null,
+            userEmail: null,
             unauthorized: true
         };
 
         try {
-            await Session.sessionPost(name, pass)
-            res.userName = name;
+            await Session.sessionPost(email, pass)
+            res.email = email;
             res.unauthorized = false;
             cb(res, null)
 
