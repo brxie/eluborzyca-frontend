@@ -6,7 +6,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { toggleMenu, logout } from "../../Redux/Actions";
-import logoImage from "../../Images/logo2.png";
+import logoImage from "../../Images/logo.svg";
 import Auth from "../../ApiProxy/Auth";
 import { getCategories } from "../../ApiProxy/Misc";
 import Person from "@material-ui/icons/PersonOutline";
@@ -86,7 +86,7 @@ class ConnectedHeader extends Component {
               <MenuIcon size="medium" />
             </IconButton>
 
-            <img src={logoImage} alt={"Logo"} style={{ marginLeft: 10 }} />
+            <img src={logoImage} alt={"Logo"} style={{opacity: 0.8,  width: 48, height: 48, marginLeft: 10 }} />
             <TextField
               label="Search products"
               value={this.state.searchTerm}
