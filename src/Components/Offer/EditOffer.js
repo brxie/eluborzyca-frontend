@@ -1,7 +1,7 @@
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Offer from './Offer'
-import { getItem, updateItem } from "./../../ApiProxy/Misc";
+import { getItem, updateItem } from "./../../ApiProxy/ApiProxy";
 
 
 class ConnectedEditOffer extends Offer {

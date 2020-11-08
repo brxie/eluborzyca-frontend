@@ -1,17 +1,20 @@
 import React, { Component } from "react";
+import Cookies from 'universal-cookie';
 import "./Header.css";
-import { IconButton, TextField, Button, Avatar, Menu,
+import { IconButton, TextField, Button, Avatar, Menu, Divider,
          MenuItem, Select, AppBar, Toolbar } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { toggleMenu, logout } from "../../Redux/Actions";
 import logoImage from "../../Images/logo.svg";
-import Auth from "../../ApiProxy/Auth";
-import { getCategories } from "../../ApiProxy/Misc";
+import { getCategories } from "../../ApiProxy/ApiProxy";
 import Person from "@material-ui/icons/PersonOutline";
 import { allCategoriesCategory } from "../../Constants";
+import Session from "./../../ApiClient/Session";
 
+
+const SESSION_COOKIE_KEY = "SESSION_ID"
 const mapStateToProps = state => {
   return {
     loggedInUser: state.loggedInUser
@@ -158,6 +161,12 @@ class ConnectedHeader extends Component {
                 this.setState({ anchorEl: null });
               }}
             >
+              
+              
+              <div style={{display: "flex", justifyContent: "center", padding: 5, fontWeight: "bold"}}>{this.props.loggedInUser ? this.props.loggedInUser.email : ""}</div>
+              
+              
+              <Divider />
               <MenuItem
                 onClick={() => {
                   this.setState({ anchorEl: null });
@@ -176,10 +185,15 @@ class ConnectedHeader extends Component {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  Auth.sessionDestroy(() => {
+                  Session.sessionDelete()
+                  .then(() => {
                     this.props.dispatch(logout());
                     this.props.history.push("/");
-                  });
+                  })
+                  .catch(e => {
+                    console.log(e.stack)
+                  })
+                  new Cookies().remove(SESSION_COOKIE_KEY, { path: '/api' });
                   this.setState({ anchorEl: null });
                 }}
               >

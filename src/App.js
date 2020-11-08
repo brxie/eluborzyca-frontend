@@ -15,13 +15,13 @@ import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import Footer from "./Components/Footer/Footer";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import Auth from "./ApiProxy/Auth";
+import Session from "./ApiClient/Session";
 import { setLoggedInUser, LoadCartItems } from "./Redux/Actions";
 
 class App extends Component {
   
   state = {
-    ready: false
+    loading: true
   };
 
   componentDidMount() {
@@ -31,16 +31,22 @@ class App extends Component {
     );
 
     // retrieve user session
-    Auth.sessionGet((session, error) => {
-      if (error) {
-        return
+    Session.sessionGet()
+    .then(async (resp) => {
+      if (resp.status === 200) {
+        let user = await resp.json()
+        this.props.dispatch(setLoggedInUser({ email: user.email }));
       }
-      this.props.dispatch(setLoggedInUser({ email: session.email }));
-    }).then(() => this.setState({ ready: true }));
+      this.setState({ loading: false })
+    })
+    .catch(e => {
+      console.log("Session get failed: " + e.stack)
+      return
+    })
   }
 
   render() {
-    if (!this.state.ready) {
+    if (this.state.loading) {
       return (<div>Loading....</div>)
     }
 

@@ -1,5 +1,5 @@
 import Cookies from 'universal-cookie';
-import { getItems } from "./../../ApiProxy/Misc";
+import { getItems } from "./../../ApiProxy/ApiProxy";
 
 const CART_ITEMS_COOKIE_KEY='LOCAL_CART_ITEMS'
 

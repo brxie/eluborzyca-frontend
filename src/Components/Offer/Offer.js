@@ -13,7 +13,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ImageUploader from 'react-images-upload';
 import Images from '../../ApiClient/Images'
-import { getCategories, getVillages, getUnits } from "../../ApiProxy/Misc";
+import { getCategories, getVillages, getUnits } from "../../ApiProxy/ApiProxy";
 import AlertDialog from "../Common/AlertDialog";
 import { quantitySliderLabels, quantitySliderColors } from "../../Constants";
 import User from '../../ApiClient/User'
@@ -276,13 +276,13 @@ class Offer extends Component {
   };
 
 
-  render() {    
+  render() {
     if (this.state.loading) {
       return <CircularProgress className="circular" />;
     }
     
     if (this.state.initError) {
-      return <div className="initial-error">Error: {this.state.initError}. Spróbuj ponownie później.</div>;
+      return <div className="initial-error">Error: {this.state.initError}.</div>;
     }
 
     return (
@@ -589,7 +589,7 @@ class Offer extends Component {
               this.handleAbort,
               this.handleCancelAbort)}
           {this.state.formErrorMsgs.length ? <h5 style={{ color: "red" }}>Formularz zawiera błędy: <ul>{this.state.formErrorMsgs.map((v, k) => <li key={k}>{v}</li>)}</ul></h5> : ""}
-          {this.state.createItemError ? <h5 style={{ color: "red" }}>Błąd: {this.state.createItemError}. Spróbuj ponownie później.</h5> : ""}
+          {this.state.createItemError ? <h5 style={{ color: "red" }}>Błąd: {this.state.createItemError}.</h5> : ""}
         </div>
       </div>
     );

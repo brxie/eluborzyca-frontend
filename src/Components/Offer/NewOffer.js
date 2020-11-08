@@ -2,7 +2,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Offer from './Offer'
 import url from 'url'
-import { newItem } from "../../ApiProxy/Misc";
+import { newItem } from "../../ApiProxy/ApiProxy";
 import User from '../../ApiClient/User'
 
 
@@ -21,7 +21,7 @@ class ConnectedNewOffer extends Offer {
     var user
     try {
       var resp = await User.userGet()
-      user = resp.data
+      user = await resp.json()
       this.setState( {
         firstLastName: user.username,
         village: user.village,

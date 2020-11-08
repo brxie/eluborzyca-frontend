@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "./Login.css";
 import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import Auth from "../../ApiProxy/Auth";
-import User from "../../ApiProxy/User";
+import User from "../../ApiClient/User";
+import Session from "../../ApiClient/Session";
 import { Button, Avatar, Checkbox, FormControlLabel, Input, Typography,
          IconButton, InputAdornment, FormControl, InputLabel} from "@material-ui/core";
 import { setLoggedInUser } from "../../Redux/Actions";
@@ -57,21 +57,18 @@ class ConnectedLogin extends Component {
     }
 
     // send api request
-    let name = ""
-    let phone = ""
-    User.createUser(name,
-                    this.state.registPass,
-                    this.state.registUserEmail,
-                    phone,
-                    (res, error) => {
-
-      
-      if (error) {
-        this.setState({registError: error.message})
-        return;
+    User.userPost({email: this.state.registUserEmail,
+                   password: this.state.registPass
+    }).then(async resp => {
+      if (resp.status !== 200) {
+        this.setState({registError:  (await resp.json()).message})
+        return
       }
       this.setState({registSuccessed: true})
-    });
+    }).catch((e) =>{
+      this.setState({registError: e.stack})
+      return;
+    })
   }
 
   validateRegisterForm(){
@@ -111,24 +108,22 @@ class ConnectedLogin extends Component {
     }
 
     // send api request
-    Auth.sessionCreate(this.state.email, this.state.pass, (res, error) => {      
-            
-      if (error) {
-        console.log("Login error: " + JSON.stringify(error))
-        this.setState({ loginError: error.message });
-        return;
-      }
-
-      if (res.unauthorized) {
+    Session.sessionPost(this.state.email, this.state.pass)
+    .then(async (resp) => {
+      if (resp.status === 401) {
         this.setState({ wrongCred: true });
         return;
       }
-
-      this.props.dispatch(setLoggedInUser({ email: res.email }));
+      this.props.dispatch(setLoggedInUser({ email: this.state.email }));
       this.setState(() => ({
         redirectToReferrer: true
       }));
-    });
+    })
+    .catch((e) => {
+        console.log("Login error: " + e.stack)
+        this.setState({ loginError: e.stack });  
+    })
+
   }
 
   validateLoginForm() {

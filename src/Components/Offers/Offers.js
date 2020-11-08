@@ -15,7 +15,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { getItems, deleteItem, updateItem } from "../../ApiProxy/Misc";
+import { getItems, deleteItem, updateItem } from "../../ApiProxy/ApiProxy";
 import AlertDialog from "../Common/AlertDialog";
 import { quantitySliderLabels, quantitySliderColors } from "../../Constants";
 

@@ -1,4 +1,4 @@
-import { getItems } from "./ApiProxy/Misc";
+import { getItems } from "./ApiProxy/ApiProxy";
 
 ///
 //

@@ -11,6 +11,7 @@
     "email-validator": "^2.0.4",
     "material-ui-phone-number": "^2.2.6",
     "metro-react-native-babel-preset": "^0.63.0",
+    "node-fetch": "^2.6.1",
     "query-string": "^6.1.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",

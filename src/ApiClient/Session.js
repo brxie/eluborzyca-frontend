@@ -1,4 +1,4 @@
-import axios from 'axios';
+import fetch from 'node-fetch';
 import url from 'url'
 
 const SESSION_API_URL = url.resolve(process.env.REACT_APP_API_URL, "session");
@@ -7,33 +7,36 @@ const SESSION_API_URL = url.resolve(process.env.REACT_APP_API_URL, "session");
 const Session = {
     // Cookie check
     async sessionGet() {        
-        return await axios({
+        return await fetch(SESSION_API_URL, 
+            {
                 method: 'GET',
-                url: SESSION_API_URL,
-                withCredentials: true
+                credentials: 'include'
             }
         );
     },
 
     // Log In
     async sessionPost(email, pass) {
-        return await axios({
+        return await fetch(SESSION_API_URL,
+            {
             method: 'POST',
-            url: SESSION_API_URL,
-            data: {
+            body: JSON.stringify({
                 "email": email,
                 "password": pass
+            }),
+            headers: {
+                'Content-Type': 'application/json'
             },
-            withCredentials: true
+            credentials: 'include'
         });
     },
 
     // Logout
     async sessionDelete() {
-        await axios({
+        await fetch(SESSION_API_URL,
+            {
             method: 'DELETE',
-            url: SESSION_API_URL,
-            withCredentials: true
+            credentials: 'include'
         }); 
     }
 }
