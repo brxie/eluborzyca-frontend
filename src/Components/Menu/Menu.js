@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import queryString from "query-string";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getMenuData } from "../../ApiProxy/ApiProxy";
+import { getMenuData } from "../../Model/Categories";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Icon from "@material-ui/core/Icon";

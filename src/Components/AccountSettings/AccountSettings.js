@@ -6,7 +6,7 @@ import { Input, Typography, InputLabel, TextField,
          Button, CircularProgress, Divider } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import User from '../../ApiClient/User'
-import { getVillages } from "../../ApiProxy/ApiProxy";
+import { getVillages } from "../../Model/Villages";
 import util from 'util';
 
 

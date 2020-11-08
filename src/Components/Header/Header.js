@@ -8,7 +8,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { toggleMenu, logout } from "../../Redux/Actions";
 import logoImage from "../../Images/logo.svg";
-import { getCategories } from "../../ApiProxy/ApiProxy";
+import { getCategories } from "../../Model/Categories";
 import Person from "@material-ui/icons/PersonOutline";
 import { allCategoriesCategory } from "../../Constants";
 import Session from "./../../ApiClient/Session";

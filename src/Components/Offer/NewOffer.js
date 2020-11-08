@@ -2,7 +2,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Offer from './Offer'
 import url from 'url'
-import { newItem } from "../../ApiProxy/ApiProxy";
+import { newItem } from "../../Model/Items";
 import User from '../../ApiClient/User'
 
 

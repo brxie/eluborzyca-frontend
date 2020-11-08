@@ -1,7 +1,7 @@
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Offer from './Offer'
-import { getItem, updateItem } from "./../../ApiProxy/ApiProxy";
+import { getItem, updateItem } from "./../../Model/Items";
 
 
 class ConnectedEditOffer extends Offer {
@@ -39,9 +39,6 @@ class ConnectedEditOffer extends Offer {
   }
 
   requestOffer() {
-
-    console.log("offerId: " + this.offerId)
-
     // validation
     try {
       this.validateForm()

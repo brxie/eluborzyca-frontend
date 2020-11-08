@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Item from "../Item/Item";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import queryString from "query-string";
-import Items from "../../Items";
+import { searchItems } from "../../Model/Items";
 import Paging from "../Paging/Paging";
 import ProductsHeader from "../ProductsHeader/ProductsHeader";
 
@@ -27,7 +27,7 @@ class ProductList extends Component {
     // Parse the query string
     let qsAsObject = queryString.parse(this.props.location.search);
 
-    let results = await Items.searchItems(qsAsObject);
+    let results = await searchItems(qsAsObject);
 
     this.setState({
       items: results.data,

@@ -13,7 +13,9 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ImageUploader from 'react-images-upload';
 import Images from '../../ApiClient/Images'
-import { getCategories, getVillages, getUnits } from "../../ApiProxy/ApiProxy";
+import { getVillages } from "../../Model/Villages";
+import { getCategories } from "../../Model/Categories";
+import { getUnits } from "../../Model/Units";
 import AlertDialog from "../Common/AlertDialog";
 import { quantitySliderLabels, quantitySliderColors } from "../../Constants";
 import User from '../../ApiClient/User'
