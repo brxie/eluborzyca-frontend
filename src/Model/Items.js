@@ -77,6 +77,8 @@ function sortByPrice(data, sortval) {
 
 function searchItems({
     category = "popular",
+    village = null,
+    seller = null,
     term = "",
     sortValue = "lh",
     itemsPerPage = 10,
@@ -98,12 +100,15 @@ function searchItems({
             return false;
           }
 
-          if (category === "popular") {
+          if (category === "popular" && village === "") {
             return item.popular;
           }
-
-          if (category !== "All categories" && category !== item.category)
+          
+          console.log("item: " + JSON.stringify(item))
+          if (category !== "All categories" && category !== item.category &&
+              village !== item.village && seller !== item.firstLastName) {
             return false;
+          }
 
           if (term && !item.name.toLowerCase().includes(term.toLowerCase()))
             return false;

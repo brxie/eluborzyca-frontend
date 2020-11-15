@@ -26,7 +26,6 @@ class ProductList extends Component {
 
     // Parse the query string
     let qsAsObject = queryString.parse(this.props.location.search);
-
     let results = await searchItems(qsAsObject);
 
     this.setState({

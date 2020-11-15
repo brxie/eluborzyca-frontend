@@ -1,0 +1,22 @@
+.item-action-bar-container  {
+    width: 180px;
+    display: flex;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 13px;
+    /* font-weight: bold; */
+    align-items: center;
+    padding-top: 2px;
+    padding-left: 3px;
+}
+
+
+.actionItemRow {
+    margin-left: 5px;
+    font-size: 13px;
+    margin-bottom:0px;
+}
+
+.actionItemRow:hover {
+    text-decoration: underline;
+    color: #4282ad;
+}

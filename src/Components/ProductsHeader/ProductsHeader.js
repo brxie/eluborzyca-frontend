@@ -15,6 +15,8 @@ class ProductsHeader extends Component {
 
   render() {
     let { parsedQueryStr, totalItemsCount, updateQueryStr } = this.props;
+    console.log("parsedQueryStr: " + JSON.stringify(parsedQueryStr))
+    const filterLabels = {category: "", village: "miejscowość: ", seller: "sprzedający: "}
 
     // Lot of values come from the query string.
     let usePriceFilter = parsedQueryStr.usePriceFilter === "true";
@@ -22,7 +24,9 @@ class ProductsHeader extends Component {
     let maxPrice = parsedQueryStr.maxPrice || 10;
     let sortValue = parsedQueryStr.sortValue || "lh";
     let keyword = parsedQueryStr.term;
-    let category = parsedQueryStr.category;
+    let filter = parsedQueryStr.category || parsedQueryStr.village || parsedQueryStr.seller;
+    var filterName = null
+    Object.keys(filterLabels).forEach(k => {if (k in parsedQueryStr && !filterName) filterName = filterLabels[k] })
 
     let subtitle = (
       <div>
@@ -50,7 +54,7 @@ class ProductsHeader extends Component {
       <div>
         <div style={{ padding: 10, display: "flex", alignItems: "center" }}>
           <div style={{ flex: 1, fontSize: 24 }}>
-            <div>{category ? category : "Popular Products"}</div>
+            <div>{filter ? filterName + filter : "Popular Products"}</div>
             {subtitle}
           </div>
 

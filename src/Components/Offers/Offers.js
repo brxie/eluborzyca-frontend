@@ -9,7 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 import Tooltip from "@material-ui/core/Tooltip";
 import Switch from "@material-ui/core/Switch";
 import IconButton from '@material-ui/core/IconButton';
-import AvabilitySlider from "../Common/AvabilitySlider";
+import AvailabilitySlider from "../Common/AvailabilitySlider";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
@@ -89,7 +89,7 @@ class ConnectedOffers extends Component {
     })
   }
 
-  handleAvabilitySliderChange(val, itemIdx) {
+  AandleavailabilitySliderChange(val, itemIdx) {
     if (this.state.items[itemIdx].availability === val) return
     let items = this.state.items
     items[itemIdx].availability = val
@@ -159,7 +159,7 @@ class ConnectedOffers extends Component {
                     <TableCell>{row.unit}</TableCell>
                     <TableCell>
                       <div style={{width: "80%"}}>
-                        <AvabilitySlider
+                        <AvailabilitySlider
                           disabled={!this.state.items[index].active}
                           orientation="horizontal"
                           valueLabelDisplay="off"
@@ -169,7 +169,7 @@ class ConnectedOffers extends Component {
                           // defaultValue={quantitySliderLabels.length-2}
                           value={this.state.items[index].availability}
                           onChange={(e, v) => {
-                            this.handleAvabilitySliderChange(v, index)
+                            this.AandleavailabilitySliderChange(v, index)
                           }}
                           style={{paddingTop: 15, color: this.state.items[index].active
                             ? quantitySliderColors[this.state.items[index].availability]

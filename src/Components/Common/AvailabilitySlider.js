@@ -23,11 +23,11 @@ const CustomSlider = withStyles({
   })(Slider);
 
 
-  function AvabilitySlider(props) {
+  function AvailabilitySlider(props) {
     return (<CustomSlider  {...props}/>)
   }
 
-  export default AvabilitySlider;
+  export default AvailabilitySlider;
 
     
   

@@ -8,7 +8,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import { Input, Typography, Select, InputLabel, TextField, FormControlLabel, 
          Button, MenuItem, LinearProgress, Checkbox } from "@material-ui/core";
-import AvabilitySlider from "../Common/AvabilitySlider";
+import AvailabilitySlider from "../Common/AvailabilitySlider";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ImageUploader from 'react-images-upload';
@@ -370,7 +370,7 @@ class Offer extends Component {
                   </div>
                   <div style={{display: "inline-grid", width: "160px", marginLeft: "40px", marginRight: "10px"}}>
                     <InputLabel>Dostępna ilość</InputLabel>
-                    <AvabilitySlider
+                    <AvailabilitySlider
                       orientation="horizontal"
                       valueLabelDisplay="off"
                       min={0}

@@ -1,22 +1,44 @@
 import React, { Component } from "react";
-import IconButton from "@material-ui/core/IconButton";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import "./Item.css";
 import { connect } from "react-redux";
-import { addItemInCart } from "../../Redux/Actions";
 import { withRouter } from "react-router-dom";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
+import { CardActionArea, Typography, Collapse, Tooltip } from "@material-ui/core";
+import { quantitySliderLabels, quantitySliderColors } from "../../Constants";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Tooltip from "@material-ui/core/Tooltip";
-import Button from "@material-ui/core/Button";
+import LabelIcon from '@material-ui/icons/Label';
+import FaceIcon from '@material-ui/icons/Face';
+import HomeIcon from '@material-ui/icons/Home';
+import { NavLink } from "react-router-dom";
+
 
 class ConnectedItem extends Component {
+
+  getNavlinkItemRow(url, title) {
+    return(
+      <NavLink
+        to={url}
+        exact
+        style={{
+          textDecoration: "none",
+          color: "rgb(32, 32, 34)"
+        }}
+        activeStyle={{
+          color: "#4282ad",
+          textDecoration: "underline"
+        }}
+      >
+        <div className="actionItemRow">{title}</div>
+      </NavLink>
+    )
+  }
+
   render() {
     return (
       <Card
-        style={{ width: 200, height: 270, margin: 10, display: "inline-block" }}
+        style={{ width: 200, height: 300, margin: 10, display: "inline-block" }}
       >
         <CardActionArea
           onClick={() => {
@@ -24,7 +46,7 @@ class ConnectedItem extends Component {
           }}
         >
           <CardMedia
-            style={{ height: 140 }}
+            style={{ height: 120 }}
             image={this.props.item.imageUrls[0].thumbnail}
           />
           <CardContent style={{ height: 50 }}>
@@ -39,41 +61,51 @@ class ConnectedItem extends Component {
             >
               {this.props.item.name}
             </div>
-            <div style={{ margin: 5 }}>Price: {this.props.item.price} zł</div>
-            <div style={{ color: "#1a9349", fontWeight: "bold", margin: 5 }}>
-              {this.props.item.popular && "Popular"}
+            <div style={{ margin: 5, display: "flex", alignItems: "center" }}>
+              Cena:<Typography style={{fontSize: 13, fontWeight: "bold", color: "green", marginLeft: 5}}>
+                {this.props.item.price.toFixed(2)} zł/{this.props.item.unit}
+                </Typography>
             </div>
+            <div style={{ margin: 5, display: "flex", alignItems: "center" }}>Dostępność:
+              <Typography 
+                style={{fontSize: 13,
+                        fontWeight: "bold",
+                        color: quantitySliderColors[this.props.item.availability],
+                        marginLeft: 5}}
+              >
+                {quantitySliderLabels[this.props.item.availability]}
+              </Typography>
+            
+            </div>
+            {/* <div style={{ color: "#1a9349", fontWeight: "bold", margin: 5 }}>
+              {this.props.item.popular && "Popular"}
+            </div> */}
           </CardContent>
         </CardActionArea>
-        <CardActions
-          style={{ display: "flex", alignItems: "center", height: 45 }}
-        >
-          <Button
-            size="small"
-            style={{ marginRight: 60 }}
-            onClick={() => {
-              this.props.history.push("/details/" + this.props.item.id);
-            }}
-          >
-            {" "}
-            Details
-          </Button>
-          <Tooltip title="Add to cart">
-            <IconButton
-              size="small"
-              onClick={e => {
-                e.stopPropagation();
-                this.props.dispatch(
-                  addItemInCart({ ...this.props.item, quantity: 1 })
-                );
-              }}
-              color="primary"
-              aria-label="Add to shopping cart"
-            >
-              <AddShoppingCartIcon size="small" />
-            </IconButton>
-          </Tooltip>
+        <CardActions >
+        <div style={{display:"inline"}}>
+          <div className="item-action-bar-container">
+            <Tooltip title="Sprzedający">
+              <FaceIcon/>
+            </Tooltip>
+            {this.getNavlinkItemRow("/?seller="+this.props.item.firstLastName, this.props.item.firstLastName)}
+          </div>
+          <div className="item-action-bar-container">
+            <Tooltip title="Miejscowość">
+              <HomeIcon/>
+            </Tooltip>
+            {this.getNavlinkItemRow("/?village="+this.props.item.village, this.props.item.village)}
+          </div>
+          <div className="item-action-bar-container">
+            <Tooltip title="Kategoria">
+              <LabelIcon/>
+            </Tooltip>
+            {this.getNavlinkItemRow("/?category="+this.props.item.category, this.props.item.category)}
+          </div>
+        </div>
         </CardActions>
+        
+        
       </Card>
     );
   }
