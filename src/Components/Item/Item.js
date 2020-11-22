@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Item.css";
+import * as Lang from '../../LangPL';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Card from "@material-ui/core/Card";
@@ -65,7 +66,7 @@ class ConnectedItem extends Component {
             </div>
             <div style={{ margin: 5, display: "flex", alignItems: "center" }}>
               Cena:<Typography style={{fontSize: 13, fontWeight: "bold", color: "green", marginLeft: 5}}>
-                {this.props.item.price.toFixed(2)} zł/{this.props.item.unit}
+                {parseFloat(this.props.item.price).toFixed(2)} {Lang.CURRENCY}/{this.props.item.unit}
                 </Typography>
             </div>
             <div style={{ margin: 5, display: "flex", alignItems: "center" }}>Dostępność:
@@ -84,19 +85,19 @@ class ConnectedItem extends Component {
         <CardActions >
         <div style={{display:"inline"}}>
           <div className="item-action-bar-container">
-            <Tooltip title="Sprzedający">
+            <Tooltip title={Lang.SELLER}>
               <FaceIcon/>
             </Tooltip>
             {this.getNavlinkItemRow("/?seller="+this.props.item.firstLastName, this.props.item.firstLastName)}
           </div>
           <div className="item-action-bar-container">
-            <Tooltip title="Miejscowość">
+            <Tooltip title={Lang.VILLAGE}>
               <HomeIcon/>
             </Tooltip>
             {this.getNavlinkItemRow("/?village="+this.props.item.village, this.props.item.village)}
           </div>
           <div className="item-action-bar-container">
-            <Tooltip title="Kategoria">
+            <Tooltip title={Lang.CATEGORY}>
               <LabelIcon/>
             </Tooltip>
             {this.getNavlinkItemRow("/?category="+this.props.item.category, this.props.item.category)}

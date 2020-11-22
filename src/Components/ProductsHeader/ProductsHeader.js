@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as Lang from '../../LangPL';
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import PriceDialog from "../PriceDialog/PriceDialog";
@@ -30,10 +31,8 @@ class ProductsHeader extends Component {
     let subtitle = (
       <div>
         <span style={{ fontSize: 12, color: "gray" }}>
-          {totalItemsCount +
-            " result" +
-            (totalItemsCount === 1 ? " " : "s ") +
-            (keyword ? "for " : "")}
+          {Lang.FOUND + ": " +  totalItemsCount +
+            (keyword ? Lang.FOR + " " : "")}
         </span>
         {keyword && (
           <span
@@ -53,7 +52,7 @@ class ProductsHeader extends Component {
       <div>
         <div style={{ padding: 10, display: "flex", alignItems: "center" }}>
           <div style={{ flex: 1, fontSize: 24 }}>
-            <div>{filter ? filterName + filter : "Popular Products"}</div>
+            <div>{filter ? filterName + filter : Lang.POPULAR_PRODUCTS}</div>
             {subtitle}
           </div>
 
@@ -72,10 +71,10 @@ class ProductsHeader extends Component {
                   }}
                 />
               }
-              label="Filter by price"
+              label={Lang.FILTER_BY_PRICE}
             />
             {usePriceFilter && (
-              <Tooltip title="Click to change range" disableFocusListener>
+              <Tooltip title={Lang.CLICK_CHANGE_RANGE} disableFocusListener>
                 <Button
                   variant="outlined"
                   style={{ marginRight: 20 }}
@@ -85,7 +84,7 @@ class ProductsHeader extends Component {
                     });
                   }}
                 >
-                  {`${minPrice}zł-${maxPrice}zł`}
+                  {`${minPrice}${Lang.CURRENCY}-${maxPrice}${Lang.CURRENCY}`}
                 </Button>
               </Tooltip>
             )}
@@ -95,8 +94,8 @@ class ProductsHeader extends Component {
                 updateQueryStr({ sortValue: e.target.value });
               }}
             >
-              <MenuItem value={"lh"}>Sort by price: low to high</MenuItem>
-              <MenuItem value={"hl"}>Sort by price: high to low</MenuItem>
+              <MenuItem value={"lh"}>{Lang.SORT_BY_PRICE_FROM_LOWER}</MenuItem>
+              <MenuItem value={"hl"}>{Lang.SORT_BY_PRICE_FROM_HIGHEST}</MenuItem>
             </Select>
           </div>
         </div>

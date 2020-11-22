@@ -6,7 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-function AlertDialog(title,  text, isDialogOpen, onClose, onClickAgree, onClickDisagree) {
+function AlertDialog(title,  text, cencelLabel, acceptLabel, isDialogOpen, onClose, onClickAgree, onClickDisagree) {
   return ( <Dialog
     open={isDialogOpen}
     onClose={onClose}
@@ -23,12 +23,12 @@ function AlertDialog(title,  text, isDialogOpen, onClose, onClickAgree, onClickD
     </DialogContent>
     <DialogActions>
       <Button onClick={onClickDisagree} color="primary">
-        Anuluj
+        {cencelLabel}
       </Button>
       <Button 
         onClick={onClickAgree}
         color="primary" autoFocus>
-        Akceptuj
+        {acceptLabel}
       </Button>
     </DialogActions>
   </Dialog>)

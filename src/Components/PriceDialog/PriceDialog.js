@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as Lang from '../../LangPL';
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -40,7 +41,7 @@ class PriceDialog extends Component {
               alignItems: "center"
             }}
           >
-            <DialogTitle>Enter price range</DialogTitle>
+            <DialogTitle>{Lang.ENTER_PRICE_RANGE}</DialogTitle>
 
             <div style={{ display: "flex", padding: 20 }}>
               <TextField
@@ -96,7 +97,7 @@ class PriceDialog extends Component {
                   this.props.onClose();
                 }}
               >
-                Cancel
+                {Lang.CANCEL}
               </Button>
             </div>
           </div>

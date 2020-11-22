@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Cookies from 'universal-cookie';
+import * as Lang from '../../LangPL';
 import "./Header.css";
 import { IconButton, TextField, Button, Avatar, Menu, Divider,
          MenuItem, Select, AppBar, Toolbar } from "@material-ui/core";
@@ -91,7 +92,7 @@ class ConnectedHeader extends Component {
 
             <img src={logoImage} alt={"Logo"} style={{opacity: 0.8,  width: 48, height: 48, marginLeft: 10 }} />
             <TextField
-              label="Search products"
+              label={Lang.SEARCH_PRODUCTS}
               value={this.state.searchTerm}
               onChange={e => {
                 this.setState({ searchTerm: e.target.value });
@@ -129,7 +130,7 @@ class ConnectedHeader extends Component {
               }}
             >
               {" "}
-              Search
+              {Lang.SEARCH}
             </Button>
           </div>
           <div className="right-part">
@@ -189,7 +190,7 @@ class ConnectedHeader extends Component {
                   this.props.history.push("/offers");
                 }}
               >
-                Moje oferty
+                {Lang.MY_OFFERS}
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -197,7 +198,7 @@ class ConnectedHeader extends Component {
                   this.setState({ anchorEl: null });
                 }}
               >
-                Ustawienia
+                {Lang.SETTINGS}
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -213,7 +214,7 @@ class ConnectedHeader extends Component {
                   this.setState({ anchorEl: null });
                 }}
               >
-                Logout
+                {Lang.LOGOUT}
               </MenuItem>
             </Menu>
           </div>

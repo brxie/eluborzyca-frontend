@@ -1,5 +1,6 @@
 import Categories from '../ApiClient/Categories'
 import { allCategoriesCategory } from "../Constants";
+import * as Lang from '../LangPL';
 
 
 async function getCategories() {
@@ -13,9 +14,9 @@ async function getMenuData() {
     categories.unshift(allCategoriesCategory)
 
     return [
-        { name: "Home page", url: "/", icon: "home", id: 0 },
+        { name: Lang.HOME_PAGE, url: "/", icon: "home", id: 0 },
         {
-        name: "Product categories",
+        name: Lang.PRODUCT_CATEGORIES,
         id: 1,
         children: categories.map((x, i) => {
             return {

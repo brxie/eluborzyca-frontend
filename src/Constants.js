@@ -1,9 +1,11 @@
+import * as Lang from './LangPL';
+
 const allCategoriesCategory = {
-    "name": "All categories",
+    "name": Lang.ALL_CATEGORIES,
     "icon": "list"
 }
 
-const quantitySliderLabels = ["mała", "średnia", "duża", "b. duża"]
+const quantitySliderLabels = Lang.QUANTITY_LABEL_NAMES
 const quantitySliderColors = ["red", "orange", "yellowgreen", "green"]
 
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import * as Lang from '../../LangPL';
 import { connect } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -55,6 +56,7 @@ class ConnectedOffers extends Component {
   }
 
   componentDidMount() {
+    this.setState({ deleteDialogOpen: false})
     this.fetchData();
   }
 
@@ -109,26 +111,26 @@ class ConnectedOffers extends Component {
 
     return (
       <div style={{ padding: 10}}>
-        <div style={{ fontSize: 24, marginTop: 20 }}>Moje oferty</div>
+        <div style={{ fontSize: 24, marginTop: 20 }}>{Lang.MY_OFFERS}</div>
         <div style={{width: "98%"}}>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>
                   <div style={{display: "flex", alignItems: "center"}}>
-                    Aktywne
-                    <Tooltip title="Jeśli chcesz aby ogłoszenie było niewidoczne dla kupujących, dezaktywuj je.
-                    W każdej chwile możesz je włączyć ponownie.">
+                    {Lang.ACTIVE}
+                    <Tooltip title={Lang.DEACTIVATE_OFFER_TEXT}>
                       <InfoOutlinedIcon  color="disabled" size="medium" style={{ width: 18, height: 18, paddingBottom: 10}} />
                     </Tooltip>
                   </div>
                 </TableCell>
                 <TableCell>
-                  Nazwa</TableCell>
-                <TableCell>Cena</TableCell>
-                <TableCell>Jednostka</TableCell>
-                <TableCell>Dostepnosc</TableCell>
-                <TableCell>Kategoria</TableCell>
+                  {Lang.NAME}
+                </TableCell>
+                <TableCell>{Lang.PRICE}</TableCell>
+                <TableCell>{Lang.UNIT}</TableCell>
+                <TableCell>{Lang.AVAILABILITY}</TableCell>
+                <TableCell>{Lang.CATEGORY}</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
@@ -211,16 +213,17 @@ class ConnectedOffers extends Component {
               })}
             </TableBody>
           </Table>
-          {AlertDialog("Usunięcie oferty",
-                       `Usunięcie oferty sprawi, że nie będzie ona więcej dostępna.
-                        Ta operacja jest nieodwracalna. Czy chcesz kontynuować?`,
+          {AlertDialog(Lang.ALERT_DIALOG_DELETE_OFFER_TITLE,
+                       Lang.ALERT_DIALOG_DELETE_OFFER_TEXT,
+                       Lang.CANCEL,
+                       Lang.ACCEPT,
                        this.state.deleteDialogOpen,
                        this.handleDeleteDialogClose,
                        this.handleDeleteAgree,
                        this.handleDeleteDisagree)}
         </div>
         <div style={{paddingTop: "20px"}}>
-          Dodaj ofertę
+          {Lang.ADD_OFFER}
         <IconButton
           onClick={() => {
             this.props.history.push("/new-offer");

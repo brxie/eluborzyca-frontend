@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import util from 'util';
 import "./Offer.css";
+import * as Lang from '../../LangPL';
 import MuiPhoneInput from "material-ui-phone-number";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Accordion from '@material-ui/core/Accordion';
@@ -145,51 +146,51 @@ class Offer extends Component {
 
     if (this.state.name === "") {
       this.setState({nameError: true})
-      errMsgs.push("tytuł oferty nie może byc pusty")
+      errMsgs.push(Lang.OFFER_TITLE_CANT_BE_EMPTY)
       validSuccess = false
     }
 
     if (this.state.category === "") {
       this.setState({categoryError: true, detailsExpanded: true})
-      errMsgs.push("musisz wybrać kategorię produktu")
+      errMsgs.push(Lang.NEED_SELECT_CATEGORY)
       validSuccess = false
     }
 
     if (this.state.price === "") {
       this.setState({priceError: true, detailsExpanded: true})
-      errMsgs.push("musisz podać cenę produktu")
+      errMsgs.push(Lang.NEED_PROVIDE_PRICE)
       validSuccess = false
     } else if (isNaN(parseInt(this.state.price, "10"))) {
-      errMsgs.push("podana cena jest nieprawidłowa")
+      errMsgs.push(Lang.WRONG_PRICE)
       validSuccess = false
     }
 
     if (this.state.unit === "") {
-      errMsgs.push("musisz wybrać jednostkę")
+      errMsgs.push(Lang.NEED_SELECT_UNIT)
       this.setState({unitError: true, detailsExpanded: true})
       validSuccess = false
     }
 
     if (this.state.description === "") {
-      errMsgs.push("musisz dodać opis")
+      errMsgs.push(Lang.NEED_PROVIDE_DESCRIPTION)
       this.setState({descriptionError: true, detailsExpanded: true})
       validSuccess = false
     }
 
     if (this.state.firstLastName === "") {
-      errMsgs.push("musisz podać imię i nazwisko")
+      errMsgs.push(Lang.NEDD_PROVIDE_NAME_LASTNAME)
       this.setState({firstLastNameError: true, contactExpanded: true})
       validSuccess = false
     }
 
     if (this.state.village === null) {
-      errMsgs.push("musisz wybrać miejscowość")
+      errMsgs.push(Lang.NEED_SELECT_VILLAGE)
       this.setState({villageError: true, contactExpanded: true})
       validSuccess = false
     }
 
     if (this.state.homeNumber === "") {
-      errMsgs.push("musisz podać numer domu")
+      errMsgs.push(Lang.NEED_PROVIDE_HOME_NUMBER)
       this.setState({homeNumberError: true, contactExpanded: true})
       validSuccess = false
     }
@@ -197,7 +198,7 @@ class Offer extends Component {
     let phoneDigits = this.state.phone.replace(/[^0-9]/g,"").length
     if (phoneDigits !== PHONE_NUMBER_LENGTH) {
       this.setState({phoneError: true, contactExpanded: true})
-      errMsgs.push(util.format('podany numer telefonu "%s" jest nieprawidłowy', this.state.phone))
+      errMsgs.push(util.format(Lang.WRONG_PHONE_FORMATED, this.state.phone))
       validSuccess = false
     }
 
@@ -302,12 +303,12 @@ class Offer extends Component {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-            <Typography variant="h6">1. Dane</Typography>
+            <Typography variant="h6">1. {Lang.DATA}</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <div className="product-container">
                 <Typography>
-                  Wprowadź szczegóły dotyczące sprzedawanych produktów
+                  {Lang.PASS_ITEM_DETAILS_TEXT}
                 </Typography>
 
                 <div style={{marginTop: 20, display: "flex", width: "100%"}}>
@@ -322,7 +323,7 @@ class Offer extends Component {
                     />
                   </div>
                   <div style={{display: "inline-grid", width: "10%", marginLeft: "20px"}}>
-                    <InputLabel>Kategoria</InputLabel>
+                    <InputLabel>{Lang.CATEGORY}</InputLabel>
                     <Select
                       value={this.state.category}
                       error={this.state.categoryError}
@@ -337,7 +338,7 @@ class Offer extends Component {
                     </Select>
                   </div>
                   <div style={{display: "inline-grid", width: "85px", marginLeft: "20px"}}>
-                    <InputLabel>Cena</InputLabel>
+                    <InputLabel>{Lang.PRICE}</InputLabel>
                     <div style={{display: "flex", width: "100%"}}>
                       <Input
                         // type="number"
@@ -349,11 +350,11 @@ class Offer extends Component {
                           this.setState({ price: val });
                         }}
                       />
-                      <Typography style={{fontSize: 17, paddingTop: 8}}>zł</Typography></div>
+                      <Typography style={{fontSize: 17, paddingTop: 8}}>{Lang.CURRENCY}</Typography></div>
                   </div>
 
                   <div style={{display: "inline-grid", width: "80px", marginLeft: "20px"}}>
-                    <InputLabel>Jednostka</InputLabel>
+                      <InputLabel>{Lang.UNIT}</InputLabel>
                     <Select
                       value={this.state.unit}
                       error={this.state.unitError}
@@ -369,7 +370,7 @@ class Offer extends Component {
                     </Select>
                   </div>
                   <div style={{display: "inline-grid", width: "160px", marginLeft: "40px", marginRight: "10px"}}>
-                    <InputLabel>Dostępna ilość</InputLabel>
+                    <InputLabel>{Lang.AVAILABILITY}</InputLabel>
                     <AvailabilitySlider
                       orientation="horizontal"
                       valueLabelDisplay="off"
@@ -391,7 +392,7 @@ class Offer extends Component {
                     />
                   </div>
                 </div>
-                <InputLabel style={{marginTop: 20}}>opis oferty</InputLabel>
+                  <InputLabel style={{marginTop: 20}}>{Lang.PRODUCT_DESCRIPTION}</InputLabel>
                 <TextField
                   variant="outlined"
                   value={this.state.description}
@@ -418,7 +419,7 @@ class Offer extends Component {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-            <Typography variant="h6">2. Zdjęcia</Typography>
+            <Typography variant="h6">2. {Lang.PHOTOS}</Typography>
             </AccordionSummary>
             <AccordionDetails>
             <div className="product-container">
@@ -437,10 +438,13 @@ class Offer extends Component {
                   withPreview={true}
                   buttonText='Choose images'
                   onChange={(pictures) => { this.onUpload(pictures)}}
-                  imgExtension={['.jpg', 'jpeg', '.gif', '.png', '.gif']}
-                  maxFileSize={5242880}
+                  imgExtension={['.jpg', 'jpeg', '.png']}
+                  maxFileSize={10000000}
                   fileContainerStyle={{background: "1px solid red"}}
                   defaultImages={this.state.defaultImages}
+                  label={Lang.IMAGE_UPLOADER_LABEL}
+                  buttonText={Lang.IMAGE_UPLOADER_BUTTON_LABEL}
+                  fileTypeError={Lang.IMAGE_UPLOADER_WRONG_EXTENSION}
                 />
               
               </div>
@@ -449,12 +453,12 @@ class Offer extends Component {
                 {this.state.uploads.ongoing.length > 0 && <LinearProgress/>}
                 {this.state.uploads.ongoing.map((v, k) => {
                   return (
-                    <Typography key={k} style={{fontSize: "12px"}}>uploading "{v}"...</Typography>
+                    <Typography key={k} style={{fontSize: "12px"}}>{Lang.UPLOADING} "{v}"...</Typography>
                   )
                 })}
                 {this.state.uploads.failed.map((v, k) => {
                   return (
-                  <Typography key={k} style={{fontSize: "12px", color: "red"}}>Upload failed: {JSON.stringify(v)}</Typography>
+                  <Typography key={k} style={{fontSize: "12px", color: "red"}}>{Lang.UPLOAD_FAILED}: {JSON.stringify(v)}</Typography>
                   )
                 })}
               </div>         
@@ -472,16 +476,16 @@ class Offer extends Component {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-            <Typography variant="h6">3. Odbiór</Typography>
+            <Typography variant="h6">3. {Lang.RECEIPT}</Typography>
             </AccordionSummary>
             <AccordionDetails>
             <div className="product-container">
               <Typography>
-                Wprowadź szczegóły dotyczące sprzedawanych produktów
+                {Lang.RECEIPT_ADDRESS_DETAILS_TEXT}
               </Typography>
 
               <div style={{marginTop: 20, display: "inline-grid", width: "200px"}}>
-                <InputLabel>Imię i nazwisko</InputLabel>
+                <InputLabel>{Lang.FIRST_LAST_NAME}</InputLabel>
                 <Input
                   value={this.state.firstLastName}
                   error={this.state.firstLastNameError}
@@ -493,7 +497,7 @@ class Offer extends Component {
               
               <div style={{marginTop: 20, display: "flex", width: "100%"}}>
                 <div style={{display: "inline-grid", width: "210px"}}>
-                  <InputLabel>Miejscowość</InputLabel>
+                  <InputLabel>{Lang.VILLAGE}</InputLabel>
                   <Autocomplete
                     value={this.state.village}
                     onChange={(e, v) => {
@@ -504,7 +508,7 @@ class Offer extends Component {
                   />
                 </div>
                 <div style={{display: "inline-grid", width: "100px", marginLeft: "20px"}}>
-                  <InputLabel>Numer domu</InputLabel>
+                  <InputLabel>{Lang.HOME_NUMBER}</InputLabel>
                   <Input
                     style={{width: "50px"}}
                     value={this.state.homeNumber}
@@ -518,7 +522,7 @@ class Offer extends Component {
 
               <div style={{marginTop: 20, display: "inline-grid", width: "100"}}>
                  
-                <InputLabel>Phone</InputLabel>
+                <InputLabel>{Lang.PHONE}</InputLabel>
                 <MuiPhoneInput
                   countryCodeEditable={false}
                   defaultCountry='pl'
@@ -551,13 +555,11 @@ class Offer extends Component {
                 }
                 label={
                   <Typography  style={{fontSize: 13}}>
-                    Użyj tych danych przy dodawaniu kolejnej oferty.
+                    {Lang.REMEMBER_ADDRESS_TEXT}
                   </Typography>
                 }
                 />
               </div>
-
-
             </div>
             </AccordionDetails>
           </Accordion>
@@ -584,8 +586,10 @@ class Offer extends Component {
           >
             Powrót
           </Button>
-          {AlertDialog("Powrócić?",
-              `Wprowadzone zmiany nie zostaną zapisane. Czy chcesz kontynuować?`,
+          {AlertDialog(Lang.ALERT_DIALOG_RETURN_BACK,
+              Lang.ALERT_DIALOG_ABANDON_CHANGES_TEXT,
+              Lang.CANCEL,
+              Lang.ACCEPT,
               this.state.abortDialogOpen,
               this.handleAbortDialogClose,
               this.handleAbort,

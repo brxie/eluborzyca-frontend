@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Login.css";
+import * as Lang from '../../LangPL';
 import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import User from "../../ApiClient/User";
@@ -74,22 +75,22 @@ class ConnectedLogin extends Component {
   validateRegisterForm(){
     if (EmailValidator.validate(this.state.registUserEmail) === false) {
       this.setState({registUserEmailError: true})
-      throw new Error("Wrong email format");
+      throw new Error(Lang.WRONG_EMAIL_FORMAT);
     }
 
     if (this.state.registPass !== this.state.registSecPass) {
       this.setState({registPassError: true, registSecPassError: true})
-      throw new Error("Password don't match");
+      throw new Error(Lang.PASSWORD_DONT_MATCH);
     }
 
     if (this.state.registPass === '') {
       this.setState({registPassError: true})
-      throw new Error("Password can't be empty");
+      throw new Error(Lang.PASSWORD_CANT_BE_EMPTY);
     }
 
     if (this.state.rulesCheckbox === false) {
       this.setState({rulesCheckboxError: true})
-      throw new Error("You need to accept rules");
+      throw new Error(Lang.NEED_ACCEPT_RULES);
     }
   }
 
@@ -129,12 +130,12 @@ class ConnectedLogin extends Component {
   validateLoginForm() {
     if (this.state.email === '') {
       this.setState({emailError: true})
-      throw new Error("User name can't be empty");
+      throw new Error(Lang.USER_CANT_BE_EMPTY);
     }
 
     if (this.state.pass === '') {
       this.setState({passError: true})
-      throw new Error("Password can't be empty");
+      throw new Error(Lang.PASSWORD_CANT_BE_EMPTY);
     }
   }
 
@@ -160,7 +161,7 @@ class ConnectedLogin extends Component {
             <Avatar style={{ marginBottom: 10 }}>
               <LockOutlinedIcon />
             </Avatar>
-            <div className="text-header">Logowanie</div>
+            <div className="text-header">{Lang.LOGIN}</div>
             <FormControl>
               <InputLabel>E-mail</InputLabel>
               <Input
@@ -181,7 +182,7 @@ class ConnectedLogin extends Component {
             </FormControl>
 
               <FormControl>
-                <InputLabel>Password</InputLabel>
+              <InputLabel>{Lang.PASSWORD}</InputLabel>
                 <Input
                   type={this.state.showPass ? 'text' : 'password'}
                   value={this.state.pass}
@@ -220,24 +221,25 @@ class ConnectedLogin extends Component {
                 this.handleLogin();
               }}
             >
-              Zaloguj
+              {Lang.SIGN_IN}
             </Button>
             <div style={{ width: 280 }}>
               {
-                (this.state.wrongCred && (<h5 style={{ color: "red" }}>Wrong email and/or password</h5>)) || 
-                (this.state.loginError && <h5 style={{ color: "red" }}>Login failed: {this.state.loginError}</h5>)
+                (this.state.wrongCred && (<h5 style={{ color: "red" }}>{Lang.WRONG_EMAIL_PASSWORD}</h5>)) || 
+                (this.state.loginError && <h5 style={{ color: "red" }}>{Lang.LOGIN_FAILED}: {this.state.loginError}</h5>)
               }
             </div>
           </div>
             <div className="screen-divider"></div>
               <div className="input-panel register-panel">
-              <div className="text-header">Jesteś tu po raz pierwszy? Załóż konto</div>
+              <div className="text-header">{Lang.FIRST_TIME_HERE}</div>
               <div className="text-area">
-                <p>Rejestrując się zyskujesz:</p>
+                <p>{Lang.REGISTER_DESC_TITLE}:</p>
                 <ul>
-                  <li>możliwość śledzenia statusu zamówienia</li>
-                  <li>dostęp do historii zamówień</li>
-                  <li>szybki i wygodny proces składania kolejnych zamówień</li>
+                  {Lang.REGISTER_DESC_BODY.split('\n').map((line, i) => {
+                      return(<li>{line}</li>)
+                    })
+                  }
                 </ul>
               </div>
               <FormControl>
@@ -255,7 +257,7 @@ class ConnectedLogin extends Component {
               </FormControl>
                 <div style={{marginTop: 10}}></div>
               <FormControl>
-                <InputLabel>Password</InputLabel>
+                <InputLabel>{Lang.PASSWORD}</InputLabel>
                 <Input
                   type={this.state.showRegistPass ? 'text' : 'password'}
                   value={this.state.registPass}
@@ -281,7 +283,7 @@ class ConnectedLogin extends Component {
                 />
               </FormControl>
               <FormControl>
-                <InputLabel>Repeat Password</InputLabel>
+                  <InputLabel>{Lang.REPEAT_PASSWORD}</InputLabel>
                 <Input
                   type={this.state.showRegistSecPass ? 'text' : 'password'}
                   value={this.state.registSecPass}
@@ -319,7 +321,7 @@ class ConnectedLogin extends Component {
                 }
                 label={
                   <Typography  style={{fontSize: 13}}>
-                     Zapoznałem się z regulaminem
+                     {Lang.IVE_READ_POLICY}
                   </Typography>
               }
                 style={{ marginTop: 10, fontSize: 4}}/>
@@ -331,7 +333,7 @@ class ConnectedLogin extends Component {
                   this.handleRegisterUser();
                 }}
               >
-                Zarejestruj się
+                {Lang.SIGN_UP}
               </Button>
               {this.state.registError && <h5 style={{ color: "red" }}>Registration failed: {this.state.registError}</h5>}
               {this.state.registSuccessed && <h5 style={{ color: "green" }}>Please open confirmation email to finish registration</h5>}

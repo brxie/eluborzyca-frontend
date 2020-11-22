@@ -1,4 +1,6 @@
 import Items from '../ApiClient/Items'
+import * as Lang from '../LangPL';
+
 
 
 async function newItem(item) {
@@ -105,7 +107,7 @@ function searchItems({
           }
           
           console.log("item: " + JSON.stringify(item))
-          if (category !== "All categories" && category !== item.category &&
+          if (category !== Lang.ALL_CATEGORIES && category !== item.category &&
               village !== item.village && seller !== item.firstLastName) {
             return false;
           }

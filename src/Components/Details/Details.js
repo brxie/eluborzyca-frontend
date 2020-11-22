@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "./Details.css";
+import * as Lang from '../../LangPL';
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { addItemInCart } from "../../Redux/Actions";
 import { searchItems } from "../../Model/Items";
 import { getItem } from "./../../Model/Items";
 import Item from "../Item/Item";
@@ -27,7 +27,7 @@ class ConnectedDetails extends Component {
       quantity: 1,
       item: null,
       itemLoading: false,
-      phoneButtonLabel: "Zadzwoń"
+      phoneButtonLabel: Lang.CALL
     };
   }
 
@@ -116,9 +116,9 @@ class ConnectedDetails extends Component {
           // border: "1px solid red",
         }}>
           <div className="item-contact-container">
-            <div className="item-contact-entry">Cena: {this.state.item.price.toFixed(2)} zł</div>
+            <div className="item-contact-entry">{Lang.PRICE}: {parseFloat(this.state.item.price).toFixed(2)} {Lang.CURRENCY}</div>
             <div className="item-contact-entry" style={{display: "flex", marginTop: "-5px", alignItems: "center"}}>
-              Dostępność: 
+              {Lang.AVAILABILITY}: 
               <Typography 
                 style={{fontWeight: "bold",
                         color: quantitySliderColors[this.state.item.availability],
@@ -127,8 +127,8 @@ class ConnectedDetails extends Component {
                 {quantitySliderLabels[this.state.item.availability]}
               </Typography>
             </div>
-            <div className="item-contact-entry">Sprzedający: {this.state.item.firstLastName}</div>
-            <div className="item-contact-entry">Adres: {this.state.item.village} {this.state.item.homeNumber}</div>
+            <div className="item-contact-entry">{Lang.SELLER}: {this.state.item.firstLastName}</div>
+            <div className="item-contact-entry">{Lang.ADDRESS}: {this.state.item.village} {this.state.item.homeNumber}</div>
             <Divider/>
             <Button
               style={{ width: 170, marginTop: 15 }}
@@ -152,7 +152,7 @@ class ConnectedDetails extends Component {
             fontSize: 22
           }}
         >
-          Product Description
+          {Lang.PRODUCT_DESCRIPTION}
         </div>
         <div
           className="box-shadow"
@@ -170,7 +170,7 @@ class ConnectedDetails extends Component {
                   ? minDescriptionLines
                   : this.getNumberOfLines(this.state.item.description) + 3
                  }
-            style={{marginTop: 5, width: "98%", border: "None"}}
+            style={{marginTop: 5, width: "98%"}}
           />
         </div>
         {/* Relateditems */}
@@ -181,7 +181,7 @@ class ConnectedDetails extends Component {
             fontSize: 22
           }}
         >
-          Related Items
+          {Lang.RELATED_ITEMS}
         </div>
         {this.state.relatedItems.slice(0, 3).map(x => {
           return <Item key={x.id} item={x} />;
