@@ -200,7 +200,7 @@ class ConnectedLogin extends Component {
                       <IconButton
                         onClick={e => {
                           this.setState({ showPass: !this.state.showPass });
-                        }}
+                        }} 
                         onMouseDown={e => {
                           e.preventDefault();
                         }}

@@ -145,14 +145,21 @@ class ConnectedHeader extends Component {
                 Zaloguj
               </Button>
             ) : (
-              <Avatar
+            
+              <IconButton
+                variant="outlined"
                 onClick={event => {
                   this.setState({ anchorEl: event.currentTarget });
                 }}
-                style={{ backgroundColor: "#3f51b5", marginRight: 10 }}
+                style={{ fontSize: '17px', backgroundColor: 'transparent' }}
               >
-                <Person />
-              </Avatar>
+                Mój ebazarek
+                <Avatar
+                  style={{ backgroundColor: "#3f51b5", marginLeft: 10 }}
+                >
+                  <Person />
+                </Avatar>
+              </IconButton>
             )}
             <Menu
               anchorEl={anchorEl}
@@ -161,9 +168,18 @@ class ConnectedHeader extends Component {
                 this.setState({ anchorEl: null });
               }}
             >
-              
-              
-              <div style={{display: "flex", justifyContent: "center", padding: 5, fontWeight: "bold"}}>{this.props.loggedInUser ? this.props.loggedInUser.email : ""}</div>
+              <div style={{
+                display: "flex",
+                justifyContent: "center",
+                paddingTop: 10,
+                paddingBottom: 15,
+                minWidth: 150,
+                color: "rgba(0, 0, 0, 0.54)",
+                fontWeight: "bold"}}>
+                  <div style={{marginRight: 5, marginLeft: 5, fontSize: "15px"}}>
+                    {this.props.loggedInUser ? this.props.loggedInUser.email : ""}
+                  </div>
+                </div>
               
               
               <Divider />
