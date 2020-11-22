@@ -59,7 +59,9 @@ class ConnectedItem extends Component {
                 textOverflow: "ellipsis"
               }}
             >
-              {this.props.item.name}
+              <div style={{display: "flex", alignItems: "center"}}>
+                {this.props.item.name}
+              </div>
             </div>
             <div style={{ margin: 5, display: "flex", alignItems: "center" }}>
               Cena:<Typography style={{fontSize: 13, fontWeight: "bold", color: "green", marginLeft: 5}}>
@@ -77,9 +79,6 @@ class ConnectedItem extends Component {
               </Typography>
             
             </div>
-            {/* <div style={{ color: "#1a9349", fontWeight: "bold", margin: 5 }}>
-              {this.props.item.popular && "Popular"}
-            </div> */}
           </CardContent>
         </CardActionArea>
         <CardActions >

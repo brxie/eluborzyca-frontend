@@ -100,7 +100,7 @@ function searchItems({
             return false;
           }
 
-          if (category === "popular" && village === "") {
+          if (category === "popular" && village === null && seller === null) {
             return item.popular;
           }
           

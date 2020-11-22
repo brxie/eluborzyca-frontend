@@ -15,7 +15,6 @@ class ProductsHeader extends Component {
 
   render() {
     let { parsedQueryStr, totalItemsCount, updateQueryStr } = this.props;
-    console.log("parsedQueryStr: " + JSON.stringify(parsedQueryStr))
     const filterLabels = {category: "", village: "miejscowość: ", seller: "sprzedający: "}
 
     // Lot of values come from the query string.
@@ -58,45 +57,48 @@ class ProductsHeader extends Component {
             {subtitle}
           </div>
 
-          <FormControlLabel
-            control={
-              <Checkbox
-                color="primary"
-                checked={usePriceFilter}
-                onChange={e => {
-                  updateQueryStr({
-                    usePriceFilter: e.target.checked,
-                    page: 1
-                  });
-                }}
-              />
-            }
-            label="Filter by price"
-          />
-          {usePriceFilter && (
-            <Tooltip title="Click to change range" disableFocusListener>
-              <Button
-                variant="outlined"
-                style={{ marginRight: 20 }}
-                onClick={() => {
-                  this.setState({
-                    openPriceDialog: true
-                  });
-                }}
-              >
-                {`${minPrice}zł-${maxPrice}zł`}
-              </Button>
-            </Tooltip>
-          )}
-          <Select
-            value={sortValue}
-            onChange={e => {
-              updateQueryStr({ sortValue: e.target.value });
-            }}
-          >
-            <MenuItem value={"lh"}>Sort by price: low to high</MenuItem>
-            <MenuItem value={"hl"}>Sort by price: high to low</MenuItem>
-          </Select>
+          
+          <div style={{display: "inline-grid", padding: 15, marginRight: 20}} className="box-shadow">
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="primary"
+                  checked={usePriceFilter}
+                  onChange={e => {
+                    updateQueryStr({
+                      usePriceFilter: e.target.checked,
+                      page: 1
+                    });
+                  }}
+                />
+              }
+              label="Filter by price"
+            />
+            {usePriceFilter && (
+              <Tooltip title="Click to change range" disableFocusListener>
+                <Button
+                  variant="outlined"
+                  style={{ marginRight: 20 }}
+                  onClick={() => {
+                    this.setState({
+                      openPriceDialog: true
+                    });
+                  }}
+                >
+                  {`${minPrice}zł-${maxPrice}zł`}
+                </Button>
+              </Tooltip>
+            )}
+            <Select
+              value={sortValue}
+              onChange={e => {
+                updateQueryStr({ sortValue: e.target.value });
+              }}
+            >
+              <MenuItem value={"lh"}>Sort by price: low to high</MenuItem>
+              <MenuItem value={"hl"}>Sort by price: high to low</MenuItem>
+            </Select>
+          </div>
         </div>
 
         {/* This is dialog which opens up for setting price filter */}

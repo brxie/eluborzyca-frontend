@@ -1,15 +1,17 @@
 import React, { Component } from "react";
+import "./Details.css";
 import Button from "@material-ui/core/Button";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { addItemInCart } from "../../Redux/Actions";
 import { searchItems } from "../../Model/Items";
 import { getItem } from "./../../Model/Items";
 import Item from "../Item/Item";
 import { connect } from "react-redux";
-import TextField from "@material-ui/core/TextField";
 import Gallery from 'react-grid-gallery';
 import CustomizedInput from './CustomizedInput'
+import { quantitySliderLabels, quantitySliderColors } from "../../Constants";
 
 
 const minDescriptionLines = 8
@@ -24,7 +26,8 @@ class ConnectedDetails extends Component {
       relatedItems: [],
       quantity: 1,
       item: null,
-      itemLoading: false
+      itemLoading: false,
+      phoneButtonLabel: "Zadzwoń"
     };
   }
 
@@ -110,54 +113,32 @@ class ConnectedDetails extends Component {
           flex: 1,
           display: "flex",
           alignItems: "flex-end",
-          // border: "1px solid red"
+          // border: "1px solid red",
         }}>
-          <div
-              style={{
-                flex: 1,
-                display: "flex",
-                flexDirection: "column",
-                marginRight: 20
-                // border: "1px solid red",
+          <div className="item-contact-container">
+            <div className="item-contact-entry">Cena: {this.state.item.price.toFixed(2)} zł</div>
+            <div className="item-contact-entry" style={{display: "flex", marginTop: "-5px", alignItems: "center"}}>
+              Dostępność: 
+              <Typography 
+                style={{fontWeight: "bold",
+                        color: quantitySliderColors[this.state.item.availability],
+                        marginLeft: 5}}
+              >
+                {quantitySliderLabels[this.state.item.availability]}
+              </Typography>
+            </div>
+            <div className="item-contact-entry">Sprzedający: {this.state.item.firstLastName}</div>
+            <div className="item-contact-entry">Adres: {this.state.item.village} {this.state.item.homeNumber}</div>
+            <Divider/>
+            <Button
+              style={{ width: 170, marginTop: 15 }}
+              color="primary"
+              variant="outlined"
+              onClick={() => {
+                this.setState({ phoneButtonLabel: this.state.item.phone });
               }}
-            >
-              <div
-                style={{
-                  fontSize: 16,
-                }}
               >
-                Price: {this.state.item.price} zł
-              </div>
-              {this.state.item.popular && (
-                <div style={{ fontSize: 14, marginTop: 5, color: "rgba(0, 0, 0, 0.87)"}}>
-                  (Popular product)
-                </div>
-              )}
-
-              <TextField
-                type="number"
-                value={this.state.quantity}
-                style={{ marginTop: 20, marginBottom: 10, width: 70 }}
-                label="Quantity"
-                inputProps={{ min: 1, max: 10, step: 1 }}
-                onChange={e => {
-                  this.setState({ quantity: parseInt(e.target.value) });
-                }}
-              />
-              <Button
-                style={{ width: 170, marginTop: 5 }}
-                color="primary"
-                variant="outlined"
-                onClick={() => {
-                  this.props.dispatch(
-                    addItemInCart({
-                      ...this.state.item,
-                      quantity: this.state.quantity
-                    })
-                  );
-                }}
-              >
-                Add to Cart <AddShoppingCartIcon style={{ marginLeft: 5 }} />
+                {this.state.phoneButtonLabel}
               </Button>
             </div>
           </div>
@@ -174,6 +155,7 @@ class ConnectedDetails extends Component {
           Product Description
         </div>
         <div
+          className="box-shadow"
           style={{
             fontSize: 13,
             overflow: "auto"
@@ -186,9 +168,9 @@ class ConnectedDetails extends Component {
             multiline
             rows={this.getNumberOfLines(this.state.item.description) < minDescriptionLines
                   ? minDescriptionLines
-                  : this.getNumberOfLines(this.state.item.description) + 1
+                  : this.getNumberOfLines(this.state.item.description) + 3
                  }
-            style={{marginTop: 5, width: "98%"}}
+            style={{marginTop: 5, width: "98%", border: "None"}}
           />
         </div>
         {/* Relateditems */}
