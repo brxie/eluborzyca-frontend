@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as Lang from '../../LangPL';
 import { NavLink } from "react-router-dom";
 import "./Footer.css";
 
@@ -20,10 +21,10 @@ class Footer extends Component {
           <div
             style={{ color: "#504F5A", fontWeight: "bold", marginBottom: 10 }}
           >
-            Buy
+            {Lang.HELP}
           </div>
           <NavLink
-            to={"/payment"}
+            to={"/faq"}
             exact
             style={{
               textDecoration: "none",
@@ -34,31 +35,17 @@ class Footer extends Component {
               textDecoration: "underline"
             }}
           >
-            <div className="footerItem">Terms of payment</div>
-          </NavLink>
-          <NavLink
-            to={"/delivery"}
-            exact
-            style={{
-              textDecoration: "none",
-              color: "rgb(32, 32, 34)"
-            }}
-            activeStyle={{
-              color: "#4282ad",
-              textDecoration: "underline"
-            }}
-          >
-            <div className="footerItem">Delivery</div>
+            <div className="footerItem">FAQ</div>
           </NavLink>
         </div>
         <div>
           <div
             style={{ color: "#504F5A", fontWeight: "bold", marginBottom: 10 }}
           >
-            About us
+            {Lang.INFO}
           </div>
           <NavLink
-            to={"/info"}
+            to={"/contact"}
             exact
             style={{
               textDecoration: "none",
@@ -69,7 +56,21 @@ class Footer extends Component {
               textDecoration: "underline"
             }}
           >
-            <div className="footerItem">Company Info</div>
+            <div className="footerItem">{Lang.CONTACT}</div>
+          </NavLink>
+          <NavLink
+            to={"/privacy-policy"}
+            exact
+            style={{
+              textDecoration: "none",
+              color: "rgb(32, 32, 34)"
+            }}
+            activeStyle={{
+              color: "#4282ad",
+              textDecoration: "underline"
+            }}
+          >
+            <div className="footerItem">{Lang.PRIVACY_POLICY}</div>
           </NavLink>
         </div>
         <div>

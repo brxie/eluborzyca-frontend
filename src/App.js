@@ -10,6 +10,9 @@ import Offer from "./Components/Offers/Offers";
 import NewOffer from "./Components/Offer/NewOffer";
 import EditOffer from "./Components/Offer/EditOffer";
 import Login from "./Components/Login/Login";
+import FAQ from "./Components/FAQ/FAQ";
+import Contact from "./Components/Contact/Contact";
+import PrivacyPolicy from "./Components/PrivacyPolicy/PrivacyPolicy";
 import AccountSettings from "./Components/AccountSettings/AccountSettings";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import Footer from "./Components/Footer/Footer";
@@ -61,6 +64,9 @@ class App extends Component {
               <Route path="/" exact component={ProductList} />
               <Route path="/details/:id" component={Details} />
               <Route path="/login" component={Login} />
+              <Route path="/faq" component={FAQ} />
+              <Route path="/contact" component={Contact} />
+              <Route path="/privacy-policy" component={PrivacyPolicy} />
               <ProtectedRoute path="/account-settings" component={AccountSettings} />
               <ProtectedRoute path="/offers" component={Offer} />
               <ProtectedRoute path="/new-offer" component={NewOffer} />

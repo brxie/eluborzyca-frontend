@@ -84,4 +84,8 @@ module.exports = {
     FOR: 'dla',
     SETTINGS: 'Ustawienia',
     LOGOUT: 'Wyloguj',
+    CONTACT: 'Kontakt',
+    INFO: 'Informacje',
+    HELP: 'Pomoc',
+    PRIVACY_POLICY: 'Polityka prywatności',
 }

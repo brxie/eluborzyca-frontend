@@ -70,7 +70,7 @@ class ConnectedMenu extends Component {
               >
                 <ListItem dense button>
                   <ListItemIcon>
-                    <Icon>{x.icon}}</Icon>
+                    <Icon>{x.icon}</Icon>
                   </ListItemIcon>
                   <ListItemText
                     disableTypography
