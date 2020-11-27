@@ -436,7 +436,6 @@ class Offer extends Component {
                   withIcon={!this.renderOpts.uploadPreviewOnly}
                   withLabel={!this.renderOpts.uploadPreviewOnly}
                   withPreview={true}
-                  buttonText='Choose images'
                   onChange={(pictures) => { this.onUpload(pictures)}}
                   imgExtension={['.jpg', 'jpeg', '.png']}
                   maxFileSize={10000000}

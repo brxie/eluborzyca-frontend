@@ -32,7 +32,7 @@ class ProductsHeader extends Component {
       <div>
         <span style={{ fontSize: 12, color: "gray" }}>
           {Lang.FOUND + ": " +  totalItemsCount +
-            (keyword ? Lang.FOR + " " : "")}
+            (keyword ? " " + Lang.FOR + " " : "")}
         </span>
         {keyword && (
           <span

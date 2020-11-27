@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import { Typography } from "@material-ui/core";
-
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // This component shows the items user checked out from the cart.
 class ConnectedPrivacyPolicy extends Component {
@@ -236,7 +230,7 @@ class ConnectedPrivacyPolicy extends Component {
           </ol>
           <p style={{marginBottom: "0cm", textAlign: "left"}} align="left"></p>
           <p style={{textAlign: "left"}} align="center"><strong>Administrator danych osobowych</strong></p>
-          <p style={{marginBottom: "0cm", textAlign: "left"}}><a name="pp-kontakt-iod"></a>Kontakt w sprawach związanych z Przetwarzaniem danych osobowych</p>
+          <p style={{marginBottom: "0cm", textAlign: "left"}}>Kontakt w sprawach związanych z Przetwarzaniem danych osobowych</p>
           <ul style={{textAlign: "left"}}>
             <ul>
               <li>

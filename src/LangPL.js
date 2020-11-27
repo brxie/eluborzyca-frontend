@@ -29,7 +29,6 @@ module.exports = {
     ACTIVE: 'Aktywne',
     PRICE: "Cena",
     NAME: "Nazwa",
-    PRICE: "Cena",
     AVAILABILITY: "Dostępność",
     QUANTITY: "Ilość",
     FIRST_LAST_NAME: 'Imię i nazwisko',
@@ -88,4 +87,6 @@ module.exports = {
     INFO: 'Informacje',
     HELP: 'Pomoc',
     PRIVACY_POLICY: 'Polityka prywatności',
+    COOKIE_POLICY: 'Polityka cookie',
+    COOKIE_MESSAGE: 'Ta strona wykorzystuje plikie cookie. Jeśli nie wyrażasz zgody, zmień ustawienia swojej przeglądarki.',
 }

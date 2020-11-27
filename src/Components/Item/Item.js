@@ -4,7 +4,7 @@ import * as Lang from '../../LangPL';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Card from "@material-ui/core/Card";
-import { CardActionArea, Typography, Collapse, Tooltip } from "@material-ui/core";
+import { CardActionArea, Typography, Tooltip } from "@material-ui/core";
 import { quantitySliderLabels, quantitySliderColors } from "../../Constants";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";

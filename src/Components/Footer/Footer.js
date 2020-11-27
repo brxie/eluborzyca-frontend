@@ -37,13 +37,6 @@ class Footer extends Component {
           >
             <div className="footerItem">FAQ</div>
           </NavLink>
-        </div>
-        <div>
-          <div
-            style={{ color: "#504F5A", fontWeight: "bold", marginBottom: 10 }}
-          >
-            {Lang.INFO}
-          </div>
           <NavLink
             to={"/contact"}
             exact
@@ -58,6 +51,13 @@ class Footer extends Component {
           >
             <div className="footerItem">{Lang.CONTACT}</div>
           </NavLink>
+        </div>
+        <div>
+          <div
+            style={{ color: "#504F5A", fontWeight: "bold", marginBottom: 10 }}
+          >
+            {Lang.INFO}
+          </div>
           <NavLink
             to={"/privacy-policy"}
             exact
@@ -71,6 +71,20 @@ class Footer extends Component {
             }}
           >
             <div className="footerItem">{Lang.PRIVACY_POLICY}</div>
+          </NavLink>
+          <NavLink
+            to={"/cookie-policy"}
+            exact
+            style={{
+              textDecoration: "none",
+              color: "rgb(32, 32, 34)"
+            }}
+            activeStyle={{
+              color: "#4282ad",
+              textDecoration: "underline"
+            }}
+          >
+            <div className="footerItem">{Lang.COOKIE_POLICY}</div>
           </NavLink>
         </div>
         <div>

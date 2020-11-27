@@ -2,11 +2,6 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import { Typography } from "@material-ui/core";
-
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // This component shows the items user checked out from the cart.
 class ConnectedContact extends Component {
