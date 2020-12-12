@@ -1,5 +1,6 @@
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import * as Lang from '../../LangPL';
 import Offer from './Offer'
 import { getItem, updateItem } from "./../../Model/Items";
 
@@ -7,8 +8,8 @@ import { getItem, updateItem } from "./../../Model/Items";
 class ConnectedEditOffer extends Offer {
 
   constructor(props) {
-    let renderOpts = {titleText: "Edycja",
-                      actionBttnLabel: "Zapisz",
+    let renderOpts = {titleText: Lang.EDITION,
+                      actionBttnLabel: Lang.SAVE,
                       uploadPreviewOnly: true}
     super(props, renderOpts);
     this.offerId = props.history.location.state.offerId
@@ -19,14 +20,14 @@ class ConnectedEditOffer extends Offer {
     let item = await getItem(this.offerId)  
 
     var images = []
-    for (let img of item.imageUrls) {
+    for (let img of item.images) {
       images.push(img.thumbnail)
     }
 
     this.setState({
       name:               item.name,
       category:           item.category,
-      price:              item.price,
+      price:              item.price.toString(),
       unit:               item.unit,
       availability:       item.availability,
       description:        item.description,
@@ -46,11 +47,12 @@ class ConnectedEditOffer extends Offer {
       return
     }
 
+
     // API request
     let item = {
       name: this.state.name,
       category: this.state.category,
-      price: this.state.price,
+      price: parseInt((parseFloat(this.state.price.replace(',', '.'))*100).toFixed(0)),
       unit: this.state.unit,
       availability: this.state.availability,
       description: this.state.description,

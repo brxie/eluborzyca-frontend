@@ -48,7 +48,7 @@ class ConnectedItem extends Component {
         >
           <CardMedia
             style={{ height: 120 }}
-            image={this.props.item.imageUrls[0].thumbnail}
+            image={this.props.item.images[0].thumbnail}
           />
           <CardContent style={{ height: 50 }}>
             <div
@@ -73,10 +73,10 @@ class ConnectedItem extends Component {
               <Typography 
                 style={{fontSize: 13,
                         fontWeight: "bold",
-                        color: quantitySliderColors[this.props.item.availability],
+                        color: quantitySliderColors[this.props.item.availability-1],
                         marginLeft: 5}}
               >
-                {quantitySliderLabels[this.props.item.availability]}
+                {quantitySliderLabels[this.props.item.availability-1]}
               </Typography>
             
             </div>

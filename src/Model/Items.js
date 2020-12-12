@@ -1,11 +1,12 @@
 import Items from '../ApiClient/Items'
+import Item from '../ApiClient/Item'
 import * as Lang from '../LangPL';
 
 
 
 async function newItem(item) {
     try {
-        var resp = Items.itemPost(item)
+        var resp = Item.itemPost(item)
     } catch (error) {
         console.log("Create item error: " + JSON.stringify(error))
         throw new Error('Create item failed: ' + resp.statusText)
@@ -20,27 +21,42 @@ async function newItem(item) {
     }
 
     async function updateItem(id, item) {
-    try {
-        var resp = Items.itemPut(id, item)
-    } catch (error) {
-        console.log("Update item error: " + JSON.stringify(error))
-        throw new Error('Update item failed: ' + resp.statusText)
+      try {
+          var resp = Item.itemPut(id, item)
+      } catch (error) {
+          console.log("Update item error: " + JSON.stringify(error))
+          throw new Error('Update item failed: ' + resp.statusText)
+      }
+
+      var r = (await resp)
+      if((r.status)!== 200) {
+          throw new Error('Update item failed: ' + r.statusText + ", " +
+                          JSON.stringify(r.data))
+      }
+      return r.data
     }
 
-    var r = (await resp)
-    if((r.status)!== 200) {
-        throw new Error('Update item failed: ' + r.statusText + ", " +
-                        JSON.stringify(r.data))
-    }
-    return r.data
+    async function activateItem(id, item) {
+      try {
+          var resp = Item.itemPatch(id, item)
+      } catch (error) {
+          console.log("Activate/deactivate item error: " + JSON.stringify(error))
+          throw new Error('Activate/deactivate item failed: ' + resp.statusText)
+      }
+
+      var r = (await resp)
+      if((r.status)!== 200) {
+          throw new Error('Activate/deactivate item failed: ' + r.statusText + ", " +
+                          JSON.stringify(r.data))
+      }
+      return r.data
     }
 
     async function getItems(includeInactive) {
     try {
         let resp = await Items.itemsGet();
-
         if (includeInactive) {
-        return resp.data
+          return resp.data
         }
         return resp.data.filter(x => x.active)
     } catch (error) {
@@ -49,13 +65,13 @@ async function newItem(item) {
 }
 
 async function getItem(id) {
-    let resp = await Items.itemGet(id);
+    let resp = await Item.itemGet(id);
     return resp.data
 }
 
 async function deleteItem(id) {
     try {
-        let resp = await Items.itemDelete(id);
+        let resp = await Item.itemDelete(id);
         return resp.data
     } catch (error) {
         console.log("Delete item error: " + JSON.stringify(error))
@@ -129,4 +145,4 @@ function searchItems({
     });
 }
 
-export { newItem, updateItem, getItems, getItem, deleteItem, searchItems };
+export { newItem, updateItem, getItems, getItem, deleteItem, searchItems, activateItem };

@@ -181,8 +181,8 @@ class ConnectedAccountSettings extends Component {
     }
     
     let user = {
-      oldPassword: this.state.oldPass,
-      password: this.state.newPass,
+      password: this.state.oldPass,
+      newPassword: this.state.newPass,
     }
 
     User.userPut(user).then(async (resp)=> {

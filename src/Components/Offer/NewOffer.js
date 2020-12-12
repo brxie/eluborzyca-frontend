@@ -65,7 +65,7 @@ class ConnectedNewOffer extends Offer {
     let item = {
       name: this.state.name,
       category: this.state.category,
-      price: this.state.price,
+      price: parseInt((parseFloat(this.state.price.replace(',', '.'))*100).toFixed(0)),
       unit: this.state.unit,
       availability: this.state.availability,
       description: this.state.description,
@@ -73,7 +73,7 @@ class ConnectedNewOffer extends Offer {
       village: this.state.village,
       homeNumber: this.state.homeNumber,
       phone: this.state.phone,
-      imageUrls: images
+      images: images
     }
 
     newItem(item).then(()=> {

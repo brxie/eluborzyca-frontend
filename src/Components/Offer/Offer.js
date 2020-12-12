@@ -374,21 +374,18 @@ class Offer extends Component {
                     <AvailabilitySlider
                       orientation="horizontal"
                       valueLabelDisplay="off"
-                      min={0}
-                      max={quantitySliderLabels.length-1}
+                      min={1}
+                      max={quantitySliderLabels.length}
                       step={1}
                       value={this.state.availability}
                       onChange={(e, v) => {
                         this.setState({ availability: v });
                       }}
-                      style={{paddingTop: 15, color: quantitySliderColors[this.state.availability]}}
+                      style={{paddingTop: 15, color: quantitySliderColors[this.state.availability-1]}}
                       track={false}
-                      marks={[{value: 0, label: quantitySliderLabels[0]},
-                              {value: quantitySliderLabels.length-1,
+                      marks={[{value: 1, label: quantitySliderLabels[0]},
+                              {value: quantitySliderLabels.length,
                                label: quantitySliderLabels[quantitySliderLabels.length-1]}]}
-                      // marks={quantitySliderLabels.map((label, idx) => {
-                      //   return {value: idx, label: label}
-                      // })}
                     />
                   </div>
                 </div>
@@ -583,7 +580,7 @@ class Offer extends Component {
               this.handleAbortClickOpen()
             }}
           >
-            Powrót
+            {Lang.BACK}
           </Button>
           {AlertDialog(Lang.ALERT_DIALOG_RETURN_BACK,
               Lang.ALERT_DIALOG_ABANDON_CHANGES_TEXT,

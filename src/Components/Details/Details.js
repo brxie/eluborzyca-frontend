@@ -98,7 +98,7 @@ class ConnectedDetails extends Component {
                     // border: "1px solid #ddd",
                     }}>
                 <Gallery
-            images={this.state.item.imageUrls}
+            images={this.state.item.images}
             maxRows={1}
             enableImageSelection={false}
             rowHeight={140}
@@ -121,10 +121,10 @@ class ConnectedDetails extends Component {
               {Lang.AVAILABILITY}: 
               <Typography 
                 style={{fontWeight: "bold",
-                        color: quantitySliderColors[this.state.item.availability],
+                        color: quantitySliderColors[this.state.item.availability-1],
                         marginLeft: 5}}
               >
-                {quantitySliderLabels[this.state.item.availability]}
+                {quantitySliderLabels[this.state.item.availability-1]}
               </Typography>
             </div>
             <div className="item-contact-entry">{Lang.SELLER}: {this.state.item.firstLastName}</div>

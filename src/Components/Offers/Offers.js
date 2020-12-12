@@ -16,7 +16,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { getItems, deleteItem, updateItem } from "../../Model/Items";
+import { getItems, deleteItem, updateItem, activateItem } from "../../Model/Items";
 import AlertDialog from "../Common/AlertDialog";
 import { quantitySliderLabels, quantitySliderColors } from "../../Constants";
 
@@ -81,9 +81,9 @@ class ConnectedOffers extends Component {
   handleActiveSwitchChange(e, itemIdx) {
     let items = this.state.items
     items[itemIdx].active = e.target.checked
-    
 
-    updateItem(items[itemIdx].id, {active: e.target.checked}).then(()=> {
+    
+    activateItem(items[itemIdx].id, {"active": e.target.checked}).then(()=> {
       this.setState({ items: items});
     }).catch(e => {
       console.log("Offer edit error: " + JSON.stringify(e))
@@ -165,21 +165,20 @@ class ConnectedOffers extends Component {
                           disabled={!this.state.items[index].active}
                           orientation="horizontal"
                           valueLabelDisplay="off"
-                          min={0}
-                          max={quantitySliderLabels.length-1}
+                          min={1}
+                          max={quantitySliderLabels.length}
                           step={1}
-                          // defaultValue={quantitySliderLabels.length-2}
                           value={this.state.items[index].availability}
                           onChange={(e, v) => {
                             this.AandleavailabilitySliderChange(v, index)
                           }}
                           style={{paddingTop: 15, color: this.state.items[index].active
-                            ? quantitySliderColors[this.state.items[index].availability]
+                            ? quantitySliderColors[this.state.items[index].availability-1]
                             : "gray"
                           }}
                           track={false}
-                          marks={[{value: 0, label: quantitySliderLabels[0]},
-                                  {value: quantitySliderLabels.length-1,
+                          marks={[{value: 1, label: quantitySliderLabels[0]},
+                                  {value: quantitySliderLabels.length,
                                   label: quantitySliderLabels[quantitySliderLabels.length-1]}]}
                         />
                       </div>
