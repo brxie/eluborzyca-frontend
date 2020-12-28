@@ -102,7 +102,7 @@ function searchItems({
     itemsPerPage = 10,
     usePriceFilter = "false",
     minPrice = 0,
-    maxPrice = 1000,
+    maxPrice = 10.00,
     page = 1
   }) {
     // Turn this into a boolean
@@ -113,7 +113,7 @@ function searchItems({
         let data = items.filter(item => {
           if (
             usePriceFilter &&
-            (item.price < minPrice || item.price > maxPrice)
+            (item.price < minPrice*100 || item.price > maxPrice*100)
           ) {
             return false;
           }
@@ -122,7 +122,6 @@ function searchItems({
             return item.popular;
           }
           
-          console.log("item: " + JSON.stringify(item))
           if (category !== Lang.ALL_CATEGORIES && category !== item.category &&
               village !== item.village && seller !== item.firstLastName) {
             return false;

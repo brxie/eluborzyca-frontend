@@ -61,7 +61,7 @@ class ConnectedLogin extends Component {
     User.userPost({email: this.state.registUserEmail,
                    password: this.state.registPass
     }).then(async resp => {
-      if (resp.status !== 200) {
+      if (resp.status !== 201) {
         this.setState({registError:  (await resp.json()).message})
         return
       }

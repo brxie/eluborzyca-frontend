@@ -27,7 +27,7 @@ class ConnectedEditOffer extends Offer {
     this.setState({
       name:               item.name,
       category:           item.category,
-      price:              item.price.toString(),
+      price:              (item.price/100).toFixed(2).toString(),
       unit:               item.unit,
       availability:       item.availability,
       description:        item.description,

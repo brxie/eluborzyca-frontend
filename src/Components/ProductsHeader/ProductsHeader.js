@@ -21,7 +21,7 @@ class ProductsHeader extends Component {
     // Lot of values come from the query string.
     let usePriceFilter = parsedQueryStr.usePriceFilter === "true";
     let minPrice = parsedQueryStr.minPrice || 0;
-    let maxPrice = parsedQueryStr.maxPrice || 10;
+    let maxPrice = parsedQueryStr.maxPrice || 10.00;
     let sortValue = parsedQueryStr.sortValue || "lh";
     let keyword = parsedQueryStr.term;
     let filter = parsedQueryStr.category || parsedQueryStr.village || parsedQueryStr.seller;
@@ -84,7 +84,7 @@ class ProductsHeader extends Component {
                     });
                   }}
                 >
-                  {`${minPrice}${Lang.CURRENCY}-${maxPrice}${Lang.CURRENCY}`}
+                  {`${parseFloat(minPrice).toFixed(2)}${Lang.CURRENCY}-${parseFloat(maxPrice).toFixed(2)}${Lang.CURRENCY}`}
                 </Button>
               </Tooltip>
             )}

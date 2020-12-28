@@ -66,7 +66,7 @@ class ConnectedItem extends Component {
             </div>
             <div style={{ margin: 5, display: "flex", alignItems: "center" }}>
               Cena:<Typography style={{fontSize: 13, fontWeight: "bold", color: "green", marginLeft: 5}}>
-                {parseFloat(this.props.item.price).toFixed(2)} {Lang.CURRENCY}/{this.props.item.unit}
+                {parseFloat(this.props.item.price/100).toFixed(2)} {Lang.CURRENCY}/{this.props.item.unit}
                 </Typography>
             </div>
             <div style={{ margin: 5, display: "flex", alignItems: "center" }}>Dostępność:

@@ -46,13 +46,14 @@ class PriceDialog extends Component {
             <div style={{ display: "flex", padding: 20 }}>
               <TextField
                 value={min}
+                step={0.1}
                 type="number"
                 style={{ width: 70 }}
                 placeholder="Min"
                 label="Min"
                 onChange={e => {
-                  let val = parseInt(e.target.value, 10);
-                  if (Number.isNaN(val) || val < 0 || val > 100000) {
+                  let val = parseFloat(e.target.value);
+                  if (Number.isNaN(val) || val < 0 || val > 10000000) {
                     return;
                   }
                   this.setState({
@@ -62,14 +63,15 @@ class PriceDialog extends Component {
               />
               <TextField
                 value={max}
+                step={0.1}
                 type="number"
                 style={{ width: 70, marginLeft: 20 }}
                 placeholder="Max"
                 label="Max"
                 onChange={e => {
-                  let val = parseInt(e.target.value, 10);
+                  let val = parseFloat(e.target.value);
 
-                  if (Number.isNaN(val) || val < 0 || val > 100000) {
+                  if (Number.isNaN(val) || val < 0 || val > 10000000) {
                     return;
                   }
                   this.setState({

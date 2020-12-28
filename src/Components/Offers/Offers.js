@@ -157,7 +157,7 @@ class ConnectedOffers extends Component {
                       />
                     </TableCell>
                     <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.price}</TableCell>
+                    <TableCell>{(row.price/100).toFixed(2)+Lang.CURRENCY}</TableCell>
                     <TableCell>{row.unit}</TableCell>
                     <TableCell>
                       <div style={{width: "80%"}}>
