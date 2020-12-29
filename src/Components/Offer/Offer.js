@@ -20,6 +20,8 @@ import { getUnits } from "../../Model/Units";
 import AlertDialog from "../Common/AlertDialog";
 import { quantitySliderLabels, quantitySliderColors } from "../../Constants";
 import User from '../../ApiClient/User'
+import Session from "./../../ApiClient/Session";
+import { logout } from "../../Redux/Actions";
 
 
 // This component shows the items user checked out from the cart.
@@ -77,6 +79,7 @@ class Offer extends Component {
   }
 
   componentDidMount() {
+    this.checkSession();
     (async () => {
       try {
         await this.loadState()
@@ -278,6 +281,16 @@ class Offer extends Component {
     this.handleAbortDialogClose();
   };
 
+  async checkSession() {
+    try {
+      let session = await Session.sessionGet();
+      if (session.status === 401) {
+        throw new Error(session.statusText);
+      }
+    } catch {
+      this.props.dispatch(logout());
+    } 
+  }
 
   render() {
     if (this.state.loading) {

@@ -53,7 +53,7 @@ module.exports = {
     NEED_SELECT_VILLAGE: 'musisz wybrać miejscowość',
     NEED_PROVIDE_HOME_NUMBER: 'musisz podać numer domu',
     WRONG_PHONE_FORMATED: 'podany numer telefonu "%s" jest nieprawidłowy',
-    DATA: 'dane',
+    DATA: 'Dane',
     PASS_ITEM_DETAILS_TEXT: 'Wprowadź szczegóły dotyczące sprzedawanych produktów',
     PHOTOS: 'Zdjęcia',
     IMAGE_UPLOADER_BUTTON_LABEL: 'Wybierz zdjęcie',

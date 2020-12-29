@@ -8,6 +8,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import User from '../../ApiClient/User'
 import { getVillages } from "../../Model/Villages";
 import util from 'util';
+import Session from "./../../ApiClient/Session";
+import { logout } from "../../Redux/Actions";
 
 
 // This component shows the items user checked out from the cart.
@@ -203,7 +205,19 @@ class ConnectedAccountSettings extends Component {
   }
   
   componentDidMount() {
+    this.checkSession();
     this.fetchData();
+  }
+
+  async checkSession() {
+    try {
+      let session = await Session.sessionGet();
+      if (session.status === 401) {
+        throw new Error(session.statusText);
+      }
+    } catch {
+      this.props.dispatch(logout());
+    } 
   }
 
 

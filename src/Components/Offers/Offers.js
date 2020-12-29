@@ -19,6 +19,8 @@ import TableRow from "@material-ui/core/TableRow";
 import { getItems, deleteItem, updateItem, activateItem } from "../../Model/Items";
 import AlertDialog from "../Common/AlertDialog";
 import { quantitySliderLabels, quantitySliderColors } from "../../Constants";
+import Session from "./../../ApiClient/Session";
+import { logout } from "../../Redux/Actions";
 
 
 const mapStateToProps = state => {
@@ -56,6 +58,7 @@ class ConnectedOffers extends Component {
   }
 
   componentDidMount() {
+    this.checkSession();
     this.setState({ deleteDialogOpen: false})
     this.fetchData();
   }
@@ -103,6 +106,18 @@ class ConnectedOffers extends Component {
       this.setState({createItemError: e.message})
     })
   }
+
+  async checkSession() {
+    try {
+      let session = await Session.sessionGet();
+      if (session.status === 401) {
+        throw new Error(session.statusText);
+      }
+    } catch {
+      this.props.dispatch(logout());
+    } 
+  }
+
 
   render() {    
     if (this.state.loading) {
