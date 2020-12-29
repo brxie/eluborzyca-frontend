@@ -1,7 +1,7 @@
 import axios from 'axios';
 import url from 'url'
 
-const IMAGES_API_URL = url.resolve(process.env.REACT_APP_API_URL, "images");
+const IMAGES_API_URL = url.resolve(process.env.REACT_APP_API_URL, "image");
 
 
 const Images = {
@@ -25,7 +25,8 @@ const Images = {
             data: formData,
             headers: {
                 'Content-Type': 'multipart/form-data'
-            }
+            },
+            withCredentials: true
         });
     },
 }

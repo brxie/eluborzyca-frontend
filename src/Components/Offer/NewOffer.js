@@ -6,7 +6,7 @@ import { newItem } from "../../Model/Items";
 import User from '../../ApiClient/User'
 
 
-const IMAGES_API_URL = url.resolve(process.env.REACT_APP_API_URL, "images/");
+const IMAGE_API_URL = url.resolve(process.env.REACT_APP_API_URL, "image/");
 
 class ConnectedNewOffer extends Offer {
 
@@ -51,8 +51,8 @@ class ConnectedNewOffer extends Offer {
       if(!(imgId in uploads.finished)) {
         continue
       }
-      let src = url.resolve(IMAGES_API_URL, uploads.finished[imgId].path)
-      let thumbnail = url.resolve(IMAGES_API_URL, uploads.finished[imgId].thumbnailPath)
+      let src = url.resolve(IMAGE_API_URL, uploads.finished[imgId].path)
+      let thumbnail = url.resolve(IMAGE_API_URL, uploads.finished[imgId].thumbnailPath)
       let img = {"src": src,
                 "thumbnail": thumbnail,
                 "thumbnailWidth": uploads.finished[imgId].thumbnailWidth,
