@@ -51,7 +51,7 @@ class ConnectedPrivacyPolicy extends Component {
             <li>
               <p style={{marginBottom: "0cm"}} align="left">
                 <span style={{fontWeight: "normal"}}>
-                  Dane osobowe są zbierane wyłącznie w związku z aktywnością na Platformie e-bazarek.pl.
+                  Dane osobowe są zbierane wyłącznie w związku z aktywnością na Platformie e-luborzyca.pl.
                 </span>
               </p>
             </li>
@@ -78,7 +78,7 @@ class ConnectedPrivacyPolicy extends Component {
                     </li>
                     <li>
                       <p style={{marginBottom: "0cm", fontWeight: "normal"}} align="left">
-                        Kontakt z e-bazarek.pl w zakresie: obsługa zgłoszeń, reklamacje, rozwiązywanie problemów technicznych, monitorowanie aktywności, obejmującej np. wyszukiwanie słów kluczowych, zamieszczanie ofert oraz zarządzanie aktywnością,
+                        Kontakt z e-luborzyca.pl w zakresie: obsługa zgłoszeń, reklamacje, rozwiązywanie problemów technicznych, monitorowanie aktywności, obejmującej np. wyszukiwanie słów kluczowych, zamieszczanie ofert oraz zarządzanie aktywnością,
                         dopasowania reklam zgodnie z uprzednio przeglądanymi treściami, dostosowywania kategorii ofert lub poszczególnych ofert w ustawieniach Administratora lub ustawieniach usług podmiotów zewnętrznych na podstawie aktywności
                         użytkownika, d<strong><span style={{fontWeight: "normal"}}>anych dotyczących logowania.</span></strong>
                       </p>
@@ -105,7 +105,7 @@ class ConnectedPrivacyPolicy extends Component {
           <ol style={{textAlign: "left"}} start="7">
             <li>
               <p style={{marginBottom: "0cm"}} align="left">
-                <strong><strong>Dane osobowe będą przetwarzane wyłącznie przez e-bazarek.pl</strong></strong>
+                <strong><strong>Dane osobowe będą przetwarzane wyłącznie przez e-luborzyca.pl</strong></strong>
               </p>
             </li>
             <li>
@@ -114,7 +114,7 @@ class ConnectedPrivacyPolicy extends Component {
               </p>
             </li>
             <li>
-              <p style={{marginBottom: "0cm"}} align="left">Użytkownik może na własną odpowiedzialność za pośrednictwem Platformy e-bazarek.pl udostępnić swoje dane osobowe innym Użytkownikom np. w celu realizacji wysyłki.</p>
+              <p style={{marginBottom: "0cm"}} align="left">Użytkownik może na własną odpowiedzialność za pośrednictwem Platformy e-luborzyca.pl udostępnić swoje dane osobowe innym Użytkownikom np. w celu realizacji wysyłki.</p>
             </li>
           </ol>
           <p style={{marginBottom: "0cm", textAlign: "left"}} align="left"></p>
@@ -150,7 +150,7 @@ class ConnectedPrivacyPolicy extends Component {
           <p style={{marginBottom: "0cm", fontWeight: "normal", textAlign: "left"}} align="left">
             <strong><span style={{fontWeight: "normal"}}>Polityka Prywatności może być przez nas zmieniana lub aktualizowana. Wszelkie zmiany zostaną zamieszczone na tej stronie </span></strong>
             <strong>
-              <span style={{fontWeight: "normal"}}><span >https://www.e-bazarek.pl/</span></span>
+              <span style={{fontWeight: "normal"}}><span >https://www.e-luborzyca.pl/</span></span>
             </strong>
             <strong>
               <span style={{fontWeight: "normal"}}>
@@ -234,7 +234,7 @@ class ConnectedPrivacyPolicy extends Component {
           <ul style={{textAlign: "left"}}>
             <ul>
               <li>
-                <p style={{marginBottom: "0cm"}}>E-mail: <a href="mailto:admin@e-bazarek.pl">kontakt@e-bazarek.pl</a></p>
+                <p style={{marginBottom: "0cm"}}>E-mail: <a href="mailto:admin@e-luborzyca.pl">kontakt@e-luborzyca.pl</a></p>
               </li>
               <li>
                 <p style={{marginBottom: "0cm"}}>

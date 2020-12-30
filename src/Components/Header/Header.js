@@ -154,7 +154,7 @@ class ConnectedHeader extends Component {
                 }}
                 style={{ fontSize: '17px', backgroundColor: 'transparent' }}
               >
-                Mój ebazarek
+                Moje Konto
                 <Avatar
                   style={{ backgroundColor: "#3f51b5", marginLeft: 10 }}
                 >
