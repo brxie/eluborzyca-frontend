@@ -5,8 +5,8 @@ import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import User from "../../ApiClient/User";
 import Session from "../../ApiClient/Session";
-import { Button, Avatar, Checkbox, FormControlLabel, Input, Typography,
-         IconButton, InputAdornment, FormControl, InputLabel} from "@material-ui/core";
+import { Button, Avatar, Input, IconButton, InputAdornment,
+  FormControl, InputLabel} from "@material-ui/core";
 import { setLoggedInUser } from "../../Redux/Actions";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { Visibility, VisibilityOff } from '@material-ui/icons';
@@ -28,8 +28,6 @@ class ConnectedLogin extends Component {
     registPass: "",
     registSecPass: "",
     showRegistSecPass: false,
-    rulesCheckbox: false,
-    rulesCheckboxError: false,
 
     // inputs errors
     emailError: false,
@@ -45,9 +43,7 @@ class ConnectedLogin extends Component {
     this.setState({registError: "",
                    registSuccessed: false,
                    registUserEmailError: false,
-                   registPassError: false,
-                   registSecPassError: false,
-                   rulesCheckboxError: false});
+                   registPassError: false});
 
     // validate
     try {
@@ -87,32 +83,28 @@ class ConnectedLogin extends Component {
       this.setState({registPassError: true})
       throw new Error(Lang.PASSWORD_CANT_BE_EMPTY);
     }
-
-    if (this.state.rulesCheckbox === false) {
-      this.setState({rulesCheckboxError: true})
-      throw new Error(Lang.NEED_ACCEPT_RULES);
-    }
   }
 
   handleLogin() {
     // clean messages state
     this.setState({emailError: false,
                   passError: false,
-                  wrongCred: false});
+                  loginFailedMessage: "",
+                  loginErrorMessage: ""});
 
     // validate
     try {
       this.validateLoginForm();
     } catch (error) {
-      this.setState({loginError: error.message})
+      this.setState({loginErrorMessage: error.message})
       return;
     }
 
     // send api request
     Session.sessionPost(this.state.email, this.state.pass)
     .then(async (resp) => {
-      if (resp.status === 401) {
-        this.setState({ wrongCred: true });
+      if (resp.status !== 200) {
+        this.setState({ loginFailedMessage: (await resp.json()).message });
         return;
       }
       this.props.dispatch(setLoggedInUser({ email: this.state.email }));
@@ -122,7 +114,7 @@ class ConnectedLogin extends Component {
     })
     .catch((e) => {
         console.log("Login error: " + e.stack)
-        this.setState({ loginError: e.stack });  
+        this.setState({ loginErrorMessage: e.stack });  
     })
 
   }
@@ -225,8 +217,8 @@ class ConnectedLogin extends Component {
             </Button>
             <div style={{ width: 280 }}>
               {
-                (this.state.wrongCred && (<h5 style={{ color: "red" }}>{Lang.WRONG_EMAIL_PASSWORD}</h5>)) || 
-                (this.state.loginError && <h5 style={{ color: "red" }}>{Lang.LOGIN_FAILED}: {this.state.loginError}</h5>)
+                (this.state.loginFailedMessage && (<h5 style={{ color: "red" }}>{Lang.LOGIN_FAILED + ": " + this.state.loginFailedMessage}</h5>)) || 
+                (this.state.loginErrorMessage && <h5 style={{ color: "red" }}>{Lang.LOGIN_ERROR}: {this.state.loginErrorMessage}</h5>)
               }
             </div>
           </div>
@@ -308,23 +300,6 @@ class ConnectedLogin extends Component {
                     }
                 />
               </FormControl>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                        color="primary"
-                        onChange={(e) => {
-                          this.setState({rulesCheckbox: e.target.checked});
-                        }}
-                        checked={this.state.rulesCheckbox}
-                        style={ {color: this.state.rulesCheckboxError ? "red" : null }}
-                    />
-                }
-                label={
-                  <Typography  style={{fontSize: 13}}>
-                     {Lang.IVE_READ_POLICY}
-                  </Typography>
-              }
-                style={{ marginTop: 10, fontSize: 4}}/>
               <Button
                 style={{ marginTop: 20, width: 200 }}
                 variant="outlined"
@@ -335,8 +310,8 @@ class ConnectedLogin extends Component {
               >
                 {Lang.SIGN_UP}
               </Button>
-              {this.state.registError && <h5 style={{ color: "red" }}>Registration failed: {this.state.registError}</h5>}
-              {this.state.registSuccessed && <h5 style={{ color: "green" }}>Please open confirmation email to finish registration</h5>}
+              {this.state.registError && <h5 style={{ color: "red" }}>Wystąpił błąd podczas rejestracji. Spróbuj ponownie później</h5>}
+              {this.state.registSuccessed && <h5 style={{ color: "green" }}>Rejestracja powiodła się. Na podany adres email został wysłany link aktywacyjny.</h5>}
             </div>
         </div>
       </div>

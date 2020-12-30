@@ -23,6 +23,7 @@ import { connect } from "react-redux";
 import Session from "./ApiClient/Session";
 import { setLoggedInUser, LoadCartItems } from "./Redux/Actions";
 import CookieBanner from 'react-cookie-banner';
+import UserVerify from "./Components/UserVerify/UserVerify";
 
 class App extends Component {
   
@@ -71,6 +72,7 @@ class App extends Component {
               <Route path="/contact" component={Contact} />
               <Route path="/privacy-policy" component={PrivacyPolicy} />
               <Route path="/cookie-policy" component={CookiePolicy} />
+              <Route path="/user-verify/:token" component={UserVerify} />
               <ProtectedRoute path="/account-settings" component={AccountSettings} />
               <ProtectedRoute path="/offers" component={Offer} />
               <ProtectedRoute path="/new-offer" component={NewOffer} />

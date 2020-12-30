@@ -39,6 +39,15 @@ const User = {
             },
         });
     },
+
+    
+    // Verify
+    async verify(token) {
+        return await fetch(USER_API_URL + "/verify/" + token,
+        {
+            method: 'POST',
+        }); 
+    }
 }
 
 
