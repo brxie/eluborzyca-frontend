@@ -78,28 +78,30 @@ class Offer extends Component {
     this.renderOpts = renderOpts
   }
 
+  async load() {
+    try {
+      await this.loadState()
+      let categories = await getCategories()
+      let villages = await getVillages()
+      let units  = await getUnits()
+      this.setState( {
+        categories: categories,
+        villages: villages,
+        units: units,
+        loading: false,
+      });
+    } catch(e) {
+      console.log("Init offer page error: " + JSON.stringify(e))
+      this.setState( {
+        loading: false,
+        initError: e.message
+      });
+    }
+  }
+
   componentDidMount() {
     this.checkSession();
-    (async () => {
-      try {
-        await this.loadState()
-        let categories = await getCategories()
-        let villages = await getVillages()
-        let units  = await getUnits()
-        this.setState( {
-          categories: categories,
-          villages: villages,
-          units: units,
-          loading: false,
-        });
-      } catch(e) {
-        console.log("Init offer page error: " + JSON.stringify(e))
-        this.setState( {
-          loading: false,
-          initError: e.message
-        });
-      }
-    }).call()
+    this.load();
   }
 
   clearFormErrors() {
