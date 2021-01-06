@@ -89,7 +89,7 @@ class ConnectedLogin extends Component {
     // clean messages state
     this.setState({emailError: false,
                   passError: false,
-                  loginFailedMessage: "",
+                  badCredenrialsError: false,
                   loginErrorMessage: ""});
 
     // validate
@@ -103,10 +103,16 @@ class ConnectedLogin extends Component {
     // send api request
     Session.sessionPost(this.state.email, this.state.pass)
     .then(async (resp) => {
-      if (resp.status !== 200) {
-        this.setState({ loginFailedMessage: (await resp.json()).message });
+      if (resp.status === 401) {
+        this.setState({ badCredenrialsError: true});
         return;
       }
+
+      if (resp.status !== 200) {
+        this.setState({ loginErrorMessage: (await resp.json()).message });
+        return;
+      }
+
       this.props.dispatch(setLoggedInUser({ email: this.state.email }));
       this.setState(() => ({
         redirectToReferrer: true
@@ -217,7 +223,7 @@ class ConnectedLogin extends Component {
             </Button>
             <div style={{ width: 280 }}>
               {
-                (this.state.loginFailedMessage && (<h5 style={{ color: "red" }}>{Lang.LOGIN_FAILED + ": " + this.state.loginFailedMessage}</h5>)) || 
+                (this.state.badCredenrialsError && (<h5 style={{ color: "red" }}>{Lang.BAD_CREDENTIALS}</h5>)) || 
                 (this.state.loginErrorMessage && <h5 style={{ color: "red" }}>{Lang.LOGIN_ERROR}: {this.state.loginErrorMessage}</h5>)
               }
             </div>
@@ -310,7 +316,7 @@ class ConnectedLogin extends Component {
               >
                 {Lang.SIGN_UP}
               </Button>
-              {this.state.registError && <h5 style={{ color: "red" }}>Wystąpił błąd podczas rejestracji. Spróbuj ponownie później</h5>}
+              {this.state.registError && <h5 style={{ color: "red" }}>Wystąpił błąd podczas rejestracji: {this.state.registError}</h5>}
               {this.state.registSuccessed && <h5 style={{ color: "green" }}>Rejestracja powiodła się. Na podany adres email został wysłany link aktywacyjny.</h5>}
             </div>
         </div>

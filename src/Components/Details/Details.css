@@ -10,6 +10,7 @@
 }
 
 .item-contact-entry {
+  max-width: 200px;
   margin-bottom: 6px;
   font-size: 15px;
 }

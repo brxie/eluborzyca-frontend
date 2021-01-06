@@ -74,7 +74,7 @@ class ConnectedMenu extends Component {
                   </ListItemIcon>
                   <ListItemText
                     disableTypography
-                    primary={<div style={{ color: "inherit" }}>{x.name}</div>}
+                    primary={<div style={{ color: "inherit" }}>{x.name} {x.count !== undefined ? " (" + x.count + ")": ""}</div>}
                   />
                 </ListItem>
               </NavLink>

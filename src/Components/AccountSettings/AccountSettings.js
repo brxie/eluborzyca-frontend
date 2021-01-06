@@ -29,6 +29,8 @@ class ConnectedAccountSettings extends Component {
     email: "",
     village: "",
     homeNumber: "",
+    addressNotes: "",
+    street: "",
     phone: "",
 
     oldPass: "",
@@ -72,6 +74,8 @@ class ConnectedAccountSettings extends Component {
       email: user.email,
       village: user.village,
       homeNumber: user.homeNumber,
+      addressNotes: user.addressNotes,
+      street: user.street,
       phone: user.phone,
       loading: false,
       villages: villages
@@ -129,6 +133,8 @@ class ConnectedAccountSettings extends Component {
       username: this.state.firstLastName,
       village: this.state.village,
       homeNumber: this.state.homeNumber,
+      addressNotes: this.state.addressNotes,
+      street: this.state.street,
       phone: this.state.phone,
     }
 
@@ -259,8 +265,7 @@ class ConnectedAccountSettings extends Component {
               />
             </div>
             
-            <div style={{marginTop: 20, display: "flex", width: "100%"}}>
-              <div style={{display: "inline-grid", width: "210px"}}>
+            <div style={{marginTop: 20, display: "inline-grid", width: "210px"}}>
                 <InputLabel>Miejscowość</InputLabel>
                 <Autocomplete
                   value={this.state.village}
@@ -271,6 +276,17 @@ class ConnectedAccountSettings extends Component {
                   renderInput={(params) => <TextField error={this.state.villageError} {...params}  />}
                 />
               </div>
+
+            <div style={{marginTop: 20, display: "flex", width: "100%"}}>
+              <div style={{display: "inline-grid", width: "200px"}}>
+                  <InputLabel>Ulica</InputLabel>
+                  <Input
+                    value={this.state.street}
+                    onChange={e => {
+                      this.setState({ street: e.target.value });
+                    }}
+                  />
+                </div>
               <div style={{display: "inline-grid", width: "100px", marginLeft: "20px"}}>
                 <InputLabel>Numer domu</InputLabel>
                 <Input
@@ -282,6 +298,16 @@ class ConnectedAccountSettings extends Component {
                   }}
                 />
               </div>
+            </div>
+
+            <div style={{marginTop: 20, display: "inline-grid", width: "300px"}}>
+                <InputLabel>Uwagi</InputLabel>
+                <Input
+                  value={this.state.addressNotes}
+                  onChange={e => {
+                    this.setState({ addressNotes: e.target.value });
+                  }}
+                />
             </div>
 
             <div style={{marginTop: 20, display: "inline-grid", width: "100"}}>

@@ -52,6 +52,8 @@ class Offer extends Component {
     availability: 2,
     description: "",
     firstLastName: "",
+    street: "",
+    addressNotes: "",
     village: null,
     homeNumber: "",
     phone: "",
@@ -65,7 +67,6 @@ class Offer extends Component {
     descriptionError: false,
     firstLastNameError: false,
     villageError: false,
-    homeNumberError: false,
     phoneError: false,
 
     formErrorMsgs: [] 
@@ -113,7 +114,6 @@ class Offer extends Component {
       descriptionError: false,
       firstLastNameError: false,
       villageError: false,
-      homeNumberError: false,
       phoneError: false,
       formErrorMsgs: []
     })
@@ -134,6 +134,8 @@ class Offer extends Component {
         username: this.state.firstLastName,
         village: this.state.village,
         homeNumber: this.state.homeNumber,
+        addressNotes: this.state.addressNotes,
+        street: this.state.street,
         phone: this.state.phone,
       }
   
@@ -191,12 +193,6 @@ class Offer extends Component {
     if (this.state.village === null) {
       errMsgs.push(Lang.NEED_SELECT_VILLAGE)
       this.setState({villageError: true, contactExpanded: true})
-      validSuccess = false
-    }
-
-    if (this.state.homeNumber === "") {
-      errMsgs.push(Lang.NEED_PROVIDE_HOME_NUMBER)
-      this.setState({homeNumberError: true, contactExpanded: true})
       validSuccess = false
     }
 
@@ -328,7 +324,7 @@ class Offer extends Component {
 
                 <div style={{marginTop: 20, display: "flex", width: "100%"}}>
                   <div style={{display: "inline-grid", width: "40%"}}>
-                    <InputLabel>tytuł oferty</InputLabel>
+                    <InputLabel required={true}>tytuł oferty</InputLabel>
                     <Input
                       value={this.state.name}
                       error={this.state.nameError}
@@ -338,7 +334,7 @@ class Offer extends Component {
                     />
                   </div>
                   <div style={{display: "inline-grid", width: "10%", marginLeft: "20px"}}>
-                    <InputLabel>{Lang.CATEGORY}</InputLabel>
+                    <InputLabel required={true}>{Lang.CATEGORY}</InputLabel>
                     <Select
                       value={this.state.category}
                       error={this.state.categoryError}
@@ -353,7 +349,7 @@ class Offer extends Component {
                     </Select>
                   </div>
                   <div style={{display: "inline-grid", width: "85px", marginLeft: "20px"}}>
-                    <InputLabel>{Lang.PRICE}</InputLabel>
+                    <InputLabel required={true}>{Lang.PRICE}</InputLabel>
                     <div style={{display: "flex", width: "100%"}}>
                       <Input
                         // type="number"
@@ -368,8 +364,8 @@ class Offer extends Component {
                       <Typography style={{fontSize: 17, paddingTop: 8}}>{Lang.CURRENCY}</Typography></div>
                   </div>
 
-                  <div style={{display: "inline-grid", width: "80px", marginLeft: "20px"}}>
-                      <InputLabel>{Lang.UNIT}</InputLabel>
+                  <div style={{display: "inline-grid", width: "85px", marginLeft: "20px"}}>
+                    <InputLabel required={true}>{Lang.UNIT}</InputLabel>
                     <Select
                       value={this.state.unit}
                       error={this.state.unitError}
@@ -404,7 +400,7 @@ class Offer extends Component {
                     />
                   </div>
                 </div>
-                  <InputLabel style={{marginTop: 20}}>{Lang.PRODUCT_DESCRIPTION}</InputLabel>
+                  <InputLabel style={{marginTop: 20}} required={true}>{Lang.PRODUCT_DESCRIPTION}</InputLabel>
                 <TextField
                   variant="outlined"
                   value={this.state.description}
@@ -496,7 +492,7 @@ class Offer extends Component {
               </Typography>
 
               <div style={{marginTop: 20, display: "inline-grid", width: "200px"}}>
-                <InputLabel>{Lang.FIRST_LAST_NAME}</InputLabel>
+                <InputLabel required={true}>{Lang.FIRST_LAST_NAME}</InputLabel>
                 <Input
                   value={this.state.firstLastName}
                   error={this.state.firstLastNameError}
@@ -506,9 +502,9 @@ class Offer extends Component {
                 />
               </div>
               
-              <div style={{marginTop: 20, display: "flex", width: "100%"}}>
-                <div style={{display: "inline-grid", width: "210px"}}>
-                  <InputLabel>{Lang.VILLAGE}</InputLabel>
+
+              <div style={{marginTop: 20, display: "inline-grid", width: "210px"}}>
+                  <InputLabel required={true}>{Lang.VILLAGE}</InputLabel>
                   <Autocomplete
                     value={this.state.village}
                     onChange={(e, v) => {
@@ -518,12 +514,22 @@ class Offer extends Component {
                     renderInput={(params) => <TextField error={this.state.villageError} {...params}  />}
                   />
                 </div>
+
+              <div style={{marginTop: 20, display: "flex", width: "100%"}}>
+                <div style={{display: "inline-grid", width: "200px"}}>
+                  <InputLabel>Ulica</InputLabel>
+                  <Input
+                    value={this.state.street}
+                    onChange={e => {
+                      this.setState({ street: e.target.value });
+                    }}
+                  />
+                </div>
                 <div style={{display: "inline-grid", width: "100px", marginLeft: "20px"}}>
                   <InputLabel>{Lang.HOME_NUMBER}</InputLabel>
                   <Input
                     style={{width: "50px"}}
                     value={this.state.homeNumber}
-                    error={this.state.homeNumberError}
                     onChange={e => {
                       this.setState({ homeNumber: e.target.value });
                     }}
@@ -531,9 +537,19 @@ class Offer extends Component {
                 </div>
               </div>
 
+              <div style={{marginTop: 20, display: "inline-grid", width: "300px"}}>
+                <InputLabel>Uwagi</InputLabel>
+                <Input
+                  value={this.state.addressNotes}
+                  onChange={e => {
+                    this.setState({ addressNotes: e.target.value });
+                  }}
+                />
+              </div>
+
               <div style={{marginTop: 20, display: "inline-grid", width: "100"}}>
                  
-                <InputLabel>{Lang.PHONE}</InputLabel>
+                <InputLabel required={true}>{Lang.PHONE}</InputLabel>
                 <MuiPhoneInput
                   countryCodeEditable={false}
                   defaultCountry='pl'

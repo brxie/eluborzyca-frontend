@@ -92,7 +92,8 @@ class ConnectedDetails extends Component {
           {this.state.item.name}
         </div>
         <div style={{ display: "flex" }}>
-        <div style={{
+        { this.state.item.images && this.state.item.images.length &&
+          <div style={{
                     display: "block",
                     width: "50%",
                     // border: "1px solid #ddd",
@@ -105,8 +106,9 @@ class ConnectedDetails extends Component {
             // the backdropClosesModal parais is a woraround for
             // https://github.com/benhowell/react-grid-gallery/issues/83
             backdropClosesModal={true} 
-        />
-        </div>
+          />
+          </div>
+        }
 
         <div style={{
           flexDirection: "column",
@@ -116,7 +118,7 @@ class ConnectedDetails extends Component {
           // border: "1px solid red",
         }}>
           <div className="item-contact-container">
-            <div className="item-contact-entry">{Lang.PRICE}: {parseFloat(this.state.item.price).toFixed(2)} {Lang.CURRENCY}</div>
+            <div className="item-contact-entry">{Lang.PRICE}: {parseFloat(this.state.item.price/100).toFixed(2)} {Lang.CURRENCY}</div>
             <div className="item-contact-entry" style={{display: "flex", marginTop: "-5px", alignItems: "center"}}>
               {Lang.AVAILABILITY}: 
               <Typography 
@@ -128,7 +130,10 @@ class ConnectedDetails extends Component {
               </Typography>
             </div>
             <div className="item-contact-entry">{Lang.SELLER}: {this.state.item.firstLastName}</div>
-            <div className="item-contact-entry">{Lang.ADDRESS}: {this.state.item.village} {this.state.item.homeNumber}</div>
+            <div className="item-contact-entry" style={{marginBottom: "-2px"}}>{Lang.ADDRESS}:</div>
+            <div className="item-contact-entry" style={{marginBottom: "-2px"}}>{this.state.item.village} {this.state.item.street ? "":this.state.item.homeNumber}</div>
+            <div className="item-contact-entry" style={{marginBottom: "-2px"}}>{this.state.item.street ? "ul. ": ""} {this.state.item.street} {this.state.item.street ? this.state.item.homeNumber: ""}</div>
+            <div className="item-contact-entry">{this.state.item.addressNotes}</div>
             <Divider/>
             <Button
               style={{ width: 170, marginTop: 15 }}

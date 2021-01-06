@@ -26,6 +26,8 @@ class ConnectedNewOffer extends Offer {
         firstLastName: user.username,
         village: user.village,
         homeNumber: user.homeNumber,
+        addressNotes: user.addressNotes,
+        street: user.street,
         phone: user.phone
       });
     } catch(e) {
@@ -70,6 +72,8 @@ class ConnectedNewOffer extends Offer {
       availability: this.state.availability,
       description: this.state.description,
       firstLastName: this.state.firstLastName,
+      addressNotes: this.state.addressNotes,
+      street: this.state.street,
       village: this.state.village,
       homeNumber: this.state.homeNumber,
       phone: this.state.phone,
