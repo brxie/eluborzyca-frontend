@@ -14,7 +14,7 @@ class ConnectedContact extends Component {
         <div style={{margin: 20, width: "80%", alignContent: "center"}}>
           Jeścli chcesz się z nami skontaktować, wyślij maila na adres 
           <NavLink
-            to={"mailto:foo@bar.com"}
+            to={"mailto:kontakt@e-luborzyca.pl"}
             exact
             style={{
               textDecoration: "none",
@@ -25,7 +25,7 @@ class ConnectedContact extends Component {
               textDecoration: "underline"
             }}
           >
-            {' '}foo@bar.com
+            {' '}kontakt@e-luborzyca.pl
           </NavLink>
 
         </div>

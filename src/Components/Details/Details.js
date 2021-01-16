@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import Gallery from 'react-grid-gallery';
 import CustomizedInput from './CustomizedInput'
 import { quantitySliderLabels, quantitySliderColors } from "../../Constants";
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 
 const minDescriptionLines = 8
@@ -118,33 +119,35 @@ class ConnectedDetails extends Component {
           // border: "1px solid red",
         }}>
           <div className="item-contact-container">
-            <div className="item-contact-entry">{Lang.PRICE}: {parseFloat(this.state.item.price/100).toFixed(2)} {Lang.CURRENCY}</div>
+            <div className="item-contact-entry"><div style={{display: "inline", fontWeight: "bold"}}>Cena: </div> {parseFloat(this.state.item.price/100).toFixed(2)} {Lang.CURRENCY}</div>
             <div className="item-contact-entry" style={{display: "flex", marginTop: "-5px", alignItems: "center"}}>
-              {Lang.AVAILABILITY}: 
+            <div style={{display: "inline", fontWeight: "bold"}}>Dostępność: </div> 
               <Typography 
-                style={{fontWeight: "bold",
+                style={{
                         color: quantitySliderColors[this.state.item.availability-1],
                         marginLeft: 5}}
               >
                 {quantitySliderLabels[this.state.item.availability-1]}
               </Typography>
             </div>
-            <div className="item-contact-entry">{Lang.SELLER}: {this.state.item.firstLastName}</div>
-            <div className="item-contact-entry" style={{marginBottom: "-2px"}}>{Lang.ADDRESS}:</div>
-            <div className="item-contact-entry" style={{marginBottom: "-2px"}}>{this.state.item.village} {this.state.item.street ? "":this.state.item.homeNumber}</div>
-            <div className="item-contact-entry" style={{marginBottom: "-2px"}}>{this.state.item.street ? "ul. ": ""} {this.state.item.street} {this.state.item.street ? this.state.item.homeNumber: ""}</div>
-            <div className="item-contact-entry">{this.state.item.addressNotes}</div>
+            <div className="item-contact-entry"><div style={{display: "inline", fontWeight: "bold"}}>Sprzedający: </div> {this.state.item.firstLastName}</div>
+            <div className="item-contact-entry" style={{marginBottom: "4px", display: "inline", fontWeight: "bold"}}>Adres odbioru: </div> 
+            <div className="item-contact-entry" style={{marginBottom: "4px"}}>{this.state.item.village} {this.state.item.street ? "":this.state.item.homeNumber}</div>
+            <div className="item-contact-entry" style={{marginBottom: "8px"}}>{this.state.item.street ? "ul. ": ""} {this.state.item.street} {this.state.item.street ? this.state.item.homeNumber: ""}</div>
+            <div className="item-contact-entry" style={{marginBottom: "12px", display: this.state.item.addressNotes ? "flex" : "none"}}><ErrorOutlineIcon color="action" style={{fontSize: "18px"}}/>{this.state.item.addressNotes}</div>
             <Divider/>
-            <Button
-              style={{ width: 170, marginTop: 15 }}
-              color="primary"
-              variant="outlined"
-              onClick={() => {
-                this.setState({ phoneButtonLabel: this.state.item.phone });
-              }}
-              >
-                {this.state.phoneButtonLabel}
-              </Button>
+              <div style={{ alignItems: "center", display: "flex", flexDirection: "column"}}>
+                <Button
+                  style={{ width: 170, marginTop: 15}}
+                  color="primary"
+                  variant="outlined"
+                  onClick={() => {
+                    this.setState({ phoneButtonLabel: this.state.item.phone });
+                  }}
+                  >
+                  {this.state.phoneButtonLabel}
+                </Button>
+              </div>
             </div>
           </div>
         </div>  

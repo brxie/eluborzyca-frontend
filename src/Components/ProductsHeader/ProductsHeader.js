@@ -71,7 +71,7 @@ class ProductsHeader extends Component {
                   }}
                 />
               }
-              label={Lang.FILTER_BY_PRICE}
+              label={Lang.PRICE}
             />
             {usePriceFilter && (
               <Tooltip title={Lang.CLICK_CHANGE_RANGE} disableFocusListener>
@@ -94,8 +94,8 @@ class ProductsHeader extends Component {
                 updateQueryStr({ sortValue: e.target.value });
               }}
             >
-              <MenuItem value={"lh"}>{Lang.SORT_BY_PRICE_FROM_LOWER}</MenuItem>
-              <MenuItem value={"hl"}>{Lang.SORT_BY_PRICE_FROM_HIGHEST}</MenuItem>
+              <MenuItem value={"lh"}>Sortuj od najtańszych</MenuItem>
+              <MenuItem value={"hl"}>Sortuj od najdroższych</MenuItem>
             </Select>
           </div>
         </div>

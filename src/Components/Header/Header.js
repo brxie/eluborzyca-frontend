@@ -8,7 +8,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { toggleMenu, logout } from "../../Redux/Actions";
-import logoImage from "../../Images/logo.svg";
+import logoImage from "../../Images/logo.png";
 import { getCategories } from "../../Model/Categories";
 import Person from "@material-ui/icons/PersonOutline";
 import { allCategoriesCategory } from "../../Constants";
@@ -90,7 +90,7 @@ class ConnectedHeader extends Component {
               <MenuIcon size="medium" />
             </IconButton>
 
-            <img src={logoImage} alt={"Logo"} style={{opacity: 0.8,  width: 48, height: 48, marginLeft: 10 }} />
+            <img src={logoImage} alt={"Logo"} style={{opacity: 0.8,  width: 64, height: 64, marginLeft: 10 }} />
             <TextField
               label={Lang.SEARCH_PRODUCTS}
               value={this.state.searchTerm}
