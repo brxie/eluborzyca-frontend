@@ -139,9 +139,8 @@ class ConnectedOffers extends Component {
                     </Tooltip>
                   </div>
                 </TableCell>
-                <TableCell>
-                  {Lang.NAME}
-                </TableCell>
+                <TableCell>{Lang.NAME}</TableCell>
+                <TableCell>Data utworzenia</TableCell>
                 <TableCell>{Lang.PRICE}</TableCell>
                 <TableCell>{Lang.UNIT}</TableCell>
                 <TableCell>{Lang.AVAILABILITY}</TableCell>
@@ -172,6 +171,7 @@ class ConnectedOffers extends Component {
                       />
                     </TableCell>
                     <TableCell>{row.name}</TableCell>
+                    <TableCell>{new Date(Date.parse(row.created)).toLocaleString("pl-PL")}</TableCell>
                     <TableCell>{(row.price/100).toFixed(2)+Lang.CURRENCY}</TableCell>
                     <TableCell>{row.unit}</TableCell>
                     <TableCell>
