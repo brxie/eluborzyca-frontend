@@ -11,6 +11,7 @@ import { setLoggedInUser } from "../../Redux/Actions";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import * as EmailValidator from 'email-validator';
+import FacebookLogin from 'react-facebook-login';
 
 
 class ConnectedLogin extends Component {
@@ -137,6 +138,32 @@ class ConnectedLogin extends Component {
     }
   }
 
+  handleFacebookLogin(response) {
+    // clean messages state
+    this.setState({emailError: false,
+      passError: false,
+      badCredenrialsError: false,
+      loginErrorMessage: ""});
+
+
+    // send api request
+    Session.facebookSessionPost(response)
+    .then(async (resp) => {
+      if (resp.status !== 200) {
+        console.log("Login failed. Unexpected response code: " + JSON.stringify(resp))
+        return;
+      }
+
+      this.props.dispatch(setLoggedInUser({ email: response.email }));
+      this.setState(() => ({
+        redirectToReferrer: true
+      }));
+    })
+    .catch((e) => {
+        console.log("Login error: " + e.stack)
+    })
+  }
+
   render() {
     const { from } = this.props.location.state || { from: { pathname: "/" } };
 
@@ -212,7 +239,7 @@ class ConnectedLogin extends Component {
               </FormControl>
 
             <Button
-              style={{ marginTop: 20, width: 200 }}
+              style={{ marginTop: 20, marginBottom: 10, width: 280 }}
               variant="outlined"
               color="primary"
               onClick={() => {
@@ -221,6 +248,21 @@ class ConnectedLogin extends Component {
             >
               {Lang.SIGN_IN}
             </Button>
+            <FacebookLogin
+              textButton=" Zaloguj przez Facebook"
+              disableMobileRedirect={true}
+              appId="185682693244772"
+              autoLoad={false}
+              language="pl_PL"
+              // scope="public_profile"
+              fields="name,email"
+              callback={response => {
+                this.handleFacebookLogin(response)
+              }}
+              size="small"
+              cssClass="facebook-button"
+              icon="fa-facebook"
+            />
             <div style={{ width: 280 }}>
               {
                 (this.state.badCredenrialsError && (<h5 style={{ color: "red" }}>{Lang.BAD_CREDENTIALS}</h5>)) || 

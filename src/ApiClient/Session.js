@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import url from 'url'
 
 const SESSION_API_URL = url.resolve(process.env.REACT_APP_API_URL, "session");
+const FACEBOOK_SESSION_API_URL = url.resolve(process.env.REACT_APP_API_URL, "facebook-session");
 
 
 const Session = {
@@ -19,15 +20,28 @@ const Session = {
     async sessionPost(email, pass) {
         return await fetch(SESSION_API_URL,
             {
-            method: 'POST',
-            body: JSON.stringify({
-                "email": email,
-                "password": pass
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include'
+                method: 'POST',
+                body: JSON.stringify({
+                    "email": email,
+                    "password": pass
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+        });
+    },
+
+    // Log In Facebook
+    async facebookSessionPost(payload) {
+        return await fetch(FACEBOOK_SESSION_API_URL,
+            {
+                method: 'POST',
+                body: JSON.stringify(payload),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
         });
     },
 
@@ -35,8 +49,8 @@ const Session = {
     async sessionDelete() {
         await fetch(SESSION_API_URL,
             {
-            method: 'DELETE',
-            credentials: 'include'
+                method: 'DELETE',
+                credentials: 'include'
         }); 
     }
 }

@@ -22,7 +22,7 @@ class ConnectedPrivacyPolicy extends Component {
           <ul style={{textAlign: "left"}}>
             <li>
               <p style={{marginBottom: "0cm"}}>
-                jeśli rejestrujesz się z wykorzystaniem konta Facebook: gromadzimy imię i nazwisko w formie w jakiej występują na Twoim koncie Facebook oraz numer identyfikacyjny (Facebook ID).              </p>
+                jeśli rejestrujesz się z wykorzystaniem konta Facebook: gromadzimy imię i nazwisko w formie w jakiej występują na Twoim koncie Facebook oraz numer identyfikacyjny (Facebook ID), email oraz imię i nazwisko (name).              </p>
             </li>
             <li>
               <p>jeśli rejestrujesz się z wykorzystaniem Twojego adresu e-mail: adres e-mail.</p>

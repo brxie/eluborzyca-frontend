@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as Lang from '../../LangPL';
 import { NavLink } from "react-router-dom";
 import "./Footer.css";
+import ReactFBLike from 'react-fb-like';
 
 class Footer extends Component {
   render() {
@@ -93,16 +94,7 @@ class Footer extends Component {
           >
             Social Media
           </div>
-          <a
-            href="http://www.facebook.com"
-            target="blank"
-            style={{
-              textDecoration: "none",
-              color: "rgb(32, 32, 34)"
-            }}
-          >
-            <div className="footerItem">Facebook</div>
-          </a>
+          <ReactFBLike language="pl_PL" appId="185682693244772" layout="button_count"/>
         </div>
       </div>
     );
