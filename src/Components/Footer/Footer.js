@@ -94,7 +94,9 @@ class Footer extends Component {
           >
             Social Media
           </div>
-          <ReactFBLike language="pl_PL" appId="185682693244772" layout="button_count"/>
+          <div>
+            <ReactFBLike language="pl_PL" appId={process.env.REACT_APP_FACEBOOK_APP_ID} layout="button_count"/>
+          </div>
         </div>
       </div>
     );

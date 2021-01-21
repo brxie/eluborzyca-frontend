@@ -11,9 +11,19 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import LabelIcon from '@material-ui/icons/Label';
 import FaceIcon from '@material-ui/icons/Face';
-import HomeIcon from '@material-ui/icons/Home';
+import LocationIcon from '@material-ui/icons/LocationOn';
 import { NavLink } from "react-router-dom";
+import {
+  WhatsappShareButton,
+  FacebookShareButton,
+} from "react-share";
+import {
+  FacebookIcon,
+  WhatsappIcon,
+} from "react-share";
 
+
+const FacebookHashtags = ["#ekologiczne", "#bio", "#eco", "#naturalne", "#nazdrowie", "#wspieramlokalnie", "#produktlokalny"]
 
 class ConnectedItem extends Component {
 
@@ -35,6 +45,8 @@ class ConnectedItem extends Component {
       </NavLink>
     )
   }
+
+
 
   render() {
     return (
@@ -92,7 +104,7 @@ class ConnectedItem extends Component {
           </div>
           <div className="item-action-bar-container">
             <Tooltip title={Lang.VILLAGE}>
-              <HomeIcon/>
+              <LocationIcon/>
             </Tooltip>
             {this.getNavlinkItemRow("/?village="+this.props.item.village, this.props.item.village)}
           </div>
@@ -101,6 +113,22 @@ class ConnectedItem extends Component {
               <LabelIcon/>
             </Tooltip>
             {this.getNavlinkItemRow("/?category="+this.props.item.category, this.props.item.category)}
+          </div>
+
+
+          <div style={{marginLeft:"135px", marginTop: "-25px", display: "flex"}}>
+          <WhatsappShareButton
+              url={window.location.href + "/api/v1/item/open-graph/" + this.props.item.id}
+            >
+              <WhatsappIcon size={24} round />
+            </WhatsappShareButton>
+
+            <FacebookShareButton
+              url={window.location.href + "/api/v1/item/open-graph/" + this.props.item.id}
+              hashtag={FacebookHashtags[Math.floor(Math.random() * FacebookHashtags.length)]}
+            >
+              <FacebookIcon size={24} round />
+            </FacebookShareButton>
           </div>
         </div>
         </CardActions>

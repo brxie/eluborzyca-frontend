@@ -119,8 +119,8 @@ class ConnectedDetails extends Component {
           // border: "1px solid red",
         }}>
           <div className="item-contact-container">
-            <div className="item-contact-entry"><div style={{display: "inline", fontWeight: "bold"}}>Cena: </div> {parseFloat(this.state.item.price/100).toFixed(2)} {Lang.CURRENCY}</div>
-            <div className="item-contact-entry" style={{display: "flex", marginTop: "-5px", marginBottom: "0px", alignItems: "center"}}>
+            <div className="item-contact-entry"><div style={{display: "inline", fontWeight: "bold"}}>Cena: </div> <Typography style={{fontSize: 14, display: "inline", fontWeight: "bold", color: "green", marginLeft: 5}}>{parseFloat(this.state.item.price/100).toFixed(2)} {Lang.CURRENCY}/{this.state.item.unit}</Typography></div>
+            <div className="item-contact-entry" style={{display: "flex", marginTop: "-10px", marginBottom: "0px", alignItems: "center"}}>
             <div style={{display: "inline", fontWeight: "bold"}}>Dostępność: </div> 
               <Typography 
                 style={{

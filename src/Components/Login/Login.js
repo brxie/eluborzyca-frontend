@@ -251,7 +251,7 @@ class ConnectedLogin extends Component {
             <FacebookLogin
               textButton=" Zaloguj przez Facebook"
               disableMobileRedirect={true}
-              appId="185682693244772"
+              appId={process.env.REACT_APP_FACEBOOK_APP_ID}
               autoLoad={false}
               language="pl_PL"
               // scope="public_profile"

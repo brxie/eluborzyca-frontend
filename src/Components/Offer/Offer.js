@@ -431,6 +431,9 @@ class Offer extends Component {
             </AccordionSummary>
             <AccordionDetails>
             <div className="product-container">
+              <Typography>
+                Tutaj możesz dodać zdjęcia. Możesz pominąc ten krok ale zdjęcia zwiększą atrakcyjność Twojego ogłoszenia.
+              </Typography>
               <div style={{
                 display: "flex",
                 width: "100%",
