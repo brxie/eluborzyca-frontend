@@ -9,7 +9,7 @@ import { withRouter } from "react-router-dom";
 
 const Paging = props => {
   let { parsedQueryStr } = props;
-  let itemsPerPage = parseInt(parsedQueryStr.itemsPerPage) || 10;
+  let itemsPerPage = parseInt(parsedQueryStr.itemsPerPage) || 30;
   let page = parseInt(parsedQueryStr.page) || 1;
   let totalPages = Math.ceil(props.totalItemsCount / itemsPerPage);
 
@@ -46,7 +46,7 @@ const Paging = props => {
         <Left />
       </IconButton>
       <Typography variant="body1">
-        Page {page} of {totalPages}
+        Strona {page} z {totalPages}
       </Typography>
       <IconButton
         size="small"

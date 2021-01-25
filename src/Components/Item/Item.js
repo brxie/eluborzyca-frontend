@@ -118,13 +118,13 @@ class ConnectedItem extends Component {
 
           <div style={{marginLeft:"135px", marginTop: "-25px", display: "flex"}}>
           <WhatsappShareButton
-              url={window.location.href + "/api/v1/item/open-graph/" + this.props.item.id}
+              url={process.env.REACT_APP_PUBLIC_URL + "/api/v1/item/open-graph/" + this.props.item.id}
             >
               <WhatsappIcon size={24} round />
             </WhatsappShareButton>
 
             <FacebookShareButton
-              url={window.location.href + "/api/v1/item/open-graph/" + this.props.item.id}
+              url={process.env.REACT_APP_PUBLIC_URL + "/api/v1/item/open-graph/" + this.props.item.id}
               hashtag={FacebookHashtags[Math.floor(Math.random() * FacebookHashtags.length)]}
             >
               <FacebookIcon size={24} round />

@@ -12,7 +12,8 @@ class ConnectedContact extends Component {
       <div style={{ padding: 10 }}>
         <div style={{ fontSize: 24, marginTop: 10}}>Kontakt</div>
         <div style={{margin: 20, width: "80%", alignContent: "center"}}>
-          Jeścli chcesz się z nami skontaktować, wyślij maila na adres 
+          Cieszymy się, że chcesz się z nami skontaktować!<br/>
+          Napisz do nas na adres mailowy
           <NavLink
             to={"mailto:kontakt@e-luborzyca.pl"}
             exact
@@ -27,6 +28,18 @@ class ConnectedContact extends Component {
           >
             {' '}kontakt@e-luborzyca.pl
           </NavLink>
+          {" "} lub skorzystaj z naszego Fanpage {" "}
+          <a href="https://www.facebook.com/eluborzyca"
+            style={{
+              textDecoration: "none",
+              color: "rgb(32, 32, 34)"
+            }}
+            activeStyle={{
+              color: "#4282ad",
+              textDecoration: "underline"
+            }}>
+            https://www.facebook.com/eluborzyca
+          </a>
 
         </div>
       </div>

@@ -16,7 +16,7 @@ async function getMenuData() {
 
 
     
-    var items = (await searchItems({})).data
+    var items = (await searchItems({itemsPerPage: 100000})).data
     return [
         { name: Lang.HOME_PAGE, url: "/", icon: "home", id: 0 },
         {

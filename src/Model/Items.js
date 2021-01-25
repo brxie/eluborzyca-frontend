@@ -99,7 +99,7 @@ function searchItems({
     seller = null,
     term = "",
     sortValue = "lh",
-    itemsPerPage = 10,
+    itemsPerPage = 30,
     usePriceFilter = "false",
     minPrice = 0,
     maxPrice = 10.00,

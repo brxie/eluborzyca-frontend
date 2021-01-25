@@ -17,6 +17,7 @@ import FacebookLogin from 'react-facebook-login';
 class ConnectedLogin extends Component {
   state = {
     redirectToReferrer: false,
+    signUpButtonDisabled: false,
     
     // login inputs values
     email: "",
@@ -44,13 +45,14 @@ class ConnectedLogin extends Component {
     this.setState({registError: "",
                    registSuccessed: false,
                    registUserEmailError: false,
-                   registPassError: false});
+                   registPassError: false,
+                   signUpButtonDisabled: true});
 
     // validate
     try {
       this.validateRegisterForm();
     } catch (error) {
-      this.setState({registError: error.message})
+      this.setState({registError: error.message, signUpButtonDisabled: false})
       return;
     }
 
@@ -59,12 +61,12 @@ class ConnectedLogin extends Component {
                    password: this.state.registPass
     }).then(async resp => {
       if (resp.status !== 201) {
-        this.setState({registError:  (await resp.json()).message})
+        this.setState({registError:  (await resp.json()).message, signUpButtonDisabled: false})
         return
       }
-      this.setState({registSuccessed: true})
+      this.setState({registSuccessed: true, signUpButtonDisabled: false})
     }).catch((e) =>{
-      this.setState({registError: e.stack})
+      this.setState({registError: e.stack, signUpButtonDisabled: false})
       return;
     })
   }
@@ -272,11 +274,12 @@ class ConnectedLogin extends Component {
           </div>
             <div className="screen-divider"></div>
               <div className="input-panel register-panel">
-              <div className="text-header">{Lang.FIRST_TIME_HERE}</div>
+              <div className="text-header">Jesteś tu po raz pierwszy? Załóż konto</div>
               <div className="text-area">
-                <p>{Lang.REGISTER_DESC_TITLE}:</p>
+                <p>Rejestrując się otrzymujesz:</p>
                 <ul>
-                  {Lang.REGISTER_DESC_BODY.split('\n').map((line, i) => {
+                  {`bezpłatne tworzenie własnych ogłoszeń
+edycja własnych ogłoszeń\nmożliwość udostępniania własnych ogłoszeń na Facooku`.split('\n').map((line, i) => {
                       return(<li>{line}</li>)
                     })
                   }
@@ -349,6 +352,7 @@ class ConnectedLogin extends Component {
                 />
               </FormControl>
               <Button
+                disabled={this.state.signUpButtonDisabled}
                 style={{ marginTop: 20, width: 200 }}
                 variant="outlined"
                 color="primary"
@@ -359,7 +363,7 @@ class ConnectedLogin extends Component {
                 {Lang.SIGN_UP}
               </Button>
               {this.state.registError && <h5 style={{ color: "red" }}>Wystąpił błąd podczas rejestracji: {this.state.registError}</h5>}
-              {this.state.registSuccessed && <h5 style={{ color: "green" }}>Rejestracja powiodła się. Na podany adres email został wysłany link aktywacyjny.</h5>}
+              {this.state.registSuccessed && <h5 style={{ color: "green" }}>Rejestracja powiodła się. Sprawdź skrzynkę email.</h5>}
             </div>
         </div>
       </div>
