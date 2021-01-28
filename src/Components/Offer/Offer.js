@@ -75,7 +75,6 @@ class Offer extends Component {
 
   constructor(props, renderOpts) {
     super(props);
-
     this.renderOpts = renderOpts
   }
 
@@ -120,6 +119,7 @@ class Offer extends Component {
   }
 
   handleProceedButton() {
+    this.clearFormErrors()
     this.requestOffer()
     this.updateUserData()
   }
@@ -154,6 +154,12 @@ class Offer extends Component {
     if (this.state.name === "") {
       this.setState({nameError: true})
       errMsgs.push(Lang.OFFER_TITLE_CANT_BE_EMPTY)
+      validSuccess = false
+    }
+
+    if (this.state.name.length > 100) {
+      this.setState({nameError: true})
+      errMsgs.push("Nazwa nie może mieć więcej niż 100 znaków")
       validSuccess = false
     }
 
@@ -324,7 +330,7 @@ class Offer extends Component {
 
                 <div style={{marginTop: 20, display: "flex", width: "100%"}}>
                   <div style={{display: "inline-grid", width: "40%"}}>
-                    <InputLabel required={true}>tytuł oferty</InputLabel>
+                    <InputLabel required={true}>Nazwa produktu</InputLabel>
                     <Input
                       value={this.state.name}
                       error={this.state.nameError}
@@ -432,7 +438,7 @@ class Offer extends Component {
             <AccordionDetails>
             <div className="product-container">
               <Typography>
-                Tutaj możesz dodać zdjęcia. Możesz pominąc ten krok ale zdjęcia zwiększą atrakcyjność Twojego ogłoszenia.
+                Tutaj możesz dodać zdjęcia. Możesz pominąć ten krok ale zdjęcia zwiększą atrakcyjność Twojego ogłoszenia.
               </Typography>
               <div style={{
                 display: "flex",

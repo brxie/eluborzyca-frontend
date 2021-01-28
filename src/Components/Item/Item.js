@@ -63,19 +63,19 @@ class ConnectedItem extends Component {
             image={this.props.item.images && this.props.item.images.length ? this.props.item.images[0].thumbnail:""}
           />
           <CardContent style={{ height: 50 }}>
-            <div
-              style={{
-                marginLeft: 5,
-                fontWeight: "bold",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis"
-              }}
-            >
-              <div style={{display: "flex", alignItems: "center"}}>
-                {this.props.item.name}
+            <Tooltip title={this.props.item.name}>
+              <div
+                style={{
+                  marginLeft: 5,
+                  fontWeight: "bold",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis"
+                }}
+              >
+                  {this.props.item.name}
               </div>
-            </div>
+            </Tooltip>
             <div style={{ margin: 5, display: "flex", alignItems: "center" }}>
               Cena:<Typography style={{fontSize: 13, fontWeight: "bold", color: "green", marginLeft: 5}}>
                 {parseFloat(this.props.item.price/100).toFixed(2)} {Lang.CURRENCY}/{this.props.item.unit}

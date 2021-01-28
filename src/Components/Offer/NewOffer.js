@@ -12,7 +12,7 @@ class ConnectedNewOffer extends Offer {
 
   constructor(props) {
     let renderOpts = {offerId: undefined,
-                      titleText: "Nowa oferta",
+                      titleText: "Nowy produkt",
                       actionBttnLabel: "Utwórz"}
     super(props, renderOpts);
   }
@@ -23,12 +23,12 @@ class ConnectedNewOffer extends Offer {
       var resp = await User.userGet()
       user = await resp.json()
       this.setState( {
-        firstLastName: user.username,
-        village: user.village,
-        homeNumber: user.homeNumber,
-        addressNotes: user.addressNotes,
-        street: user.street,
-        phone: user.phone
+        firstLastName: user.username ? user.username : "",
+        village: user.village ? user.village : null,
+        homeNumber: user.homeNumber ? user.homeNumber: "",
+        addressNotes: user.addressNotes ? user.addressNotes : "",
+        street: user.street ? user.street:  "",
+        phone: user.phone ? user.phone: ""
       });
     } catch(e) {
       console.log("User get error: " + JSON.stringify(e))

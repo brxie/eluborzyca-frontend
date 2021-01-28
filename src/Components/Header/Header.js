@@ -4,7 +4,9 @@ import * as Lang from '../../LangPL';
 import "./Header.css";
 import { IconButton, TextField, Button, Avatar, Menu, Divider,
          MenuItem, Select, AppBar, Toolbar } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+import { NavLink } from "react-router-dom";
+import MenuOpenIcon from '@material-ui/icons/MenuOpen';
+import MenuIcon from '@material-ui/icons/Menu';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { toggleMenu, logout } from "../../Redux/Actions";
@@ -18,7 +20,8 @@ import Session from "./../../ApiClient/Session";
 const SESSION_COOKIE_KEY = "SESSION_ID"
 const mapStateToProps = state => {
   return {
-    loggedInUser: state.loggedInUser
+    loggedInUser: state.loggedInUser,
+    showMenu: state.showMenu
   };
 };
 
@@ -87,10 +90,13 @@ class ConnectedHeader extends Component {
                 this.props.dispatch(toggleMenu());
               }}
             >
-              <MenuIcon size="medium" />
+              {this.props.showMenu && <MenuOpenIcon size="medium" />}
+              {!this.props.showMenu && <MenuIcon size="medium" />}
             </IconButton>
 
-            <img src={logoImage} alt={"Logo"} style={{opacity: 0.8,  width: 64, height: 64, marginLeft: 10 }} />
+            <NavLink to="/">
+              <img src={logoImage} alt={"Logo"} style={{opacity: 0.8,  width: 64, height: 64, marginLeft: 30 }} />
+            </NavLink>
             <TextField
               label={Lang.SEARCH_PRODUCTS}
               value={this.state.searchTerm}
@@ -102,7 +108,7 @@ class ConnectedHeader extends Component {
                   this.handleSearch();
                 }
               }}
-              style={{ marginLeft: 30, width: 250, marginBottom: 15 }}
+              style={{ marginLeft: 50, width: 250, marginBottom: 15 }}
             />
 
             <Select

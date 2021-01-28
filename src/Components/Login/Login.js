@@ -280,7 +280,7 @@ class ConnectedLogin extends Component {
                 <ul>
                   {`bezpłatne tworzenie własnych ogłoszeń
 edycja własnych ogłoszeń\nmożliwość udostępniania własnych ogłoszeń na Facooku`.split('\n').map((line, i) => {
-                      return(<li>{line}</li>)
+                      return(<li key={i}>{line}</li>)
                     })
                   }
                 </ul>

@@ -57,7 +57,7 @@ class ConnectedUserVerify extends Component {
         <div style={{ fontSize: 24, marginTop: 10}}>Weryfikacja użytkownika</div>
         <div style={{margin: 20, width: "80%", alignContent: "center"}}>
           
-        {this.state.error ? <h5 style={{ color: "red" }}>Błąd: {this.state.error}</h5> : "Veryfikacja powiodła się! Możesz przejść do strony logowania"}
+        {this.state.error ? <h5 style={{ color: "red" }}>Błąd: {this.state.error}</h5> : "Gratulujemy! Weryfikacja powiodła się. Możesz się zalogować."}
 
         </div>
       </div>

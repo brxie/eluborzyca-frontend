@@ -77,6 +77,7 @@ class ConnectedAccountSettings extends Component {
       addressNotes: user.addressNotes,
       street: user.street,
       phone: user.phone,
+      facebookID: user.facebookID,
       loading: false,
       villages: villages
     });
@@ -121,7 +122,14 @@ class ConnectedAccountSettings extends Component {
   }
 
   handleSaveChangesButton() {
-    this.setState({successed: false, updateError: null, formErrorMsgs: []})
+    this.setState({successed: false,
+      updateError: null, 
+      formErrorMsgs: [],
+      firstLastNameError: false,
+      villageError: false,
+      homeNumberError: false,
+      phoneError: false
+    })
     // validation
     try {
       this.validateForm()
@@ -348,71 +356,71 @@ class ConnectedAccountSettings extends Component {
           {this.state.updateError ? <h5 style={{ color: "red" }}>Błąd: {this.state.updateError}.</h5> : ""}
           {this.state.successed ? <h5 style={{ color: "green" }}>Dane zostały zaktualizowane.</h5> : ""}
         </div>
+        <div style={{display: this.state.facebookID ? "none" : ""}}>
         <Divider style={{marginTop: 10}} />
-        <div style={{ fontSize: 24, marginTop: 10 }}>Zmiana hasła</div>
-        <div style={{margin: 20, width: "98%"}}>
+          <div style={{ fontSize: 24, marginTop: 10 }}>Zmiana hasła</div>
+          <div style={{margin: 20, width: "98%"}}>
+            <div className="product-container">
+              <Typography>
+                Tutaj możesz zmienić swoje hasło
+              </Typography>
+              <div style={{marginTop: 20, display: "inline-grid", width: "200px"}}>
+                <InputLabel>Stare hasło</InputLabel>
+                <Input
+                  type={'password'}
+                  value={this.state.oldPass}
+                  error={this.state.oldPassError}
+                  onChange={e => {
+                    this.setState({
+                      oldPass: e.target.value
+                    });
+                  }}
+                />
+              </div>
 
+              <div style={{marginTop: 20, display: "inline-grid", width: "200px"}}>
+                <InputLabel>Nowe hasło</InputLabel>
+                <Input
+                  type={'password'}
+                  value={this.state.newPass}
+                  error={this.state.newPassError}
+                  onChange={e => {
+                    this.setState({
+                      newPass: e.target.value
+                    });
+                  }}
+                />
+              </div>
 
-          <div className="product-container">
-            <Typography>
-              Tutaj możesz zmienić swoje hasło
-            </Typography>
-            <div style={{marginTop: 20, display: "inline-grid", width: "200px"}}>
-              <InputLabel>Stare hasło</InputLabel>
-              <Input
-                type={'password'}
-                value={this.state.oldPass}
-                error={this.state.oldPassError}
-                onChange={e => {
-                  this.setState({
-                    oldPass: e.target.value
-                  });
-                }}
-              />
-            </div>
-
-            <div style={{marginTop: 20, display: "inline-grid", width: "200px"}}>
-              <InputLabel>Nowe hasło</InputLabel>
-              <Input
-                type={'password'}
-                value={this.state.newPass}
-                error={this.state.newPassError}
-                onChange={e => {
-                  this.setState({
-                    newPass: e.target.value
-                  });
-                }}
-              />
-            </div>
-
-            <div style={{marginTop: 20, display: "inline-grid", width: "200px"}}>
-              <InputLabel>Powtórz nowe hasło</InputLabel>
-              <Input
-                type={'password'}
-                value={this.state.newPassRep}
-                error={this.state.newPassRepError}
-                onChange={e => {
-                  this.setState({
-                    newPassRep: e.target.value
-                  });
-                }}
-              />
+              <div style={{marginTop: 20, display: "inline-grid", width: "200px"}}>
+                <InputLabel>Powtórz nowe hasło</InputLabel>
+                <Input
+                  type={'password'}
+                  value={this.state.newPassRep}
+                  error={this.state.newPassRepError}
+                  onChange={e => {
+                    this.setState({
+                      newPassRep: e.target.value
+                    });
+                  }}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div style={{ marginTop: 20, width: "70%", padding: "20px"}}>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => {
-              this.handleChangePasswdButton()
-            }}
-          >
-            Zmień
-          </Button>
-          {this.state.passErrorMsgs.length ? <h5 style={{ color: "red" }}>Formularz zawiera błędy: <ul>{this.state.passErrorMsgs.map((v, k) => <li key={k}>{v}</li>)}</ul></h5> : ""}
-          {this.state.updatePassError ? <h5 style={{ color: "red" }}>Błąd: {this.state.updatePassError}.</h5> : ""}
-          {this.state.passSuccessed ? <h5 style={{ color: "green" }}>Hasło zostało pomyślnie zmienione.</h5> : ""}
+          <div style={{ marginTop: 20, width: "70%", padding: "20px"}}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => {
+                this.handleChangePasswdButton()
+              }}
+            >
+              Zmień
+            </Button>
+            {this.state.passErrorMsgs.length ? <h5 style={{ color: "red" }}>Formularz zawiera błędy: <ul>{this.state.passErrorMsgs.map((v, k) => <li key={k}>{v}</li>)}</ul></h5> : ""}
+            {this.state.updatePassError ? <h5 style={{ color: "red" }}>Błąd: {this.state.updatePassError}.</h5> : ""}
+            {this.state.passSuccessed ? <h5 style={{ color: "green" }}>Hasło zostało pomyślnie zmienione.</h5> : ""}
+          </div>
         </div>
       </div>
     );

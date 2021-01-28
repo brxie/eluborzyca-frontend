@@ -3,13 +3,13 @@ import { withRouter } from "react-router-dom";
 import * as Lang from '../../LangPL';
 import { connect } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import Tooltip from "@material-ui/core/Tooltip";
 import Switch from "@material-ui/core/Switch";
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import AvailabilitySlider from "../Common/AvailabilitySlider";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -21,6 +21,7 @@ import AlertDialog from "../Common/AlertDialog";
 import { quantitySliderLabels, quantitySliderColors } from "../../Constants";
 import Session from "./../../ApiClient/Session";
 import { logout } from "../../Redux/Actions";
+import { NavLink } from "react-router-dom";
 
 
 const mapStateToProps = state => {
@@ -128,105 +129,138 @@ class ConnectedOffers extends Component {
       <div style={{ padding: 10}}>
         <div style={{ fontSize: 24, marginTop: 20 }}>{Lang.MY_OFFERS}</div>
         <div style={{width: "98%"}}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <div style={{display: "flex", alignItems: "center"}}>
-                    {Lang.ACTIVE}
-                    <Tooltip title={Lang.DEACTIVATE_OFFER_TEXT}>
-                      <InfoOutlinedIcon  color="disabled" size="medium" style={{ width: 18, height: 18, paddingBottom: 10}} />
-                    </Tooltip>
-                  </div>
-                </TableCell>
-                <TableCell>{Lang.NAME}</TableCell>
-                <TableCell>Data utworzenia</TableCell>
-                <TableCell>{Lang.PRICE}</TableCell>
-                <TableCell>{Lang.UNIT}</TableCell>
-                <TableCell>{Lang.AVAILABILITY}</TableCell>
-                <TableCell>{Lang.CATEGORY}</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.items.map((row, index) => {
-                const editId = `offers-table-edit-${index}`;
-                const deleteId = `offers-table-delete-${index}`;
-                return (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={index}
-                  >  
-                    <TableCell>
-                      <Switch
-                        checked={row.active}
-                        onChange={(e) => {
-                          this.handleActiveSwitchChange(e, index)
-                        }}
-                        color="primary"
-                        name="checkedB"
-                        inputProps={{ 'aria-label': 'primary checkbox' }}
-                      />
-                    </TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{new Date(Date.parse(row.created)).toLocaleString("pl-PL")}</TableCell>
-                    <TableCell>{(row.price/100).toFixed(2)+Lang.CURRENCY}</TableCell>
-                    <TableCell>{row.unit}</TableCell>
-                    <TableCell>
-                      <div style={{width: "80%"}}>
-                        <AvailabilitySlider
-                          disabled={!this.state.items[index].active}
-                          orientation="horizontal"
-                          valueLabelDisplay="off"
-                          min={1}
-                          max={quantitySliderLabels.length}
-                          step={1}
-                          value={this.state.items[index].availability}
-                          onChange={(e, v) => {
-                            this.AandleavailabilitySliderChange(v, index)
+
+        <div style={{margin: 10, marginTop: 40,  width: "80%", alignContent: "center", display: this.state.items.length ? "none" : ""}}>
+          Autualnie nie posiadasz żadnych produktów :( 
+        </div>
+
+          <div style={{display: this.state.items.length ? "" : "none"}}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <div style={{display: "flex", alignItems: "center"}}>
+                      {Lang.ACTIVE}
+                      <Tooltip title={Lang.DEACTIVATE_OFFER_TEXT}>
+                        <InfoOutlinedIcon  color="disabled" size="medium" style={{ width: 18, height: 18, paddingBottom: 10}} />
+                      </Tooltip>
+                    </div>
+                  </TableCell>
+                  <TableCell>{Lang.NAME}</TableCell>
+                  <TableCell>Data utworzenia</TableCell>
+                  <TableCell>{Lang.PRICE}</TableCell>
+                  <TableCell>{Lang.UNIT}</TableCell>
+                  <TableCell>{Lang.AVAILABILITY}</TableCell>
+                  <TableCell>{Lang.CATEGORY}</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.state.items.map((row, index) => {
+                  const editId = `offers-table-edit-${index}`;
+                  const deleteId = `offers-table-delete-${index}`;
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={index}
+                    >  
+                      <TableCell>
+                        <Switch
+                          checked={row.active}
+                          onChange={(e) => {
+                            this.handleActiveSwitchChange(e, index)
                           }}
-                          style={{paddingTop: 15, color: this.state.items[index].active
-                            ? quantitySliderColors[this.state.items[index].availability-1]
-                            : "gray"
-                          }}
-                          track={false}
-                          marks={[{value: 1, label: quantitySliderLabels[0]},
-                                  {value: quantitySliderLabels.length,
-                                  label: quantitySliderLabels[quantitySliderLabels.length-1]}]}
+                          color="primary"
+                          name="checkedB"
+                          inputProps={{ 'aria-label': 'primary checkbox' }}
                         />
-                      </div>
-                    </TableCell>
-                    <TableCell>{row.category}</TableCell>
-                    <TableCell style={{ width: "10px"}}>
-                      <div  style={{ display: "inline-flex"}}>
-                        <IconButton
-                          onClick={() => {
-                            this.props.history.push("/edit-offer", {offerId: row.id});
+                      </TableCell>
+                      <TableCell>
+                        <NavLink to={"/details/" + row.id}  
+                          exact
+                          style={{
+                            textDecoration: "none",
+                            color: "rgb(32, 32, 34)"
                           }}
-                        >
-                          <EditIcon
-                            aria-label={editId}
+                          activeStyle={{
+                            color: "#4282ad",
+                            textDecoration: "underline"
+                          }}>
+                            {row.name}
+                        </NavLink>
+                      </TableCell>
+                      <TableCell>{new Date(Date.parse(row.created)).toLocaleString("pl-PL")}</TableCell>
+                      <TableCell>{(row.price/100).toFixed(2)+Lang.CURRENCY}</TableCell>
+                      <TableCell>{row.unit}</TableCell>
+                      <TableCell>
+                        <div style={{width: "80%"}}>
+                          <AvailabilitySlider
+                            disabled={!this.state.items[index].active}
+                            orientation="horizontal"
+                            valueLabelDisplay="off"
+                            min={1}
+                            max={quantitySliderLabels.length}
+                            step={1}
+                            value={this.state.items[index].availability}
+                            onChange={(e, v) => {
+                              this.AandleavailabilitySliderChange(v, index)
+                            }}
+                            style={{paddingTop: 15, color: this.state.items[index].active
+                              ? quantitySliderColors[this.state.items[index].availability-1]
+                              : "gray"
+                            }}
+                            track={false}
+                            marks={[{value: 1, label: quantitySliderLabels[0]},
+                                    {value: quantitySliderLabels.length,
+                                    label: quantitySliderLabels[quantitySliderLabels.length-1]}]}
                           />
-                        </IconButton>
-                        <IconButton
-                          onClick={() => {
-                            this.handleDeleteClickOpen(row.id)
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <NavLink to={"/?category="+row.category}  
+                          exact
+                          style={{
+                            textDecoration: "none",
+                            color: "rgb(32, 32, 34)"
                           }}
-                        >
-                          <DeleteIcon
-                            aria-label={deleteId}
-                          />
-                        </IconButton>
-                      </div>
-                    </TableCell>
-                    
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+                          activeStyle={{
+                            color: "#4282ad",
+                            textDecoration: "underline"
+                          }}>
+                            {row.category}
+                        </NavLink>
+                      </TableCell>
+                      <TableCell style={{ width: "10px"}}>
+                        <div  style={{ display: "inline-flex"}}>
+                          <IconButton
+                            onClick={() => {
+                              this.props.history.push("/edit-offer", {offerId: row.id});
+                            }}
+                          >
+                            <EditIcon
+                              aria-label={editId}
+                            />
+                          </IconButton>
+                          <IconButton
+                            onClick={() => {
+                              this.handleDeleteClickOpen(row.id)
+                            }}
+                          >
+                            <DeleteIcon
+                              aria-label={deleteId}
+                            />
+                          </IconButton>
+                        </div>
+                      </TableCell>
+                      
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>
           {AlertDialog(Lang.ALERT_DIALOG_DELETE_OFFER_TITLE,
                        Lang.ALERT_DIALOG_DELETE_OFFER_TEXT,
                        Lang.CANCEL,
@@ -237,18 +271,15 @@ class ConnectedOffers extends Component {
                        this.handleDeleteDisagree)}
         </div>
         <div style={{paddingTop: "20px"}}>
-          {Lang.ADD_OFFER}
-        <IconButton
-          onClick={() => {
-            this.props.history.push("/new-offer");
-          }}
-        >
-          <AddCircleIcon 
-            color="primary"
-            size="medium"
-            style={{ width: 30, height: 30}}
-          />
-        </IconButton>
+          
+          <Button
+            onClick={() => {
+              this.props.history.push("/new-offer");
+            }}
+            variant="outlined"
+            color="primary">
+              {Lang.ADD_OFFER}
+          </Button>
         </div>
       </div>
     );
